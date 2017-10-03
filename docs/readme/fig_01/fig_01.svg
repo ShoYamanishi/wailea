@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="drawing.svg"
+   sodipodi:docname="fig_01.svg"
    inkscape:export-filename="/Users/shoichiroyamanishi/workarea/Wailea/wailea/docs/readme/fig_01.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
@@ -28,16 +28,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="275.64155"
-     inkscape:cy="420.68668"
+     inkscape:zoom="1.979899"
+     inkscape:cx="367.8333"
+     inkscape:cy="976.99746"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1381"
-     inkscape:window-height="1364"
-     inkscape:window-x="1179"
-     inkscape:window-y="10"
+     inkscape:window-height="856"
+     inkscape:window-x="45"
+     inkscape:window-y="45"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata5">
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,7 +61,9 @@
        width="165.93155"
        height="77.485123"
        x="20.032738"
-       y="7.4702382" />
+       y="7.4702382"
+       inkscape:export-xdpi="306.15033"
+       inkscape:export-ydpi="306.15033" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:0.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
@@ -307,29 +309,49 @@
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.23333311px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="81.642853"
-       y="30.337791"
+       style="font-style:normal;font-weight:normal;font-size:3.21619892px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.20101243"
+       x="89.038292"
+       y="24.95219"
        id="text4632"><tspan
          sodipodi:role="line"
          id="tspan4630"
-         x="81.642853"
-         y="30.337791"
-         style="stroke-width:0.26458332">- decompose</tspan><tspan
+         x="89.038292"
+         y="24.95219"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243">- decompose</tspan><tspan
          sodipodi:role="line"
-         x="81.642853"
-         y="35.629459"
-         style="stroke-width:0.26458332"
-         id="tspan4634">- planarize</tspan><tspan
+         x="89.038292"
+         y="28.972439"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan4636">- planarize</tspan><tspan
          sodipodi:role="line"
-         x="81.642853"
-         y="40.921124"
-         style="stroke-width:0.26458332"
-         id="tspan4636">- reinsert edges</tspan><tspan
+         x="89.038292"
+         y="32.992687"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan194">- reinsert edges</tspan><tspan
          sodipodi:role="line"
-         x="81.642853"
-         y="46.212791"
-         style="stroke-width:0.26458332"
-         id="tspan4638">- visibility representation</tspan></text>
+         x="89.038292"
+         y="37.012936"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan176">- visibility representation</tspan><tspan
+         sodipodi:role="line"
+         x="89.038292"
+         y="41.033184"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan180">- make acyclic</tspan><tspan
+         sodipodi:role="line"
+         x="89.038292"
+         y="45.053432"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan182">- rank assignment</tspan><tspan
+         sodipodi:role="line"
+         x="89.038292"
+         y="49.073681"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan184">- network simplex</tspan><tspan
+         sodipodi:role="line"
+         x="89.038292"
+         y="53.093929"
+         style="font-size:2.94818258px;line-height:0px;stroke-width:0.20101243"
+         id="tspan188">- crossing reduction</tspan></text>
   </g>
 </svg>

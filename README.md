@@ -191,6 +191,14 @@ used to test the planarity of Gp + {e}.
 
 Then, for each {u,v} in Er, the edge-insersion algorithm [GMW05] inserts {u,v}
 into Gp. This is a very complex process involving the following algorithms.
+
+* BC-tree decomposition
+* SPQR-tree decomposition
+* path finder on a tree
+* Planar embedding finder
+* Dual graph finder
+* Shortest path finder
+
 The basic idea is explained in [GMW05] and the implementation details are in
 the comments in `gmw_edge_inserter.hpp`.
 
@@ -199,7 +207,7 @@ At this stage, each Gb has been planarized.
 Then Waile creates something called embedded BC-tree.
 It contains the planar embedding (and its dual) of each block as well as
 how the incident faces around each cut vertex will be unified.
-The details are found in 'embedded_bctree.hpp'
+The details are found in `embedded_bctree.hpp`.
 
 Then Wailea finds a visibility representation of Gc based on the information
 in the embedded BC-tree. The process is basically a recursive application
@@ -209,7 +217,7 @@ there are three types of edge labels: near node 1, in the middle of edge, and
 near node 2. And there are three types of edge label placement: center of
 the edge curve, touching the curve on CCW side, 
 and touching the curve on CW side. The details are found in 
-'vis_rep_finder.hpp'.
+`vis_rep_finder.hpp`.
 
 Finally for each Gc, we have a visibility representation in the xy-coordinates
 of the nodes, edges, node labels, and edge labels.

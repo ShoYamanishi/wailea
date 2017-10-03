@@ -285,8 +285,8 @@ Decomposes a given connected graph into BC-tree in DFS [RND77].
 * **SPQRDecomposer** (undirected/spqr_decomposer.hpp) :
 Decomposes a given biconnected graph into SPQR-tree in DFS.
 The original algorithm is proposed by [HT73], and then later it is corrected
-by [GM01]. It is still hard to understand and I have arranged a supplementary
-document here:
+by [GM01]. It is still hard to understand and [I have arranged a supplementary
+document here](docs/spqr_explained/HTGMExplained.pdf)
 
 
 * **STNumbering** (undirected/st_numbering.hpp) :

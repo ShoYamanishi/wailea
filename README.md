@@ -392,7 +392,7 @@ Hopcroft, John & Tarjan, Robert (1973),
 R. Jayakumar, K. Thulasiraman, M.N.S. Swamy,
 IEEE Transactions on Computer-aided Design, Vol 8. No. 3, March 1989
 
-[RND77] 
+* [RND77] 
 "Combinatorial Algorithms Theory and Practice",
 E.M. Reingold, J Nievergelt, & N Deo,
 Prentice Hall (Dec. 1977) 978-0131524477

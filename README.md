@@ -194,7 +194,7 @@ into Gp. This is a very complex process involving the following algorithms.
 
 * BC-tree decomposition
 * SPQR-tree decomposition
-* path finder on a tree
+* Path finder on a tree
 * Planar embedding finder
 * Dual graph finder
 * Shortest path finder
@@ -275,51 +275,80 @@ with transposes. The details are given in [GKNV].
 ## Undirected Graph
 
 * **ConnectedDecomposer** (undirected/connected_decomposer.hpp) :
-Decomposes a given graph into connected components.
+Decomposes a given graph into connected components in DFS.
+
 
 * **BiconnectedDecomposer** (undirected/bctree.hpp) :
-Decomposes a given connected graph into BC-tree.
+Decomposes a given connected graph into BC-tree in DFS [RND77].
+
 
 * **SPQRDecomposer** (undirected/spqr_decomposer.hpp) :
-Decomposes a given biconnected graph into SPQR-tree.
+Decomposes a given biconnected graph into SPQR-tree in DFS.
+The original algorithm is proposed by [HT73], and then later it is corrected
+by [GM01]. It is still hard to understand and I have arranged a supplementary
+document here:
+
 
 * **STNumbering** (undirected/st_numbering.hpp) :
-Generates an ST-ordering for a biconnected graph.
+Generates an ST-ordering for a biconnected graph in DFS [T85].
+
 
 * **JTSPlanarizer** (undirected/jts_planarizer.hpp) :
 Classifies the edges of a given biconnected graph into a good planar subgraph
-and a set of removed edges.
+and a set of removed edges. The first phase of [JTS89], which finds a planar 
+spanning subgraph. The claimed maximality was refuted by manu, but I think
+the 1st phase is still useful to find a base planar graph and in many cases
+the subgraph is biconnected.
+
 
 * **BLPlanarityTester** (undirected/bl_planarity_tester.hpp) :
 Tests if a given biconnected graph is planar, and finds a combinatorial planar
-embedding of a given planar biconnected graph.
+embedding of a given planar biconnected graph. [BL76]
+I believe the original [BL76] is incorrect as it is incapable of handling 
+certain arrangement of pertinent frontiers. This may be the only correct
+implementation of PQ-tree planarity algorithm available so far.
+
 
 * **PlanarDualGraphMaker** (undirected/planar_dual_graph_maker.hpp) :
 Makes a dual graph structure of the given planar biconnected graph in a palanr
-embedding.
+embedding. My own linear time algorhitm as I could not find any in public.
+
 
 * **GMWEdgeInserter** (undirected/gmw_edge_inserter.hpp) :
 Inserts an edge into a given connected graph such that the number of crossings
-is minimized.
+is minimized [GMW05].
+
 
 * **EmbeddedBCTree** (undirected/embedded_bctree.hpp) :
 Represents an embedding of a connected graph decomposed into a BC-tree.
+My own algorithm.
+
 
 * **VisRepFinder** (undirected/vis_rep_finder.hpp) :
 Generates a visibility representation of a connected graph.
+My own algorithm based on [TT86]. It handles not only biconnected graphs,
+but also connected graphs.
+
 
 ## Directed Graph
 * **AcyclicOrderingFinder** (directed/acyclic_ordering_finder.hpp) :
 Finds an acyclic ordering of a given graph that may contain cycles.
+My own algorithm using network simplex as described above.
+
 
 * **NetworkSimplex** (directed/network_simplex.hpp) :
 Solves the network simplex problem, which is a variant of integer linear
 programming. Both phase I and II are solved in the primary space.
+The phase I solves an aux problem to find an initial feasible solution, and
+the phase II takes it to an optimum.
 Used by AcyclicOrderingFinder and GKNV rank assignment in SugiyamaDiGraph.
+
 
 * **GKNVcrossingsReducer** (directed/gknv_crossings_reducer.hpp) :
 Tries to reduce the crossings in a connected bipartite digraph in a embedding
-with a barycenter heuristics and some tweaks. Employed in dot of GrpahViz.
+with a barycenter and adjacent transpose heuristics.
+Employed in dot of GrpahViz. A bit crude but it gives pretty good results.
+
 
 * **SugiyamaDiGraph** (directed/sugiyama_digraph.hpp) :
 Finds integer xy-coordinates of the nodes of the given digraph in Sugiyama
@@ -330,42 +359,56 @@ heiearchical framework.
 # References
 
 * [BL76]
-Testing for the consecutive ones property, interval graphs, and graph planarity
-using PQ-tree algorithms Kellogg S. Booth & George S. Lueker Journal of 
-Computer and System Sciences archive Volume 13 Issue 3, December, 1976
-Pages 335-379 Academic Press, Inc. Orlando, FL, USA
+"Testing for the consecutive ones property, interval graphs, 
+and graph planarity using PQ-tree algorithms",
+Kellogg S. Booth & George S. Lueker
+Journal of Computer and System Sciences archive Volume 13 Issue 3, 
+December, 1976 Pages 335-379 Academic Press, Inc. Orlando, FL, USA
 
 * [GKNV]
-E. R. Gansner, E. Koutsofios, S. C. North, and K. P Vo. A technique
-for drawing directed graphs. IEEE Transactions on Software Engineering,
-19(3):214–230, March 1993.
+"A technique for drawing directed graphs." ,
+E. R. Gansner, E. Koutsofios, S. C. North, and K. P Vo. 
+IEEE Transactions on Software Engineering, 19(3):214–230, March 1993.
 
 * [GMW05]
-Inserting an Edge into a Planar Graph Carsten Gutwenger, Petra Mutzel, Rene 
-Weiskircher Algorithmica 41(4):289-308, April 2005
+"Inserting an Edge into a Planar Graph",
+Carsten Gutwenger, Petra Mutzel, Rene Weiskircher 
+Algorithmica 41(4):289-308, April 2005
 
 * [GM01]
-Gutwenger, Carsten; Mutzel Petra (2001), "A linear time implementation of SPQR
-trees", Proc. 8th International Symposium on Graph Drawing (GD 2000), Lecture
-Nodes in Computer Science 1984, Springer-Verlag, pp. 77-90,
+"A linear time implementation of SPQR trees",
+Gutwenger, Carsten &  Mutzel Petra, 
+Proc. 8th International Symposium on Graph Drawing (GD 2000),
+Lecture Nodes in Computer Science 1984, Springer-Verlag, pp. 77-90,
 doi:10.1007/3-540-44541-2_8
 
 * [HT73]
-Hopcroft, John; Tarjan, Robert (1973), "Dividing a graph into triconnected
-components', SIAM Journal on Computing 2 (3): 135-158, doi:10.1137/0202012
+"Dividing a graph into triconnected components",
+Hopcroft, John & Tarjan, Robert (1973), 
+ SIAM Journal on Computing 2 (3): 135-158, doi:10.1137/0202012
 
 * [JTS89]
-O(n2) Algorithms for Graph Planarization R. Jayakumar, K. Thulasiraman,
-M.N.S. Swamy, IEEE Transactions on Computer-aided Design, Vol 8. No. 3,
-March 1989
+"O(n2) Algorithms for Graph Planarization",
+R. Jayakumar, K. Thulasiraman, M.N.S. Swamy,
+IEEE Transactions on Computer-aided Design, Vol 8. No. 3, March 1989
+
+[RND77] 
+"Combinatorial Algorithms Theory and Practice",
+E.M. Reingold, J Nievergelt, & N Deo,
+Prentice Hall (Dec. 1977) 978-0131524477
+(Biconnected decomposition algorithm is found at
+https://www.cs.cmu.edu/~avrim/451f12/lectures/biconnected.pdf )
 
 * [TT86]
-"A Unified Approach to Visibility Representation of Planar Graphs"
-R. Tamassia and I.G. Tollis, Discrete Comput Geom 1:321-341 (1986)
+"A Unified Approach to Visibility Representation of Planar Graphs",
+R. Tamassia and I.G. Tollis, 
+Discrete Comput Geom 1:321-341 (1986)
 
 * [T85]
-Two Streamlined Depth-First Search Algorthms Robert Endre Tarjan Computer
-Science Department Princeton University Princeton, NJ 08544 and AT&T Bell
+"Two Streamlined Depth-First Search Algorthms",
+Robert Endre Tarjan
+Computer Science Department Princeton University Princeton, 
+NJ 08544 and AT&T Bell
 Laboratories Murray Hill, NJ 07974 July, 1985 CS-TR-013-86
 ftp://ftp.cs.princeton.edu/techreports/1985/013.pdf
 

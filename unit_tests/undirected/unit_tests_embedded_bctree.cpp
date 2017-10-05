@@ -1997,7 +1997,7 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     auto  ebcN03dgFit = ebcN03dg.nodes().first;
     auto& ebcN03dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN03dgFit)));
     ebcN03dgFit++;
-    /*auto& ebcN03dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN03dgFit)));*/
+    auto& ebcN03dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN03dgFit)));
 
     //auto  ebcN03dgEit = ebcN03dg.edges().first;
     //auto& ebcN03dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN03dgEit)));
@@ -2049,7 +2049,7 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     auto  ebcN04dgFit = ebcN04dg.nodes().first;
     auto& ebcN04dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN04dgFit)));
     ebcN04dgFit++;
-    /*auto& ebcN04dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN04dgFit)));*/
+    auto& ebcN04dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN04dgFit)));
 
     //auto  ebcN04dgEit = ebcN04dg.edges().first;
     //auto& ebcN04dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN04dgEit)));
@@ -2100,7 +2100,7 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     auto  ebcN05dgFit = ebcN05dg.nodes().first;
     auto& ebcN05dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN05dgFit)));
     ebcN05dgFit++;
-    /*auto& ebcN05dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN05dgFit)));*/
+    auto& ebcN05dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN05dgFit)));
 
     //auto  ebcN05dgEit = ebcN05dg.edges().first;
     //auto& ebcN05dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN05dgEit)));
@@ -2126,8 +2126,8 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     UnificationFace& uf4 = ebcN01UG1.at(3);
 
     EXPECT_EQ(&uf1.treeNode(),       &ebcN02);
-// TMP    EXPECT_EQ(&uf1.faceInDG(),       &ebcN02dgF01);
-// TMP    EXPECT_EQ( uf1.faceInDGIt(),      ebcN02dgF01.backIt());
+    EXPECT_EQ(&uf1.faceInDG(),       &ebcN02dgF02);
+    EXPECT_EQ( uf1.faceInDGIt(),      ebcN02dgF02.backIt());
     EXPECT_EQ(&uf1.cutVertexInEG(),  &ebcN02egN02);
     EXPECT_EQ( uf1.cutVertexInEGIt(), ebcN02egN02.backIt());
     EXPECT_EQ(&uf1.edgeCCWInEG(),    &ebcN02egE01);
@@ -2137,8 +2137,8 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     EXPECT_EQ( uf1.roleOfECWReversed(), false);
 
     EXPECT_EQ(&uf2.treeNode(),       &ebcN03);
-// TMP    EXPECT_EQ(&uf2.faceInDG(),       &ebcN03dgF01);
-// TMP    EXPECT_EQ( uf2.faceInDGIt(),      ebcN03dgF01.backIt());
+    EXPECT_EQ(&uf2.faceInDG(),       &ebcN03dgF02);
+    EXPECT_EQ( uf2.faceInDGIt(),      ebcN03dgF02.backIt());
     EXPECT_EQ(&uf2.cutVertexInEG(),  &ebcN03egN02);
     EXPECT_EQ( uf2.cutVertexInEGIt(), ebcN03egN02.backIt());
     EXPECT_EQ(&uf2.edgeCCWInEG(),    &ebcN03egE01);
@@ -2148,8 +2148,8 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     EXPECT_EQ( uf2.roleOfECWReversed(), false);
 
     EXPECT_EQ(&uf3.treeNode(),       &ebcN04);
-// TMP    EXPECT_EQ(&uf3.faceInDG(),       &ebcN04dgF01);
-// TMP    EXPECT_EQ( uf3.faceInDGIt(),      ebcN04dgF01.backIt());
+    EXPECT_EQ(&uf3.faceInDG(),       &ebcN04dgF02);
+    EXPECT_EQ( uf3.faceInDGIt(),      ebcN04dgF02.backIt());
     EXPECT_EQ(&uf3.cutVertexInEG(),  &ebcN04egN02);
     EXPECT_EQ( uf3.cutVertexInEGIt(), ebcN04egN02.backIt());
     EXPECT_EQ(&uf3.edgeCCWInEG(),    &ebcN04egE01);
@@ -2159,8 +2159,8 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     EXPECT_EQ( uf3.roleOfECWReversed(), false);
 
     EXPECT_EQ(&uf4.treeNode(),       &ebcN05);
-// TMP    EXPECT_EQ(&uf4.faceInDG(),       &ebcN05dgF01);
-// TMP    EXPECT_EQ( uf4.faceInDGIt(),      ebcN05dgF01.backIt());
+    EXPECT_EQ(&uf4.faceInDG(),       &ebcN05dgF02);
+    EXPECT_EQ( uf4.faceInDGIt(),      ebcN05dgF02.backIt());
     EXPECT_EQ(&uf4.cutVertexInEG(),  &ebcN05egN02);
     EXPECT_EQ( uf4.cutVertexInEGIt(), ebcN05egN02.backIt());
     EXPECT_EQ(&uf4.edgeCCWInEG(),    &ebcN05egE01);
@@ -2234,15 +2234,15 @@ TEST_F(EmbeddedBCTreeTests, FourK3s) {
     EXPECT_EQ(expE03.incidentNodeDst().backIt(), expN04.backIt());
 
     EXPECT_EQ(&ebcN02.outerFace(), &ebcN02dgF02);
-// TMP    EXPECT_EQ(&ebcN02.topNode(),   &ebcN02egN03);//n02
+    EXPECT_EQ(&ebcN02.topNode(),   &ebcN02egN01);//n09
 
-// TMP    EXPECT_EQ(&ebcN03.outerFace(), &ebcN03dgF01);
+    EXPECT_EQ(&ebcN03.outerFace(), &ebcN03dgF02);
     EXPECT_EQ(&ebcN03.topNode(),   &ebcN03egN02);//n01
 
-// TMP    EXPECT_EQ(&ebcN04.outerFace(), &ebcN04dgF01);
+    EXPECT_EQ(&ebcN04.outerFace(), &ebcN04dgF02);
     EXPECT_EQ(&ebcN04.topNode(),   &ebcN04egN02);//n01
 
-// TMP    EXPECT_EQ(&ebcN05.outerFace(), &ebcN05dgF01);
+    EXPECT_EQ(&ebcN05.outerFace(), &ebcN05dgF02);
     EXPECT_EQ(&ebcN05.topNode(),   &ebcN05egN02);//n01
 
 }
@@ -3379,14 +3379,14 @@ TEST_F(EmbeddedBCTreeTests, Realistic1) {
     /*auto& ebcN08dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN08dgFit)));*/
 
     auto eit = ebcN08dgF01.mCycleEdges.begin();
-// TMP    EXPECT_EQ(ebcN08egE01.backIt(), 
-// TMP              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-// TMP   EXPECT_EQ(ebcN08egE02.backIt(), 
-// TMP             dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-// TMP    EXPECT_EQ(ebcN08egE03.backIt(), 
-// TMp              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    // ebcN08dgF01 : 10 -> 12-> 11
-    // ebcN08dgF02 : 10 -> 11-> 12
+    EXPECT_EQ(ebcN08egE03.backIt(), 
+              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+    EXPECT_EQ(ebcN08egE02.backIt(), 
+              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+    EXPECT_EQ(ebcN08egE01.backIt(), 
+              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+    // ebcN08dgF01 : 10 -> 11-> 12
+    // ebcN08dgF02 : 10 -> 12-> 11
 
     //auto  ebcN08dgEit = ebcN08dg.edges().first;
     //auto& ebcN08dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
@@ -3723,10 +3723,10 @@ TEST_F(EmbeddedBCTreeTests, Realistic1) {
     EXPECT_EQ( uf8.faceInDGIt(),      ebcN08dgF01.backIt());
     EXPECT_EQ(&uf8.cutVertexInEG(),  &ebcN08egN01);
     EXPECT_EQ( uf8.cutVertexInEGIt(), ebcN08egN01.backIt());
-// TMP    EXPECT_EQ(&uf8.edgeCCWInEG(),    &ebcN08egE03);
-// TMP    EXPECT_EQ( uf8.edgeCCWInEGIt(),   ebcN08egE03.backIt());
-// TMP    EXPECT_EQ(&uf8.edgeCWInEG()    , &ebcN08egE01);
-// TMP    EXPECT_EQ( uf8.edgeCWInEGIt(),    ebcN08egE01.backIt());
+    EXPECT_EQ(&uf8.edgeCCWInEG(),    &ebcN08egE01);
+    EXPECT_EQ( uf8.edgeCCWInEGIt(),   ebcN08egE01.backIt());
+    EXPECT_EQ(&uf8.edgeCWInEG()    , &ebcN08egE03);
+    EXPECT_EQ( uf8.edgeCWInEGIt(),    ebcN08egE03.backIt());
     EXPECT_EQ( uf8.roleOfECWReversed(), false);
 
     EXPECT_EQ(&uf9.treeNode(),       &ebcN09);

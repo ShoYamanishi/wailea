@@ -2759,6 +2759,7 @@ void BLTree::transferGraphNodeOrientationsQ5(BLTreeNode& X)
 }
 
 
+#ifdef UNIT_TESTS
 void BLTree::printTree(ostream& os, node_list_it_t pr) {
 
     // Find the root.
@@ -3045,6 +3046,7 @@ void BLTree::printTree(ostream& os, node_list_it_t pr) {
     }
     os << "==========TREE END==========\n";
 }
+#endif /*UNIT_TESTS*/
 
 }// namespace Undirected
 

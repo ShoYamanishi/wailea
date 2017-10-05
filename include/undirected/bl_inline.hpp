@@ -186,7 +186,8 @@ inline void BLTreeNode::clearFullChildren() {
     for (auto fit : mFullChildren) {
         auto& C = mTree.toNodeRef(fit);
         if (!C.mFullChildrenSet) {
-cerr << "SOMETHING IS WRONG WITH " << C.mNodeNum << " from " << mNodeNum << "\n";
+            ;// Must not reach.
+//cerr << "SOMETHING IS WRONG WITH " << C.mNodeNum << " from " << mNodeNum << "\n";
         }
         else {
 //cerr << "Unlinking " << C.mNodeNum << " from " << mNodeNum << "\n";

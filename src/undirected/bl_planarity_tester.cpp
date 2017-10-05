@@ -1236,23 +1236,23 @@ node_list_it_t BLPlanarityTester::removePertinentTree(
         return removePertinentTreeCDPartial(pqTree, R);
 
     }
-    else if (R.mNodeType==BLTreeNode::LType) {
+    else if (R.nodeType()==BLTreeNode::LType) {
 
         R.resetToPAttachment();
         return R.backIt();
 
     }
-    else if (R.mNodeType==BLTreeNode::PType) {
+    else if (R.nodeType()==BLTreeNode::PType) {
 
         return removePertinentTreePType(pqTree, R);
 
     }
-    else if (R.mNodeType==BLTreeNode::QType) {
+    else if (R.nodeType()==BLTreeNode::QType) {
 
         return removePertinentTreeQType(pqTree, R);
 
     }
-    else { //(R.mNodeType==BLTreeNode::VirtualRootType)
+    else { //(nodeType()==BLTreeNode::VirtualRootType)
 
         return removePertinentTreeQTypeMiddle(pqTree, R);
 
@@ -1296,11 +1296,11 @@ node_list_it_t BLPlanarityTester::removePertinentTreeCDPartial(
         topLevelNodes.push_back(layerIt);
         layerIt = L.mCDPartialChild;
         
-        if (L.mNodeType == BLTreeNode::QType) {
+        if (L.nodeType() == BLTreeNode::QType) {
 
             CDP.unlinkFromQTypeParent(layerIt);
         }
-        else if (L.mNodeType == BLTreeNode::PType) {
+        else if (L.nodeType() == BLTreeNode::PType) {
 
             CDP.unlinkFromPTypeParent();
         }
@@ -1614,11 +1614,11 @@ void BLPlanarityTester::removePertinentNodesAndDescendants(
         C.discardOldFullLink();
         C.clearFullChildren();
 
-        if (C.mNodeType == BLTreeNode::PType) {
+        if (C.nodeType() == BLTreeNode::PType) {
 
             Q.insert(Q.end(),C.mChildren.begin(), C.mChildren.end());
         }
-        else if (C.mNodeType == BLTreeNode::QType) {
+        else if (C.nodeType() == BLTreeNode::QType) {
             auto prevIt = pqTree.nil();
             auto curIt  = C.mEndChild1;
             while (!pqTree.isNil(curIt)) {
@@ -1670,7 +1670,7 @@ void BLPlanarityTester::collectEdgeOrdering(
                              pqTree, pertinentRoot, graphNode, collectionType);
 
     }
-    else if (R.mNodeType==BLTreeNode::LType) {
+    else if (R.nodeType()==BLTreeNode::LType) {
 //cerr << "collectEdgeOrdering 02\n";
         if (collectionType == INCOMING) {
 //cerr << "collectEdgeOrdering 03\n";
@@ -1682,19 +1682,19 @@ void BLPlanarityTester::collectEdgeOrdering(
         }
 
     }
-    else if (R.mNodeType==BLTreeNode::VirtualRootType) { 
+    else if (R.nodeType()==BLTreeNode::VirtualRootType) { 
 //cerr << "collectEdgeOrdering 05\n";
         collectEdgeOrderingQTypeMiddle(
                              pqTree, pertinentRoot, graphNode, collectionType);
 
     }
-    else if (R.mNodeType==BLTreeNode::QType) {
+    else if (R.nodeType()==BLTreeNode::QType) {
 //cerr << "collectEdgeOrdering 06\n";
         collectEdgeOrderingQType(
                              pqTree, pertinentRoot, graphNode, collectionType);
 
     }
-    else if (R.mNodeType==BLTreeNode::PType) {
+    else if (R.nodeType()==BLTreeNode::PType) {
 //cerr << "collectEdgeOrdering 07\n";
         collectEdgeOrderingPType(
                              pqTree, pertinentRoot, graphNode, collectionType);
@@ -2018,8 +2018,7 @@ class PStackElem {
     virtual ~PStackElem() {;};
 
     // Helper routines to access BLTreeNode's members.
-    int num(){ return mN.mNodeNum; }
-    BLTreeNode::nodeType type(){return mN.mNodeType;};
+    enum BLTreeNode::nodeType type(){return mN.nodeType();};
     bool isEmpty(){return mN.isEmpty();};
     edge_list_it_t edge(){return mN.mGraphEdge;};
 
@@ -2028,7 +2027,7 @@ class PStackElem {
      */
     node_list_it_t child(){   
 
-        if (mN.mNodeType == BLTreeNode::PType) {
+        if (mN.nodeType() == BLTreeNode::PType) {
 
             if (mScanDirection == BLTree::REVERSED_DIRECTION) {
 
@@ -2053,7 +2052,7 @@ class PStackElem {
                 }
             }
         }
-        else if (mN.mNodeType == BLTreeNode::QType) {
+        else if (mN.nodeType() == BLTreeNode::QType) {
 
             if (mTree.isNil(mQCur)) {
 
@@ -2112,6 +2111,12 @@ class PStackElem {
 
     // Current child being or to be visited if this is a Q node.
     node_list_it_t                 mQCur;
+
+
+#ifdef UNIT_TESTS
+  public:
+    int num(){ return mN.mNodeNum; }
+#endif
 
 };
 

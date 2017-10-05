@@ -34,6 +34,10 @@ class BLTreeNode : public Node {
 
   public:
 
+    /** @brief PQ-tree node type.
+     */
+    enum nodeType {TypeUnknown, PType, QType, LType, VirtualRootType};
+
     inline BLTreeNode(BLTree& tree) noexcept;
     inline virtual ~BLTreeNode();
 
@@ -75,6 +79,9 @@ class BLTreeNode : public Node {
      */
     inline void unblock();
 
+    /** @brief PQ-tree node type.
+     */
+    inline enum nodeType nodeType() const noexcept {return mNodeType; }
 
 
     /** @brief returns true if this node is of pertinent type full, partial,
@@ -162,11 +169,7 @@ class BLTreeNode : public Node {
      */
     BLTree&                       mTree;
 
-
-    /** @brief PQ-tree node type.
-     */
-    enum nodeType {TypeUnknown, PType, QType, LType, VirtualRootType};
-    nodeType                       mNodeType;
+    enum nodeType                 mNodeType;
 
 
     /** @brief The list of children for P-node
@@ -475,7 +478,8 @@ class BLTreeNode : public Node {
 
 
   friend class BLTree;
-  friend class BLPlanarityTest;
+  friend class BLPlanarityTester;
+  friend class PStackElem;
 
 #ifdef UNIT_TESTS
   friend class BLPlanarizerTests;

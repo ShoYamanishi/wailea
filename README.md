@@ -79,10 +79,27 @@ visibility representation of the underlying connected graph with the
 coordinates of the labels. An embedded BC-tree is a BC-tree augmented with
 necessary embedding information to generate a visibility representation.
 
-
 `$ make sample_graph_drawer`
 
 This will make the 4 command-line tools written in C++ above.
+
+
+### util/sample_digraph_drawer.py
+This drawers a directed graph.
+It does not consider lables. Nodes are represented by a circle.
+It parses the input text file, and then invokes the following command in
+series, and then draw the graph using pyplot in matplotlib.
+
+* `digraph_arranger`
+
+`$ make sample_digraph_drawer`
+
+This will make the command-line tool written in C++ above.
+
+
+### Sample output
+
+#### sample_graph_drawer.py
 
 Some sample output and their corresponding input files are shown below.
 
@@ -100,18 +117,7 @@ Some sample output and their corresponding input files are shown below.
 
 ![alt text](docs/readme/graph_02.png   "sample graph 02")
 
-
-### util/sample_digraph_drawer.py
-This drawers a directed graph.
-It does not consider lables. Nodes are represented by a circle.
-It parses the input text file, and then invokes the following command in
-series, and then draw the graph using pyplot in matplotlib.
-
-* `digraph_arranger`
-
-`$ make sample_digraph_drawer`
-
-This will make the command-line tool written in C++ above.
+#### sample_graph_drawer.py
 
 Some sample output and their corresponding input files are shown below.
 
@@ -134,11 +140,8 @@ Some sample output and their corresponding input files are shown below.
 
 `$ make unit_tests directed`
 
-
 These commands will run unit tests using Google Test.
-You might have to udpate the location of the header files and the library of 
-Google Test in Makefile.
-
+Update `GOOGLE_TEST_INC_DIR` and `GOOGLE_TEST_LIB_DIR` in `Makefile` according to your environment.
 
 # Design goals
 

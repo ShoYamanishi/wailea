@@ -13,9 +13,13 @@ GOOGLE_TEST_LIB_DIR   = -L./GoogleTest/lib
 CC           = c++
 LD           = c++
 RM           = rm -f
+RMR          = rm -fr
 
-SRC_DIR      = ./src
+SRC_DIR_LIB  = ./src_lib
 SRC_DIR_UT   = ./unit_tests
+SRC_DIR_BIN  = ./src_bin
+BIN_DIR      = ./bin
+LIB_DIR     = ./libs
 
 OBJ_DIR_REL  = ./objs_release
 OBJ_DIR_DBG  = ./objs_debug
@@ -24,12 +28,19 @@ OBJ_DIR_UT   = ./objs_unit_tests
 CPPFLAGS     = -Wall -std=c++1y
 CPPFLAGS_REL = -fPIC -O3
 CPPFLAGS_DBG = -g -O0 -DUNIT_TESTS -DUSE_TEST_GRAPH_GENERATOR
+CPPFLAGS_BIN = -L./libs
 
-INC          = $(GOOGLE_TEST_INC_DIR) -I. -I./include
-CFLAGS       = $(INC)
+CFLAGS_DBG   = $(GOOGLE_TEST_INC_DIR) -I. -I./include
+CFLAGS_REL   = -I. -I./include
 
 LDFLAGS      = -shared
-TARGET_LIB   = libwailea.so
+TARGET_LIB   = $(LIB_DIR)/libwailea.so
+
+PLANARIZER              = bin/planarizer
+BICONN_DECOMPOSER       = bin/biconn_decomposer
+BICONN_EMBEDDING_FINDER = bin/biconn_embedding_finder
+VIS_REP_FINDER          = bin/vis_rep_finder
+DIGRAPH_ARRANGER        = bin/digraph_arranger
 
 UNIT_TEST_UNDIRECTED = unit_tester_undirected
 UNIT_TEST_DIRECTED   = unit_tester_directed
@@ -40,26 +51,26 @@ OBJS_UNDIRECTED_REL = $(patsubst %,$(OBJ_DIR_REL)/undirected_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/undirected/*.cpp ))))
+                               $(SRC_DIR_LIB)/undirected/*.cpp ))))
 
 OBJS_DIRECTED_REL = $(patsubst %,$(OBJ_DIR_REL)/directed_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/directed/*.cpp ))))
+                               $(SRC_DIR_LIB)/directed/*.cpp ))))
 
 
 OBJS_UNDIRECTED_DBG = $(patsubst %,$(OBJ_DIR_DBG)/undirected_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/undirected/*.cpp ))))
+                               $(SRC_DIR_LIB)/undirected/*.cpp ))))
 
 OBJS_DIRECTED_DBG = $(patsubst %,$(OBJ_DIR_DBG)/directed_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/directed/*.cpp ))))
+                               $(SRC_DIR_LIB)/directed/*.cpp ))))
 
 OBJS_UNDIRECTED_UT = $(patsubst %,$(OBJ_DIR_UT)/undirected_%, \
                          $(subst .cpp,.o, \
@@ -77,47 +88,60 @@ OBJ_DIRECTED_BASE = $(patsubst %,$(OBJ_DIR_DBG)/directed_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/directed/di_base.cpp ))))
-
+                               $(SRC_DIR_LIB)/directed/di_base.cpp ))))
 
 OBJ_UNDIRECTED_BASE = $(patsubst %,$(OBJ_DIR_DBG)/undirected_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/undirected/base.cpp ))))
+                               $(SRC_DIR_LIB)/undirected/base.cpp ))))
 
 OBJ_UNDIRECTED_CONN = $(patsubst %,$(OBJ_DIR_DBG)/undirected_%, \
                          $(subst .cpp,.o, \
                            $(notdir \
                              $(wildcard \
-                               $(SRC_DIR)/undirected/connected_decomposer.cpp ))))
+                               $(SRC_DIR_LIB)/undirected/connected_decomposer.cpp ))))
 
-$(OBJ_DIR_REL)/undirected_%.o: $(SRC_DIR)/undirected/%.cpp
-	$(DIR_GUARD)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CPPFLAGS_REL) -c $< -o $@
+BIN_LIST            = $(patsubst %,$(BIN_DIR)/%, \
+                         $(basename \
+                           $(notdir \
+                             $(wildcard \
+                               $(SRC_DIR_BIN)/*.cpp ))))
 
-$(OBJ_DIR_DBG)/undirected_%.o: $(SRC_DIR)/undirected/%.cpp
-	$(DIR_GUARD)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
 
-$(OBJ_DIR_REL)/directed_%.o: $(SRC_DIR)/directed/%.cpp
+$(OBJ_DIR_REL)/undirected_%.o: $(SRC_DIR_LIB)/undirected/%.cpp
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CPPFLAGS_REL) -c $< -o $@
+	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) -c $< -o $@
 
-$(OBJ_DIR_DBG)/directed_%.o: $(SRC_DIR)/directed/%.cpp
+$(OBJ_DIR_DBG)/undirected_%.o: $(SRC_DIR_LIB)/undirected/%.cpp
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
+	$(CC) $(CFLAGS_DBG) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
+
+$(OBJ_DIR_REL)/directed_%.o: $(SRC_DIR_LIB)/directed/%.cpp
+	$(DIR_GUARD)
+	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) -c $< -o $@
+
+$(OBJ_DIR_DBG)/directed_%.o: $(SRC_DIR_LIB)/directed/%.cpp
+	$(DIR_GUARD)
+	$(CC) $(CFLAGS_DBG) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
 
 $(OBJ_DIR_UT)/undirected_%.o: $(SRC_DIR_UT)/undirected/%.cpp
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
+	$(CC) $(CFLAGS_DBG) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
 
 $(OBJ_DIR_UT)/directed_%.o: $(SRC_DIR_UT)/directed/%.cpp
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
+	$(CC) $(CFLAGS_DBG) $(CPPFLAGS) $(CPPFLAGS_DBG) -c $< -o $@
 
 $(TARGET_LIB):	$(OBJS_UNDIRECTED_REL) $(OBJS_DIRECTED_REL)
+	$(DIR_GUARD)
 	$(LD) $(LDFLAGS) -o $@ $^
+
+$(BIN_DIR)/%:	$(TARGET_LIB) $(SRC_DIR_BIN)/%.cpp
+	$(eval LIBWAILEA=$(subst  lib,-l,$(basename $(notdir $(word 1, $^)))))
+	$(eval BIN_SRC=$(word 2, $^))
+	$(DIR_GUARD)
+	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) -lstdc++ $(LIBWAILEA) $(BIN_SRC) -o $@
 
 $(UNIT_TEST_UNDIRECTED): $(OBJS_UNDIRECTED_DBG) $(OBJ_DIRECTED_BASE) $(OBJS_UNDIRECTED_UT)
 	$(LD) $(GOOGLE_TEST_LIB_DIR) -lgtest -lgtest_main -lstdc++ $^ -o $@
@@ -131,11 +155,11 @@ unit_tests_undirected:	$(UNIT_TEST_UNDIRECTED)
 unit_tests_directed:	$(UNIT_TEST_DIRECTED)
 	./$^
 
-all:	$(TARGET_LIB)
+all:	$(TARGET_LIB) $(BIN_LIST)
 
 clean:
-	-$(RM) $(TARGET_LIB) $(UNIT_TEST_UNDIRECTED) $(UNIT_TEST_DIRECTED) \
-               $(OBJ_DIR_REL)/*.o $(OBJ_DIR_DBG)/*.o $(OBJ_DIR_UT)/*.o
+	-$(RM) $(TARGET_LIB) $(UNIT_TEST_UNDIRECTED) $(UNIT_TEST_DIRECTED)
+	-$(RMR) $(OBJ_DIR_REL) $(OBJ_DIR_DBG) $(OBJ_DIR_UT) $(LIB_DIR) $(BIN_DIR)
 
 install:
 	@echo "Currently we don't support install. Grab ./libwailea.so and put it anywhere you like."

@@ -10,7 +10,7 @@
 #include "undirected/st_numbering.hpp"
 #include "undirected/tree_path_finder.hpp"
 
-#include "../src/undirected/dfs.cpp"
+#include "../src_lib/undirected/dfs.cpp"
 
 namespace Wailea {
 

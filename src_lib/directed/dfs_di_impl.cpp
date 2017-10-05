@@ -4,7 +4,7 @@
 #include <vector>
 #include <exception>
 
-#include "../src/directed/dfs_di.cpp"
+#include "../src_lib/directed/dfs_di.cpp"
 
 namespace Wailea {
 

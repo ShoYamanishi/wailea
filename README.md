@@ -296,7 +296,6 @@ Decomposes a given graph into connected components in DFS.
 
 * **BiconnectedDecomposer**
 [bctree.hpp](include/undirected/bctree.hpp) :
-
 Decomposes a given connected graph into BC-tree in DFS [RND77].
 
 

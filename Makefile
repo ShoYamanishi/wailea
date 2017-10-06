@@ -36,12 +36,6 @@ CFLAGS_REL   = -I. -I./include
 LDFLAGS      = -shared
 TARGET_LIB   = $(LIB_DIR)/libwailea.so
 
-PLANARIZER              = bin/planarizer
-BICONN_DECOMPOSER       = bin/biconn_decomposer
-BICONN_EMBEDDING_FINDER = bin/biconn_embedding_finder
-VIS_REP_FINDER          = bin/vis_rep_finder
-DIGRAPH_ARRANGER        = bin/digraph_arranger
-
 UNIT_TEST_UNDIRECTED = unit_tester_undirected
 UNIT_TEST_DIRECTED   = unit_tester_directed
 
@@ -162,4 +156,4 @@ clean:
 	-$(RMR) $(OBJ_DIR_REL) $(OBJ_DIR_DBG) $(OBJ_DIR_UT) $(LIB_DIR) $(BIN_DIR)
 
 install:
-	@echo "Currently we don't support install. Grab ./libwailea.so and put it anywhere you like."
+	@echo "Currently we don't support install. Grab $(TARGET_LIB) and put it anywhere you like."

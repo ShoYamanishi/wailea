@@ -109,8 +109,14 @@ However, I have tested it only on the following environment.
 If you want to run the sample drawers, you will need Python, numpy, 
 and matplotlib.
 
+
 # License
+Copyright (c) 2017 Shoichiro Yamanishi
 Wailea is released under MIT license. See `LICENSE` for details.
+
+
+# Contact
+Shoichiro Yamanishi yamanishi72@gmail.com
 
 
 # Sample drawings

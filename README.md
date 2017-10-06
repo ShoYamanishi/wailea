@@ -1,11 +1,8 @@
 # Wailea
 
-Wailea is a library of basic graph operations and graph algorithms mainly for drawing both undirected and
-directed graphs written in C++.
-It currently contains two sample elementary drawers written in Python.
-They invoke functions of the library and then draw the graph with Matplotlib.
-Also I plan to add some expository documentation about graph drawing in 
-general.
+Wailea is a set of commandline tools and a library of basic graph operations
+and graph algorithms mainly for drawing both undirected and directed graphs.
+It is written in C++14.
 
 
 # What it does
@@ -22,16 +19,19 @@ are represented by horizontal line segments and the edges are by vertical ones.
 For directed graphs, the information is given in integer xy-coordinates of 
 vertices.
 
+It currently contains two sample elementary drawers written in Python.
+They parse a text file that contains the graph information, invoke the 
+commandline tools, and then draw the graph with Matplotlib.
+
 
 # What it does not (yet).
 
-It does not generate presentable drawings with nice polynomial curves.
-At moment, Waliea is a collection of mathematical graph algorithms,
-which generates combinatorial embedding of graph, and augmented visibility
-representation.
+At moment, Wailea does not generate presentable drawings with nice polynomial
+curves. The output from Wailea is considered to be a crude input to a graph
+renderer that places the labels and draw the curves.
 
-It is definitely not suitable for massive and dense graphs, such as computer 
-networks and social networks.
+It is definitely not suitable for massive and dense graphs such as 
+computer networks and social networks.
 Such graphs are usually visualized by force directed techniques, which are not
 supported by Wailea at moment.
 
@@ -47,55 +47,61 @@ Wailea is released under MIT license. See `LICENSE` for details.
 
 # Install
 
-## Main Library
-`$ make wailea`
+## Main commandline tools and the library.
+`$ make` or `$make all`
 
-This will get you libwailea.a.
+This will get you the following:
 
-## Sample drawers.
+* **libs/libwailea.so**
 
-It contains two sample drawers:
-Those are quick-and-dirty scripts originally written to test libwailea.
+Main library.
 
-### util/sample_graph_drawer.py
-This draws a simple undirected graph with rectangular node and edge labels.
-It parses the input text file, and then invokes the following commands in
-series, and then draw the graph using pyplot in matplotlib.
 
-* `decomposer` :
-This takes a simple undirected graph, and decomposes it into BC-tree.
+* **bin/decomposer**
 
-* `planarizer`
-This takes a biconnected undirected graph and planarize it by inserting
-virtual nodes and splitting edges at crossings.
+This takes a simple undirected graph and decomposes it into BC-tree.
 
-* `biconnected_embedding_finder`
-This takes a planar biconnected graph and finds a planar embedding of it and 
+
+* **bin/planarizer**:
+
+This takes a biconnected undirected graph and planarize it by inserting virtual
+nodes and splitting edges at crossings.
+
+
+* **bin/biconnected_embedding_finder**
+
+This takes a planar biconnected graph and finds a planar embedding of it and
 its dual graph with faces and dual edges.
 
-* `vis_rep_finder`
+
+* **bin/vis_rep_finder**
+
 This takes an embedded BC-tree & rectangular label dimensions, and produces a
 visibility representation of the underlying connected graph with the 
 coordinates of the labels. An embedded BC-tree is a BC-tree augmented with
 necessary embedding information to generate a visibility representation.
 
-`$ make sample_graph_drawer`
 
-This will make the 4 command-line tools written in C++ above.
+* **bin/digraph_arranger**
+
+This takes a single connected directed graph and arranges the nodes in
+the integer x/y-coordinates (rank/position).
 
 
-### util/sample_digraph_drawer.py
-This drawers a directed graph.
-It does not consider lables. Nodes are represented by a circle.
-It parses the input text file, and then invokes the following command in
-series, and then draw the graph using pyplot in matplotlib.
+## Sample drawers.
 
-* `digraph_arranger`
+It contains two sample drawers.
+Those are quick-and-dirty python scripts originally written to test libwailea.
 
-`$ make sample_digraph_drawer`
+* **util/sample_graph_drawer.py**
 
-This will make the command-line tool written in C++ above.
+This internally calls `decomposer`, `planarizer`, 
+`biconnected_embedding_finder`, and `vis_rep_finder`.
 
+
+* **util/sample_digraph_drawer.py**
+
+This internally calls `digraph_arranger`.
 
 ### Sample output
 
@@ -141,7 +147,9 @@ Some sample output and their corresponding input files are shown below.
 `$ make unit_tests directed`
 
 These commands will run unit tests using Google Test.
-Update `GOOGLE_TEST_INC_DIR` and `GOOGLE_TEST_LIB_DIR` in `Makefile` according to your environment.
+Update `GOOGLE_TEST_INC_DIR` and `GOOGLE_TEST_LIB_DIR` in `Makefile` according
+to your environment.
+
 
 # Design goals
 

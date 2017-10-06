@@ -112,11 +112,15 @@ and matplotlib.
 
 # License
 Copyright (c) 2017 Shoichiro Yamanishi
+
 Wailea is released under MIT license. See `LICENSE` for details.
 
 
 # Contact
-Shoichiro Yamanishi yamanishi72@gmail.com
+For any inquiries, please contact:
+Shoichiro Yamanishi
+
+yamanishi72@gmail.com
 
 
 # Sample drawings
@@ -184,6 +188,7 @@ Released under MIT licence.
 
 * *Oct 2017* Alpha release
 
+* *TODO* Documentation
 
 # How does it do it?
 

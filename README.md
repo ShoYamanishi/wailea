@@ -60,6 +60,7 @@ the real xy-coordinates for the nodes and edges.
 
 
 * **bin/digraph_arranger**
+[main source file](src_bin/digraph_arranger.cpp)
 
 This takes a single connected directed graph and arranges the nodes in
 the integer x/y-coordinates (rank/position).
@@ -96,8 +97,8 @@ This internally calls `digraph_arranger`.
 `$ make unit_tests directed`
 
 These commands will run unit tests using Google Test.
-Update `GOOGLE_TEST_INC_DIR` and `GOOGLE_TEST_LIB_DIR` in `Makefile` according
-to your environment.
+Update `GOOGLE_TEST_INC_DIR` and `GOOGLE_TEST_LIB_DIR` in [Makefile](Makefile)
+ according to your environment.
 
 
 # Requirements
@@ -289,21 +290,18 @@ The following is the list of main algorithms implemented in libwailea.
 ## Undirected Graph
 
 * **ConnectedDecomposer**
-[undirected/connected_decomposer.hpp]
-(include/undirected/connected_decomposer.hpp) :
+[connected_decomposer.hpp](include/undirected/connected_decomposer.hpp) :
 Decomposes a given graph into connected components in DFS.
 
 
 * **BiconnectedDecomposer**
-[undirected/bctree.hpp]
-(include/undirected/bctree.hpp) :
+[bctree.hpp](include/undirected/bctree.hpp) :
 
 Decomposes a given connected graph into BC-tree in DFS [RND77].
 
 
 * **SPQRDecomposer**
-[undirected/spqr_decomposer.hpp]
-(include/undirected/spqr_decomposer.hpp) :
+[spqr_decomposer.hpp](include/undirected/spqr_decomposer.hpp) :
 Decomposes a given biconnected graph into SPQR-tree in DFS.
 The original algorithm is proposed by [HT73], and then later it is corrected
 by [GM01]. It is still hard to understand and [I have arranged a supplementary
@@ -311,14 +309,12 @@ document here](docs/spqr_explained/HTGMExplained.pdf)
 
 
 * **STNumbering** (undirected/st_numbering.hpp) :
-[undirected/st_numbering.hpp]
-(include/undirected/st_numbering.hpp) :
+[st_numbering.hpp](include/undirected/st_numbering.hpp) :
 Generates an ST-ordering for a biconnected graph in DFS [T85].
 
 
 * **JTSPlanarizer**
-[undirected/jts_planarizer.hpp]
-(include/undirected/jts_planarizer.hpp) :
+[jts_planarizer.hpp](include/undirected/jts_planarizer.hpp) :
 Classifies the edges of a given biconnected graph into a good planar subgraph
 and a set of removed edges. The first phase of [JTS89], which finds a planar 
 spanning subgraph. The claimed maximality was refuted by manu, but I think
@@ -327,8 +323,7 @@ the subgraph is biconnected.
 
 
 * **BLPlanarityTester**
-[undirected/bl_planarity_tester.hpp]
-(include/undirected/bl_planarity_tester.hpp) :
+[bl_planarity_tester.hpp](include/undirected/bl_planarity_tester.hpp) :
 Tests if a given biconnected graph is planar, and finds a combinatorial planar
 embedding of a given planar biconnected graph. [BL76]
 I believe the original [BL76] is incorrect as it is incapable of handling 
@@ -337,29 +332,25 @@ implementation of PQ-tree planarity algorithm available so far.
 
 
 * **PlanarDualGraphMaker**
-[undirected/planar_dual_graph_maker.hpp]
-(include/undirected/planar_dual_graph_maker.hpp) :
+[planar_dual_graph_maker.hpp](include/undirected/planar_dual_graph_maker.hpp) :
 Makes a dual graph structure of the given planar biconnected graph in a palanr
 embedding. My own linear time algorhitm as I could not find any in public.
 
 
 * **GMWEdgeInserter**
-[undirected/gmw_edge_inserter.hpp]
-(include/undirected/gmw_edge_inserter.hpp) :
+[gmw_edge_inserter.hpp](include/undirected/gmw_edge_inserter.hpp) :
 Inserts an edge into a given connected graph such that the number of crossings
 is minimized [GMW05].
 
 
 * **EmbeddedBCTree** (undirected/embedded_bctree.hpp) :
-[undirected/embedded_bctree.hpp]
-(include/undirected/embedded_bctree.hpp) :
+[embedded_bctree.hpp](include/undirected/embedded_bctree.hpp) :
 Represents an embedding of a connected graph decomposed into a BC-tree.
 My own algorithm.
 
 
 * **VisRepFinder**
-[undirected/vis_rep_finder.hpp]
-(include/undirected/vis_rep_finder.hpp) :
+[vis_rep_finder.hpp](include/undirected/vis_rep_finder.hpp) :
 Generates a visibility representation of a connected graph.
 My own algorithm based on [TT86]. It handles not only biconnected graphs,
 but also connected graphs.
@@ -367,15 +358,13 @@ but also connected graphs.
 
 ## Directed Graph
 * **AcyclicOrderingFinder**
-[directed/acyclic_ordering_finder.hpp]
-(include/directed/acyclic_ordering_finder.hpp) :
+[acyclic_ordering_finder.hpp](include/directed/acyclic_ordering_finder.hpp) :
 Finds an acyclic ordering of a given graph that may contain cycles.
 My own algorithm using network simplex as described above.
 
 
 * **NetworkSimplex**
-[directed/network_simplex.hpp]
-(include/directed/network_simplex.hpp) :
+[network_simplex.hpp](include/directed/network_simplex.hpp) :
 Solves the network simplex problem, which is a variant of integer linear
 programming. Both phase I and II are solved in the primary space.
 The phase I solves an aux problem to find an initial feasible solution, and
@@ -384,16 +373,14 @@ Used by AcyclicOrderingFinder and GKNV rank assignment in SugiyamaDiGraph.
 
 
 * **GKNVcrossingsReducer**
-[directed/gknv_crossings_reducer.hpp]
-(include/directed/gknv_crossings_reducer.hpp)
+[gknv_crossings_reducer.hpp](include/directed/gknv_crossings_reducer.hpp)
 Tries to reduce the crossings in a connected bipartite digraph in a embedding
 with a barycenter and adjacent transpose heuristics.
 Employed in dot of GrpahViz. A bit crude but it gives pretty good results.
 
 
 * **SugiyamaDiGraph**
-[directed/sugiyama_digraph.hpp]
-(include/directed/sugiyama_digraph.hpp)
+[sugiyama_digraph.hpp](include/directed/sugiyama_digraph.hpp)
 Finds integer xy-coordinates of the nodes of the given digraph in Sugiyama
 heiearchical framework. 
 

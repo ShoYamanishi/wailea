@@ -6,6 +6,7 @@ GOOGLE_TEST_LIB_DIR   = -L./GoogleTest/lib
 
 INSTALL_DIR_LIB = /usr/local/lib
 INSTALL_DIR_BIN = /usr/local/bin
+INSTALL_DIR_INC = /usr/local/include
 
 .PHONY:	unit_tests_undirected
 .PHONY:	unit_tests_directed
@@ -18,6 +19,7 @@ LD           = c++
 RM           = rm -f
 RMR          = rm -fr
 CP           = cp
+MKDIR        = mkdir -p
 
 PWD          =  $(shell pwd)
 SRC_DIR_LIB  = ./src_lib
@@ -142,13 +144,13 @@ $(BIN_DIR)/%:	$(TARGET_LIB) $(SRC_DIR_BIN)/%.cpp
 	$(eval LWAILEA=$(subst lib,-l,$(basename $(LIBWAILEA))))
 	$(eval BIN_SRC=$(word 2, $^))
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) $(BIN_SRC) -lstdc++ $(LWAILEA) -o $@
+	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) $(BIN_SRC) $(LWAILEA) -lstdc++ -o $@
 
 $(UNIT_TEST_UNDIRECTED): $(OBJS_UNDIRECTED_DBG) $(OBJ_DIRECTED_BASE) $(OBJS_UNDIRECTED_UT)
-	$(LD) $(GOOGLE_TEST_LIB_DIR) -lgtest -lgtest_main -lstdc++ $^ -o $@
+	$(LD) $(GOOGLE_TEST_LIB_DIR) $^ -lgtest -lgtest_main -lstdc++ -o $@
 
 $(UNIT_TEST_DIRECTED): $(OBJS_DIRECTED_DBG) $(OBJ_UNDIRECTED_BASE) $(OBJ_UNDIRECTED_CONN) $(OBJS_DIRECTED_UT)
-	$(LD) $(GOOGLE_TEST_LIB_DIR) -lgtest -lgtest_main -lstdc++ $^ -o $@
+	$(LD) $(GOOGLE_TEST_LIB_DIR) $^ -lgtest -lgtest_main -lstdc++ -o $@
 
 unit_tests_undirected:	$(UNIT_TEST_UNDIRECTED)
 	./$^
@@ -165,7 +167,7 @@ clean:
 install:
 	sudo $(CP) $(TARGET_LIB) $(INSTALL_DIR_LIB)
 	sudo $(CP) $(BIN_LIST) $(INSTALL_DIR_BIN)
-
-
-
-
+	sudo $(MKDIR) $(INSTALL_DIR_INC)/undirected
+	sudo $(MKDIR) $(INSTALL_DIR_INC)/directed
+	sudo $(CP) include/undirected/* $(INSTALL_DIR_INC)/undirected
+	sudo $(CP) include/directed/*   $(INSTALL_DIR_INC)/directed

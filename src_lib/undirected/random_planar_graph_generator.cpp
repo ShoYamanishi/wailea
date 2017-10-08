@@ -94,16 +94,36 @@ void RandomPlanarGraphGenerator::removeDeg2Node(
     Graph&         g,
     Node&          N
 ) {
-
+    if (N.degree()!=2) {
+        // Previous call may have made the degree less than 2.
+        return;
+    }
     auto eit = N.incidentEdges().first;
     auto& E1 = *(*(*eit));
     auto& A1 = E1.adjacentNode(N);
     eit++;
     auto& E2 = *(*(*eit));
     auto& A2 = E2.adjacentNode(N);
+    if (A1.backIt() == A2.backIt()) {
+        // Previous call may have made A1 == A2.
+        g.removeNode(N);
+        return;
+    }
 
+    bool A1A2exists = false;
+    for (auto a1it = A1.incidentEdges().first;
+                                 a1it != A1.incidentEdges().second; a1it++) {
+        auto& A1E = *(*(*a1it));
+        auto& A1A = A1E.adjacentNode(A1);
+        if (A1A.backIt() == A2.backIt()) {
+            A1A2exists = true;
+            break;
+        }
+    }
     g.removeNode(N);
-    g.addEdge(make_unique<Edge>(), A1, A2);
+    if (!A1A2exists) {
+        g.addEdge(make_unique<Edge>(), A1, A2);
+    }
 }
 
 

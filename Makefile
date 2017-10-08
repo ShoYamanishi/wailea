@@ -15,11 +15,17 @@ LD           = c++
 RM           = rm -f
 RMR          = rm -fr
 
+# Following tool is needed to change the runtime path for libwailea
+# after an executable is created.
+# It seems Clang's linker does not have -rpath option.
+INSTALL_NAME_TOOL = install_name_tool
+
+PWD          =  $(shell pwd)
 SRC_DIR_LIB  = ./src_lib
 SRC_DIR_UT   = ./unit_tests
 SRC_DIR_BIN  = ./src_bin
 BIN_DIR      = ./bin
-LIB_DIR     = ./libs
+LIB_DIR      = ./libs
 
 OBJ_DIR_REL  = ./objs_release
 OBJ_DIR_DBG  = ./objs_debug
@@ -35,6 +41,7 @@ CFLAGS_REL   = -I. -I./include
 
 LDFLAGS      = -shared
 TARGET_LIB   = $(LIB_DIR)/libwailea.so
+
 
 UNIT_TEST_UNDIRECTED = unit_tester_undirected
 UNIT_TEST_DIRECTED   = unit_tester_directed
@@ -132,10 +139,13 @@ $(TARGET_LIB):	$(OBJS_UNDIRECTED_REL) $(OBJS_DIRECTED_REL)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(BIN_DIR)/%:	$(TARGET_LIB) $(SRC_DIR_BIN)/%.cpp
-	$(eval LIBWAILEA=$(subst  lib,-l,$(basename $(notdir $(word 1, $^)))))
+	$(eval LIBWAILEA=$(notdir $(word 1, $^)))
+	$(eval LWAILEA=$(subst lib,-l,$(basename $(LIBWAILEA))))
 	$(eval BIN_SRC=$(word 2, $^))
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) -lstdc++ $(LIBWAILEA) $(BIN_SRC) -o $@
+	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) $(BIN_SRC) -lstdc++ $(LWAILEA) -o $@
+	$(INSTALL_NAME_TOOL) -change libs/$(LIBWAILEA)  $(PWD)/libs/$(LIBWAILEA) $@
+
 
 $(UNIT_TEST_UNDIRECTED): $(OBJS_UNDIRECTED_DBG) $(OBJ_DIRECTED_BASE) $(OBJS_UNDIRECTED_UT)
 	$(LD) $(GOOGLE_TEST_LIB_DIR) -lgtest -lgtest_main -lstdc++ $^ -o $@

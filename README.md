@@ -69,9 +69,17 @@ the integer x/y-coordinates (rank/position).
 # Install
 
 ## Main command-line tools and the library.
-`$ make` or `$make all`
+`$ make` or `$ make all` and then `$ make install`.
 
-This will get you the library and 5 command-line tools.
+This will get you the library and 5 command-line tools under 
+**/usr/local{lib,bin}**.
+
+**NOTE**: For Mac OS X of El Capitan and later, it seems the best way to
+handle private shared library is to put it under /user/local.
+Placing a shared library to an arbitrary location and let LD_LIBRARY_PATH
+point to it does not seem to work due to 'System integrity protection'.
+See: https://support.apple.com/en-us/HT204899
+
 
 ## Sample Drawers
 

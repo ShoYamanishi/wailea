@@ -1347,7 +1347,7 @@ def main(argv):
     decompOutputFileName = work_dir + 'decomp_output.txt'
     pOrg = originalInputParser(argv[1])
     pOrg.emitForDecomposition(decompInputFileName)
-    call(['./bin/decomposer', decompInputFileName, decompOutputFileName])
+    call(['decomposer', decompInputFileName, decompOutputFileName])
 
     nodeMax = pOrg.nodeNumMax
     faceIndexStart = 1
@@ -1366,10 +1366,10 @@ def main(argv):
         embeddingOutputFileName     = work_dir + 'embedding_output_' + str(blockIndex) + '.txt'
 
         block.emitForPlanarization(planarizationInputFileName, nodeMax+1)
-        call(['./bin/planarizer', planarizationInputFileName, planarizationOutputFileName])
+        call(['planarizer', planarizationInputFileName, planarizationOutputFileName])
         pPlanarized = planarizedParser(planarizationOutputFileName, pOrg.edges);
         pPlanarized.emitForEmbedding(embeddingInputFileName)
-        call(['./bin/biconnected_embedding_finder', 
+        call(['biconnected_embedding_finder', 
               embeddingInputFileName, 
               embeddingOutputFileName])
         pEmbedding = embeddingParser(embeddingOutputFileName, faceIndexStart)
@@ -1386,7 +1386,7 @@ def main(argv):
     visRepInputFileName  = work_dir + 'vis_rep_input.txt'
     visRepOutputFileName = work_dir + 'vis_rep_output.txt'
     emitVisRepInput(visRepInputFileName, pOrg, pDecomp, planarizedBlocks, incidences, embeddings)
-    call(['./bin/vis_rep_finder', visRepInputFileName, visRepOutputFileName])
+    call(['vis_rep_finder', visRepInputFileName, visRepOutputFileName])
     pVisRep = visRepParser(visRepOutputFileName)
 
     rNodes, rEdges = constructGeomInfo(pOrg, planarizedBlocks, pVisRep)

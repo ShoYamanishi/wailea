@@ -4,6 +4,9 @@
 GOOGLE_TEST_INC_DIR   = -I./GoogleTest/include
 GOOGLE_TEST_LIB_DIR   = -L./GoogleTest/lib
 
+INSTALL_DIR_LIB = /usr/local/lib
+INSTALL_DIR_BIN = /usr/local/bin
+
 .PHONY:	unit_tests_undirected
 .PHONY:	unit_tests_directed
 .PHONY: all
@@ -14,12 +17,14 @@ CC           = c++
 LD           = c++
 RM           = rm -f
 RMR          = rm -fr
+CP           = cp
 
+PWD          =  $(shell pwd)
 SRC_DIR_LIB  = ./src_lib
 SRC_DIR_UT   = ./unit_tests
 SRC_DIR_BIN  = ./src_bin
 BIN_DIR      = ./bin
-LIB_DIR     = ./libs
+LIB_DIR      = ./libs
 
 OBJ_DIR_REL  = ./objs_release
 OBJ_DIR_DBG  = ./objs_debug
@@ -35,6 +40,7 @@ CFLAGS_REL   = -I. -I./include
 
 LDFLAGS      = -shared
 TARGET_LIB   = $(LIB_DIR)/libwailea.so
+
 
 UNIT_TEST_UNDIRECTED = unit_tester_undirected
 UNIT_TEST_DIRECTED   = unit_tester_directed
@@ -132,10 +138,11 @@ $(TARGET_LIB):	$(OBJS_UNDIRECTED_REL) $(OBJS_DIRECTED_REL)
 	$(LD) $(LDFLAGS) -o $@ $^
 
 $(BIN_DIR)/%:	$(TARGET_LIB) $(SRC_DIR_BIN)/%.cpp
-	$(eval LIBWAILEA=$(subst  lib,-l,$(basename $(notdir $(word 1, $^)))))
+	$(eval LIBWAILEA=$(notdir $(word 1, $^)))
+	$(eval LWAILEA=$(subst lib,-l,$(basename $(LIBWAILEA))))
 	$(eval BIN_SRC=$(word 2, $^))
 	$(DIR_GUARD)
-	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) -lstdc++ $(LIBWAILEA) $(BIN_SRC) -o $@
+	$(CC) $(CFLAGS_REL) $(CPPFLAGS) $(CPPFLAGS_REL) $(CPPFLAGS_BIN) $(BIN_SRC) -lstdc++ $(LWAILEA) -o $@
 
 $(UNIT_TEST_UNDIRECTED): $(OBJS_UNDIRECTED_DBG) $(OBJ_DIRECTED_BASE) $(OBJS_UNDIRECTED_UT)
 	$(LD) $(GOOGLE_TEST_LIB_DIR) -lgtest -lgtest_main -lstdc++ $^ -o $@
@@ -156,4 +163,9 @@ clean:
 	-$(RMR) $(OBJ_DIR_REL) $(OBJ_DIR_DBG) $(OBJ_DIR_UT) $(LIB_DIR) $(BIN_DIR)
 
 install:
-	@echo "Currently we don't support install. Grab $(TARGET_LIB) and put it anywhere you like."
+	sudo $(CP) $(TARGET_LIB) $(INSTALL_DIR_LIB)
+	sudo $(CP) $(BIN_LIST) $(INSTALL_DIR_BIN)
+
+
+
+

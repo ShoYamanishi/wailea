@@ -301,7 +301,7 @@ def draw(p):
 def main(argv):
 
     arrangedNodesFileName = 'digraph_drawer_tmp_output.txt'
-    call(['./bin/digraph_arranger', argv[1], arrangedNodesFileName])
+    call(['digraph_arranger', argv[1], arrangedNodesFileName])
     p = inputParser(arrangedNodesFileName)
     p.assignRanksAndPos()
     call(['rm' , '-f', arrangedNodesFileName])

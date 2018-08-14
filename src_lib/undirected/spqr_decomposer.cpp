@@ -31,7 +31,6 @@ using namespace std;
 
 SPQRTree SPQRDecomposer::decompose(Graph& g, Node& s)
 {
-
     DFSGraph<Graph,SPQR_DFS_Node,SPQR_DFS_Edge> gCopy;
     auto sCopy = copyInputGraph(g, gCopy, s.backIt());
 
@@ -44,9 +43,7 @@ SPQRTree SPQRDecomposer::decompose(Graph& g, Node& s)
                              DFSNode<Graph, SPQR_DFS_Node, SPQR_DFS_Edge>&>
                                                                   (*(*sCopy)));
     }
-
     sortAdjacency(gCopy);
-
     {
         SPQRStrategyProc2 strategy2;
         DFSExplorer<Graph,SPQR_DFS_Node,SPQR_DFS_Edge> 
@@ -57,11 +54,9 @@ SPQRTree SPQRDecomposer::decompose(Graph& g, Node& s)
                          DFSNode<Graph, SPQR_DFS_Node,SPQR_DFS_Edge>&>
                                                                   (*(*sCopy)));
     }
-
     // Find the initial separation components and form a tree.
 
     SPQRTree     spqrTree(g);
-
     {
 
         SPQRStrategyProc3 strategy3(gCopy, spqrTree);
@@ -79,31 +74,21 @@ SPQRTree SPQRDecomposer::decompose(Graph& g, Node& s)
 
     }
 
-
     spqrTree.determineTypes();
 
 
     // Merging adjacent S and P nodes.
     {
-
         SPQRStrategyProc4 strategy4(spqrTree);
-
         DFSGraph<Graph, SPQR_PROC4_Node, SPQR_PROC4_Edge> tCopy;
-
         copySPQRTree(spqrTree, tCopy);
-
         auto nit =  tCopy.nodes().first;
-
         DFSExplorer<Graph, SPQR_PROC4_Node, SPQR_PROC4_Edge> 
                                                  mExplorer4(tCopy, strategy4);
-
         mExplorer4.reset(tCopy);
-
         mExplorer4.run(dynamic_cast<
                   DFSNode<Graph, SPQR_PROC4_Node, SPQR_PROC4_Edge>&>(*(*nit)));
-
     }
-
     // Making forward links for the edges in the original graph.
     {
         auto tnPair = spqrTree.nodes();
@@ -123,7 +108,6 @@ SPQRTree SPQRDecomposer::decompose(Graph& g, Node& s)
             }
         }
     }
-
     return spqrTree; // rvo
 }
 

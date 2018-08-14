@@ -43,6 +43,9 @@ class ConnectedDecomposer {
      *  @param   nodeSets (out): lists of vertices. Each list contains the 
      *                           nodes for a connected component.
      *
+     *  @param   edgeSets (out): lists of edges. Each list contains the 
+     *                           edges for a connected component.
+     *
      *  @remark
      *           If the input graph is not simple, the behavior is undefined.
      *           The required memory and running time will be still in the 
@@ -51,7 +54,8 @@ class ConnectedDecomposer {
      *  @remark  If uses Node::utility internally.
      */
 
-    void decompose(Graph& g, vector<vector<node_list_it_t> >& nodeSets);
+    void decompose(Graph& g, vector<vector<node_list_it_t> >& nodeSets,
+                             vector<vector<edge_list_it_t> >& edgeSets);
 
   private:
 

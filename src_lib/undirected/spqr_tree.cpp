@@ -103,15 +103,12 @@ void SPQRTree::mergeTwoNodesS(
     auto& treeEdge = dynamic_cast<SPQRTreeEdge&>(*(*treeEdgeIt));
     auto& n1  = dynamic_cast<SPQRTreeNode&>(treeEdge.incidentNode1());
     auto& n2  = dynamic_cast<SPQRTreeNode&>(treeEdge.incidentNode2());
-    auto& c1  = n1.component();
-    auto& c2  = n2.component();
 
     node_list_it_t nodeRemovedIt;
     node_list_it_t nodeExpandedIt;
     edge_list_it_t virtualEdgeRIt;
     edge_list_it_t virtualEdgeEIt;
     if (nodeToBeRemovedIt == n1.backIt()) {
-
         nodeRemovedIt  = n1.backIt();
         nodeExpandedIt = n2.backIt();
         virtualEdgeRIt = (*treeEdge.virtualEdge1())->backIt();
@@ -119,23 +116,19 @@ void SPQRTree::mergeTwoNodesS(
 
     }
     else {
-
         nodeRemovedIt  = n2.backIt();
         nodeExpandedIt = n1.backIt();
         virtualEdgeRIt = (*treeEdge.virtualEdge2())->backIt();
         virtualEdgeEIt = (*treeEdge.virtualEdge1())->backIt();
 
     }
-
     auto& nodeRemoved  = dynamic_cast<SPQRTreeNode&>(*(*nodeRemovedIt));
     auto& nodeExpanded = dynamic_cast<SPQRTreeNode&>(*(*nodeExpandedIt));
     auto& componentRemoved  = nodeRemoved.component();
     auto& componentExpanded = nodeExpanded.component();
     auto& virtualEdgeR = dynamic_cast<SPQRComponentEdge&>(*(*virtualEdgeRIt));
     auto& virtualEdgeE = dynamic_cast<SPQRComponentEdge&>(*(*virtualEdgeEIt));
-
     removeEdge(treeEdge);
-
     auto& node1R = dynamic_cast<SPQRComponentNode&>(
                                                 virtualEdgeR.incidentNode1());
     auto& node2R = dynamic_cast<SPQRComponentNode&>(
@@ -155,19 +148,15 @@ void SPQRTree::mergeTwoNodesS(
         node1EIt = node2Eprep.backIt();
         node2EIt = node1Eprep.backIt();
     }
-
     auto& node1E = dynamic_cast<SPQRComponentNode&>(*(*node1EIt));
     auto& node2E = dynamic_cast<SPQRComponentNode&>(*(*node2EIt));
-                                                         
-    c1.removeEdge(virtualEdgeR);
-    c2.removeEdge(virtualEdgeE);
-
+    componentRemoved.removeEdge(virtualEdgeR);
+    componentExpanded.removeEdge(virtualEdgeE);
     vector<edge_list_it_t> edgesMerged;
     for (auto eit = componentRemoved.edges().first;
               eit != componentRemoved.edges().second; eit++) {
         edgesMerged.push_back(eit);
     }                       
-
     componentRemoved.moveEdgeInducedSubgraph(edgesMerged, componentExpanded);
 
     // Find the two end edges in (former) compRemoved.
@@ -186,19 +175,15 @@ void SPQRTree::mergeTwoNodesS(
 
     auto& theOtherNodeEdge2R = dynamic_cast<SPQRComponentNode&>(
                                                   edge2R.adjacentNode(node2R));
-
-    // Link the end edges of the c1 path to the nodes in c2.
+    // Link the end edges of the cR path to the nodes in cE.
     componentExpanded.moveEdge(edge1R, node1E, theOtherNodeEdge1R);
     componentExpanded.moveEdge(edge2R, node2E, theOtherNodeEdge2R);
-
-    c2.removeNode(node1R);
-    c2.removeNode(node2R);
-
+    componentExpanded.removeNode(node1R);
+    componentExpanded.removeNode(node2R);
     // Relink the virtual edges that were in componentRemoved.
     auto prevEit = edge1E.backIt();
     auto thisEit = edge1R.backIt();
     while (thisEit != edge2E.backIt()) {
-
         auto& edgeThisSide = dynamic_cast<SPQRComponentEdge&>(*(*thisEit));
         if (edgeThisSide.type() == SPQRComponentEdge::VirtualType) {
             auto& edgeThatSide     = edgeThisSide.pairVirtualEdge();
@@ -208,14 +193,11 @@ void SPQRTree::mergeTwoNodesS(
                                    nodeRemoved, nodeExpanded, edgeThisSide);
         }
 
-
         auto newEit = advanceEdgeItOnPath(prevEit, thisEit);
         prevEit = thisEit;
         thisEit = newEit;
     }
-
     removeNode(nodeRemoved);
-
     return;
 
 }

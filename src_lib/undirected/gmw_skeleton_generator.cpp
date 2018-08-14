@@ -163,29 +163,23 @@ void GMWSkeletonGenerator::processBlock(
     node_list_it_t bnit1,
     node_list_it_t bnit2
 ) {
-
     // Decompose the given biconnected component to the SPQR-tree.
     SPQRDecomposer decomposer;
     SPQRTree       spqrTree = decomposer.decompose(B, *(*bnit1));
-
     // Find the tree nodes for N1 and N2.
     node_list_it_t tnit1;
     node_list_it_t tnit2;
     findTreeNodesFromBlockNodes(spqrTree, bnit1, bnit2, tnit1, tnit2);
-
     auto& TN1 = dynamic_cast<SPQRTreeNode&>(*(*tnit1));
     auto& TN2 = dynamic_cast<SPQRTreeNode&>(*(*tnit2));
-
     // Find a path from N1 to N2 on the tree.
     TreePathFinder finder;
 
     list<node_list_it_t> spqrPathNodes;
     list<edge_list_it_t> spqrPathEdges;
     finder.findPath(spqrTree, TN1, TN2, spqrPathNodes, spqrPathEdges);
-
     // Find the minimal path from N1 to N2 on the tree.
     findMinimalTreePath(spqrPathNodes, spqrPathEdges, bnit1, bnit2);
-
     // Find the component nodes for each representative node along the path.
 
     if (spqrPathNodes.size() == 1) {

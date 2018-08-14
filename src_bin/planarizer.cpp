@@ -269,7 +269,6 @@ void CommandLinePlanarizer::generateGraphs()
         n.it = nr.backIt();
     }
     for (auto& e : mEdges) {
-
         auto  ep  = std::make_unique<PlanarizableEdge>();
         auto& er  = dynamic_cast<PlanarizableEdge&>(
                     mGunplanarized.addEdge(
@@ -552,6 +551,7 @@ int main(int argc, char *argv[])
     p.parseUnplanarizedSpec(argv[1]);
     p.generateGraphs();
     p.emitPlanarizedSpec(argv[2]);
+
     return 0;
 }
 

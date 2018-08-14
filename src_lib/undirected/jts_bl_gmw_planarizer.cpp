@@ -86,22 +86,17 @@ void JTS_BL_GMW_Planarizer::planarizeConnectedGraph(
 
     // Planarize all the blocks
     vector<PlanarizableGraph> planarizedBlocks;
+
     for (auto tnit = bcTree.nodes().first; 
                                        tnit != bcTree.nodes().second; tnit++) {
-
         auto& TN = dynamic_cast<BCTreeNode&>(*(*tnit));
 
         if (TN.type() == BCTreeNode::BlockType) {
-
             PlanarizableGraph planarizedBlock;
-
             planarizeBiconnectedGraph(TN.block(), planarizedBlock);
-
             planarizedBlocks.push_back(std::move(planarizedBlock));
-
         }
     }
-
     // Fill planarizedG with non-virtual nodes.
     for (auto gnit = G.nodes().first; gnit != G.nodes().second; gnit++) {
 
@@ -271,13 +266,9 @@ void JTS_BL_GMW_Planarizer::planarizeBiconnectedGraph(
 
         throw std::invalid_argument(Constants::kExceptionNotEmpty);
     }
-
     findPlanarSubgraph      (G, planarSubgraph, removedEdges);
-
     maximalizePlanarSubgraph(G, planarSubgraph, removedEdges);
-
     reinsertRemovedEdges    (G, planarSubgraph, removedEdges);
-
 }
 
 
@@ -390,36 +381,26 @@ void JTS_BL_GMW_Planarizer::reinsertRemovedEdges(
     PlanarizableGraph&      planarSubgraph,
     vector<edge_list_it_t>& removedEdges
 ) {
+
     for (auto eit2 = planarSubgraph.edges().first; eit2 != planarSubgraph.edges().second; eit2++) {
         auto& E  = dynamic_cast<PlanarizableEdge&>(*(*eit2));
         E.mChainN1 = planarSubgraph.edges().second;
         E.mChainN2 = planarSubgraph.edges().second;
     }
 
-
     for (auto eit : removedEdges) {
-
         auto& E  = dynamic_cast<Edge&>(*(*eit));
-
         auto& N1 = dynamic_cast<PlanarizableNode&>(
                                          E.incidentNode1().IGForwardLinkRef());
-
         auto& N2 = dynamic_cast<PlanarizableNode&>(
                                          E.incidentNode2().IGForwardLinkRef());
-
         GMWEdgeInserter inserter;
-
         inserter.findInsertionPath(planarSubgraph, N1, N2);
-
         list<edge_list_it_t> iPath = inserter.getPath();
-
         vector<edge_ptr_t>   removedEdges =
                                 planarSubgraph.insertEdge(iPath, N1, N2, eit);
-
         removedEdges.clear();
-
     }
-
 }
 
 }// namespace Undirected

@@ -1064,7 +1064,8 @@ bool NetworkSimplex::checkValidity() {
 
     Undirected::ConnectedDecomposer cd;
     vector<vector<node_list_it_t> > nodeSets;
-    cd.decompose(mG, nodeSets);
+    vector<vector<edge_list_it_t> > edgeSets;
+    cd.decompose(mG, nodeSets, edgeSets);
     if (nodeSets.size() > 1) {
         return false;
     }

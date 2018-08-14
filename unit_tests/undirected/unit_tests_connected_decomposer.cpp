@@ -86,7 +86,8 @@ TEST_F(ConnectedDecomposerTests, Test1) {
     ConnectedDecomposer decomposer;
 
     vector< vector<node_list_it_t> > nodeSets;
-    decomposer.decompose(g, nodeSets);
+    vector< vector<edge_list_it_t> > edgeSets;
+    decomposer.decompose(g, nodeSets, edgeSets);
     EXPECT_EQ(nodeSets.size(), 0);
 
 }
@@ -101,7 +102,8 @@ TEST_F(ConnectedDecomposerTests, Test2) {
     ConnectedDecomposer decomposer;
 
     vector< vector<node_list_it_t> > nodeSets;
-    decomposer.decompose(g, nodeSets);
+    vector< vector<edge_list_it_t> > edgeSets;
+    decomposer.decompose(g, nodeSets, edgeSets);
     EXPECT_EQ(nodeSets.size(), 1);
     EXPECT_EQ(nodeSets[0].size(), 1);
     EXPECT_EQ(nodeSets[0][0], n_01.backIt());
@@ -120,7 +122,8 @@ TEST_F(ConnectedDecomposerTests, Test3) {
     ConnectedDecomposer decomposer;
 
     vector< vector<node_list_it_t> > nodeSets;
-    decomposer.decompose(g, nodeSets);
+    vector< vector<edge_list_it_t> > edgeSets;
+    decomposer.decompose(g, nodeSets, edgeSets);
     EXPECT_EQ(nodeSets.size(), 1);
     vector<node_list_it_t> nodes_01;
     nodes_01.push_back(n_01.backIt());
@@ -151,7 +154,8 @@ TEST_F(ConnectedDecomposerTests, Test4) {
     ConnectedDecomposer decomposer;
 
     vector< vector<node_list_it_t> > nodeSets;
-    decomposer.decompose(g, nodeSets);
+    vector< vector<edge_list_it_t> > edgeSets;
+    decomposer.decompose(g, nodeSets, edgeSets);
     EXPECT_EQ(nodeSets.size(), 2);
     vector<node_list_it_t> nodes_01;
     nodes_01.push_back(n_01.backIt());
@@ -189,7 +193,8 @@ TEST_F(ConnectedDecomposerTests, Test5) {
     ConnectedDecomposer decomposer;
 
     vector< vector<node_list_it_t> > nodeSets;
-    decomposer.decompose(g, nodeSets);
+    vector< vector<edge_list_it_t> > edgeSets;
+    decomposer.decompose(g, nodeSets, edgeSets);
     EXPECT_EQ(nodeSets.size(), 2);
     vector<node_list_it_t> nodes_01;
     nodes_01.push_back(n_01.backIt());
@@ -262,7 +267,8 @@ TEST_F(ConnectedDecomposerTests, Test6) {
     ConnectedDecomposer decomposer;
 
     vector< vector<node_list_it_t> > nodeSets;
-    decomposer.decompose(g, nodeSets);
+    vector< vector<edge_list_it_t> > edgeSets;
+    decomposer.decompose(g, nodeSets, edgeSets);
     EXPECT_EQ(nodeSets.size(), 4);
     vector<node_list_it_t> nodes_01;
     nodes_01.push_back(n_01.backIt());

@@ -312,11 +312,12 @@ void RandomPlanarGraphGenerator::generateGraphs(
 
     // Find connected components.
     ConnectedDecomposer decomp;
-    vector<vector<node_list_it_t> >connectedComponents;
-    decomp.decompose(G, connectedComponents);
+    vector<vector<node_list_it_t> >connectedNodes;
+    vector<vector<edge_list_it_t> >connectedEdges;
+    decomp.decompose(G, connectedNodes, connectedEdges);
 
     // Find bi-connected components.
-    for (auto& connectedComponent :  connectedComponents) {
+    for (auto& connectedComponent :  connectedNodes) {
 //        cerr << "conn:" << connectedComponent.size() << "\n";
         if (connectedComponent.size() >= 3) {
 

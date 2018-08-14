@@ -72,11 +72,9 @@ class SPQRStrategyProc4:
         DNode& w = dynamic_cast<DNode&>(vw.adjacentNode(v));
         if ( v.mType == SPQR_PROC4_Node::SType && 
              w.mType == SPQR_PROC4_Node::SType    ) {
-
             // Merge v and w.
             mSPQRTree.mergeTwoNodesS(vw.IGBackwardLink(), w.IGBackwardLink());
             w.setIGBackwardLink(v.IGBackwardLink());
-
         }
         else if ( v.mType == SPQR_PROC4_Node::PType && 
                   w.mType == SPQR_PROC4_Node::PType    ) {

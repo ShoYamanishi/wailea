@@ -1,3 +1,72 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{BL76}
+K.~S. Booth and G.~S. Lueker.
+\newblock Testing for the consecutive ones property, interval graphs, and graph
+  planarity using pq-tree algorithms.
+\newblock {\em Journal of Computer and System Sciences}, 13(3):335 -- 379,
+  1976.
+\newblock URL:
+  \url{http://www.sciencedirect.com/science/article/pii/S0022000076800451},
+  \href {http://dx.doi.org/http://dx.doi.org/10.1016/S0022-0000(76)80045-1}
+  {\path{doi:http://dx.doi.org/10.1016/S0022-0000(76)80045-1}}.
+
+\bibitem{EVEN79}
+S.~Even.
+\newblock {\em Graph Algorihms}.
+\newblock Computer Software Engineering Series. Computer Science Press, Inc.,
+  9125 Fall River Lane Potomac, Maryland 20854, first printing edition, 1979.
+
+\bibitem{HSU01}
+W.~Hsu.
+\newblock Pc-trees v.s. pq-trees.
+\newblock {\em Lecture Notes in Computer Science}, 2108:207--217, 2001.
+
+\bibitem{JTS89}
+R.~Jayakumar, K.~Thulasiraman, and M.~Swamy.
+\newblock O(n²) algorithms for graph planarization.
+\newblock {\em IEEE Transactions on Computer-Aided Design}, 8(3):257--267,
+  1989.
+
+\bibitem{JUNGER97}
+M.~J{\"u}nger, S.~Leipert, and P.~Mutzel.
+\newblock {\em Pitfalls of using PQ-trees in automatic graph drawing}, pages
+  193--204.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 1997.
+\newblock URL: \url{http://dx.doi.org/10.1007/3-540-63938-1_62}, \href
+  {http://dx.doi.org/10.1007/3-540-63938-1_62}
+  {\path{doi:10.1007/3-540-63938-1_62}}.
+
+\bibitem{KANT92}
+G.~Kant.
+\newblock An o n maximal planarization algorithm based on pq trees.
+\newblock Technical Rep ort RUU-CS-92-03, Department of Computer Science
+  Utrecht University, P O Box TB Utrecht the Netherlands P O Box TB Utrecht the
+  Netherlands P.O. Box 80.089, 3508 TB Utrecht, the Netherlands, 1992.
+
+\bibitem{LEC67}
+A.~Lempel, S.~Even, and I.~Cederbaum.
+\newblock An algorithm for planarity testing of graphs.
+\newblock pages 215--232, N.Y., July 1967. Theory of Graphs: International
+  Symposium, Rome, Gordon and Breach.
+
+\bibitem{OZAWA81}
+T.~Ozawa and H.~Takahashi.
+\newblock {\em A graph-planarization algorithm and its application to random
+  graphs}, pages 95--107.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg, 1981.
+\newblock URL: \url{http://dx.doi.org/10.1007/3-540-10704-5_9}, \href
+  {http://dx.doi.org/10.1007/3-540-10704-5_9}
+  {\path{doi:10.1007/3-540-10704-5_9}}.
+
+\bibitem{HSU99}
+W.~K. Shih and W.~L. Hsu.
+\newblock A new planarity test.
+\newblock {\em Theoretical Computer Science}, 223:179--191, 1999.
+
+\bibitem{TARJAN86}
+R.~E. Tarjan.
+\newblock Two streamlined depth-first search algorithms.
+\newblock {\em Fundamenta Informaticae}, 9(1):85--94, 1986.
 
 \end{thebibliography}

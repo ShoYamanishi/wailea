@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.30)  10 SEP 2018 13:58
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.9.30)  10 SEP 2018 14:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -436,10 +436,10 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
 Package epstopdf Info: Source file: <pq_tree_sample_01.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 19949 bytes
 (epstopdf)             Output file: <pq_tree_sample_01-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:44
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9366 bytes
 (epstopdf)             Command: <repstopdf --outfile=pq_tree_sample_01-eps-conv
 erted-to.pdf pq_tree_sample_01.eps>
@@ -454,10 +454,10 @@ Package pdftex.def Info: pq_tree_sample_01-eps-converted-to.pdf used on input l
 ine 159.
 (pdftex.def)             Requested size: 220.79979pt x 106.38019pt.
 Package epstopdf Info: Source file: <bush_form_01.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 25580 bytes
 (epstopdf)             Output file: <bush_form_01-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10040 bytes
 (epstopdf)             Command: <repstopdf --outfile=bush_form_01-eps-converted
 -to.pdf bush_form_01.eps>
@@ -474,10 +474,10 @@ Package pdftex.def Info: bush_form_01-eps-converted-to.pdf used on input line 1
  [3 <./pq_tree_sample_01-eps-converted-to.pdf> <./bush_form_01-eps-converted-to
 .pdf>]
 Package epstopdf Info: Source file: <pq_tree_sample_02.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11435 bytes
 (epstopdf)             Output file: <pq_tree_sample_02-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5425 bytes
 (epstopdf)             Command: <repstopdf --outfile=pq_tree_sample_02-eps-conv
 erted-to.pdf pq_tree_sample_02.eps>
@@ -492,10 +492,10 @@ Package pdftex.def Info: pq_tree_sample_02-eps-converted-to.pdf used on input l
 ine 208.
 (pdftex.def)             Requested size: 310.4979pt x 62.4524pt.
 Package epstopdf Info: Source file: <pq_tree_sample_03.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6033 bytes
 (epstopdf)             Output file: <pq_tree_sample_03-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 3291 bytes
 (epstopdf)             Command: <repstopdf --outfile=pq_tree_sample_03-eps-conv
 erted-to.pdf pq_tree_sample_03.eps>
@@ -510,10 +510,10 @@ Package pdftex.def Info: pq_tree_sample_03-eps-converted-to.pdf used on input l
 ine 215.
 (pdftex.def)             Requested size: 172.5pt x 33.38849pt.
 Package epstopdf Info: Source file: <pq_tree_sample_04.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10249 bytes
 (epstopdf)             Output file: <pq_tree_sample_04-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 4996 bytes
 (epstopdf)             Command: <repstopdf --outfile=pq_tree_sample_04-eps-conv
 erted-to.pdf pq_tree_sample_04.eps>
@@ -528,10 +528,10 @@ Package pdftex.def Info: pq_tree_sample_04-eps-converted-to.pdf used on input l
 ine 222.
 (pdftex.def)             Requested size: 345.0pt x 44.95988pt.
 Package epstopdf Info: Source file: <pq_tree_sample_05.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 7079 bytes
 (epstopdf)             Output file: <pq_tree_sample_05-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 3922 bytes
 (epstopdf)             Command: <repstopdf --outfile=pq_tree_sample_05-eps-conv
 erted-to.pdf pq_tree_sample_05.eps>
@@ -551,10 +551,10 @@ converted-to.pdf>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 258.
 Package epstopdf Info: Source file: <proof_overview.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 77785 bytes
 (epstopdf)             Output file: <proof_overview-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 21137 bytes
 (epstopdf)             Command: <repstopdf --outfile=proof_overview-eps-convert
 ed-to.pdf proof_overview.eps>
@@ -570,10 +570,10 @@ Package pdftex.def Info: proof_overview-eps-converted-to.pdf used on input line
 (pdftex.def)             Requested size: 276.00105pt x 149.27998pt.
  [5] [6] [7] [8]
 Package epstopdf Info: Source file: <marked_bush_form_00.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34164 bytes
 (epstopdf)             Output file: <marked_bush_form_00-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12437 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_00-eps-co
 nverted-to.pdf marked_bush_form_00.eps>
@@ -598,10 +598,10 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
  [9 <./proof_overview-eps-converted-to.pdf> <./marked_bush_form_00-eps-converte
 d-to.pdf>]
 Package epstopdf Info: Source file: <marked_bush_form_01.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34344 bytes
 (epstopdf)             Output file: <marked_bush_form_01-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12492 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_01-eps-co
 nverted-to.pdf marked_bush_form_01.eps>
@@ -616,10 +616,10 @@ Package pdftex.def Info: marked_bush_form_01-eps-converted-to.pdf used on input
  line 552.
 (pdftex.def)             Requested size: 103.50105pt x 76.37094pt.
 Package epstopdf Info: Source file: <marked_bush_form_02.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34344 bytes
 (epstopdf)             Output file: <marked_bush_form_02-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12494 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_02-eps-co
 nverted-to.pdf marked_bush_form_02.eps>
@@ -634,10 +634,10 @@ Package pdftex.def Info: marked_bush_form_02-eps-converted-to.pdf used on input
  line 556.
 (pdftex.def)             Requested size: 103.50105pt x 76.37094pt.
 Package epstopdf Info: Source file: <marked_bush_form_03.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34344 bytes
 (epstopdf)             Output file: <marked_bush_form_03-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12489 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_03-eps-co
 nverted-to.pdf marked_bush_form_03.eps>
@@ -652,10 +652,10 @@ Package pdftex.def Info: marked_bush_form_03-eps-converted-to.pdf used on input
  line 560.
 (pdftex.def)             Requested size: 103.50105pt x 76.37094pt.
 Package epstopdf Info: Source file: <marked_bush_form_04.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34459 bytes
 (epstopdf)             Output file: <marked_bush_form_04-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12534 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_04-eps-co
 nverted-to.pdf marked_bush_form_04.eps>
@@ -670,10 +670,10 @@ Package pdftex.def Info: marked_bush_form_04-eps-converted-to.pdf used on input
  line 569.
 (pdftex.def)             Requested size: 103.50105pt x 76.37094pt.
 Package epstopdf Info: Source file: <marked_bush_form_05.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34459 bytes
 (epstopdf)             Output file: <marked_bush_form_05-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12533 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_05-eps-co
 nverted-to.pdf marked_bush_form_05.eps>
@@ -688,10 +688,10 @@ Package pdftex.def Info: marked_bush_form_05-eps-converted-to.pdf used on input
  line 573.
 (pdftex.def)             Requested size: 103.50105pt x 76.37094pt.
 Package epstopdf Info: Source file: <marked_bush_form_06.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 34459 bytes
 (epstopdf)             Output file: <marked_bush_form_06-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12529 bytes
 (epstopdf)             Command: <repstopdf --outfile=marked_bush_form_06-eps-co
 nverted-to.pdf marked_bush_form_06.eps>
@@ -713,10 +713,10 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 701.
  [13]
 Package epstopdf Info: Source file: <pq_tree_com.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 23025 bytes
 (epstopdf)             Output file: <pq_tree_com-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:50
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9654 bytes
 (epstopdf)             Command: <repstopdf --outfile=pq_tree_com-eps-converted-
 to.pdf pq_tree_com.eps>
@@ -732,10 +732,10 @@ Package pdftex.def Info: pq_tree_com-eps-converted-to.pdf used on input line 78
 (pdftex.def)             Requested size: 241.49895pt x 84.7048pt.
  [14] [15 <./pq_tree_com-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <plot_performance_01.eps>
-(epstopdf)                    date: 2016-12-14 11:40:46
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 139335 bytes
 (epstopdf)             Output file: <plot_performance_01-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-14 11:40:48
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 129572 bytes
 (epstopdf)             Command: <repstopdf --outfile=plot_performance_01-eps-co
 nverted-to.pdf plot_performance_01.eps>
@@ -755,9 +755,13 @@ hub:yamanishi/colameco.
  []
 
 [16 <./plot_performance_01-eps-converted-to.pdf>] (./pq_tree_enhancement.bbl
+Underfull \hbox (badness 6995) in paragraph at lines 4--13
+\OT1/cmtt/m/n/10 sciencedirect . com / science / article / pii / S0022000076800
+451$[]\OT1/cmr/m/n/10 , []$\OT1/cmtt/m/n/10 doi :
+ []
 
-LaTeX Warning: Empty `thebibliography' environment on input line 3.
-
+Missing character: There is no Â in font cmr10!
+Missing character: There is no ² in font cmr10!
 ) [17
 
 ]
@@ -766,16 +770,16 @@ Overfull \hbox (35.21448pt too wide) in paragraph at lines 878--878
  []
 
 Package epstopdf Info: Source file: <sample_graph.eps>
-(epstopdf)                    date: 2016-12-09 03:18:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 22590 bytes
 (epstopdf)             Output file: <sample_graph-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:50
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9219 bytes
 (epstopdf)             Command: <repstopdf --outfile=sample_graph-eps-converted
 -to.pdf sample_graph.eps>
 (epstopdf)             \includegraphics on input line 885.
 Package epstopdf Info: Output file is already uptodate.
-<sample_graph-eps-converted-to.pdf, id=381, 241.90375pt x 155.58125pt>
+<sample_graph-eps-converted-to.pdf, id=391, 241.90375pt x 155.58125pt>
 File: sample_graph-eps-converted-to.pdf Graphic file (type pdf)
 
 <use sample_graph-eps-converted-to.pdf>
@@ -795,36 +799,36 @@ Underfull \vbox (badness 5802) has occurred while \output is active []
  [19]
 [20] [21] [22]
 Package epstopdf Info: Source file: <bc_transform_cv_01_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9090 bytes
 (epstopdf)             Output file: <bc_transform_cv_01_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:50
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5606 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_01_before-
 eps-converted-to.pdf bc_transform_cv_01_before.eps>
 (epstopdf)             \includegraphics on input line 1137.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_01_before-eps-converted-to.pdf, id=435, 26.0975pt x 30.1125pt>
+<bc_transform_cv_01_before-eps-converted-to.pdf, id=446, 26.0975pt x 30.1125pt>
 File: bc_transform_cv_01_before-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_cv_01_before-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_cv_01_before-eps-converted-to.pdf used on
  input line 1137.
 (pdftex.def)             Requested size: 34.5021pt x 39.81567pt.
 Package epstopdf Info: Source file: <bc_transform_cv_01_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9151 bytes
 (epstopdf)             Output file: <bc_transform_cv_01_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:50
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5609 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_01_root-ep
 s-converted-to.pdf bc_transform_cv_01_root.eps>
 (epstopdf)             \includegraphics on input line 1138.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_01_root-eps-converted-to.pdf, id=436, 25.09375pt x 30.1125pt>
+<bc_transform_cv_01_root-eps-converted-to.pdf, id=447, 25.09375pt x 30.1125pt>
 File: bc_transform_cv_01_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_01_root-eps-converted-to.pdf>
@@ -832,18 +836,18 @@ Package pdftex.def Info: bc_transform_cv_01_root-eps-converted-to.pdf used on i
 nput line 1138.
 (pdftex.def)             Requested size: 34.5021pt x 41.40869pt.
 Package epstopdf Info: Source file: <bc_transform_cv_01_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9155 bytes
 (epstopdf)             Output file: <bc_transform_cv_01_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:50
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5606 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_01_nonroot
 -eps-converted-to.pdf bc_transform_cv_01_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1140.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_01_nonroot-eps-converted-to.pdf, id=437, 26.0975pt x 30.1125pt
+<bc_transform_cv_01_nonroot-eps-converted-to.pdf, id=448, 26.0975pt x 30.1125pt
 >
 File: bc_transform_cv_01_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_01_nonroot-eps-converted-to.pdf>
@@ -851,36 +855,36 @@ Package pdftex.def Info: bc_transform_cv_01_nonroot-eps-converted-to.pdf used o
 n input line 1140.
 (pdftex.def)             Requested size: 34.5021pt x 39.81567pt.
 Package epstopdf Info: Source file: <bc_transform_cv_11_before.eps>
-(epstopdf)                    date: 2016-12-14 08:42:18
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9090 bytes
 (epstopdf)             Output file: <bc_transform_cv_11_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-14 10:26:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5598 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_11_before-
 eps-converted-to.pdf bc_transform_cv_11_before.eps>
 (epstopdf)             \includegraphics on input line 1144.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_11_before-eps-converted-to.pdf, id=438, 26.0975pt x 30.1125pt>
+<bc_transform_cv_11_before-eps-converted-to.pdf, id=449, 26.0975pt x 30.1125pt>
 File: bc_transform_cv_11_before-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_cv_11_before-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_cv_11_before-eps-converted-to.pdf used on
  input line 1144.
 (pdftex.def)             Requested size: 34.5021pt x 39.81567pt.
 Package epstopdf Info: Source file: <bc_transform_cv_11_root.eps>
-(epstopdf)                    date: 2016-12-14 08:42:18
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9151 bytes
 (epstopdf)             Output file: <bc_transform_cv_11_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-14 10:26:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5601 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_11_root-ep
 s-converted-to.pdf bc_transform_cv_11_root.eps>
 (epstopdf)             \includegraphics on input line 1145.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_11_root-eps-converted-to.pdf, id=439, 25.09375pt x 30.1125pt>
+<bc_transform_cv_11_root-eps-converted-to.pdf, id=450, 25.09375pt x 30.1125pt>
 File: bc_transform_cv_11_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_11_root-eps-converted-to.pdf>
@@ -888,18 +892,18 @@ Package pdftex.def Info: bc_transform_cv_11_root-eps-converted-to.pdf used on i
 nput line 1145.
 (pdftex.def)             Requested size: 34.5021pt x 41.40869pt.
 Package epstopdf Info: Source file: <bc_transform_cv_11_nonroot.eps>
-(epstopdf)                    date: 2016-12-14 08:42:18
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9151 bytes
 (epstopdf)             Output file: <bc_transform_cv_11_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-14 10:26:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5601 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_11_nonroot
 -eps-converted-to.pdf bc_transform_cv_11_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1147.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_11_nonroot-eps-converted-to.pdf, id=440, 25.09375pt x 30.1125p
+<bc_transform_cv_11_nonroot-eps-converted-to.pdf, id=451, 25.09375pt x 30.1125p
 t>
 File: bc_transform_cv_11_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_11_nonroot-eps-converted-to.pdf>
@@ -907,18 +911,18 @@ Package pdftex.def Info: bc_transform_cv_11_nonroot-eps-converted-to.pdf used o
 n input line 1147.
 (pdftex.def)             Requested size: 34.5021pt x 41.40869pt.
 Package epstopdf Info: Source file: <bc_transform_cv_02_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9622 bytes
 (epstopdf)             Output file: <bc_transform_cv_02_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5705 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_02_before-
 eps-converted-to.pdf bc_transform_cv_02_before.eps>
 (epstopdf)             \includegraphics on input line 1151.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_02_before-eps-converted-to.pdf, id=441, 32.12pt x 33.12375pt>
+<bc_transform_cv_02_before-eps-converted-to.pdf, id=452, 32.12pt x 33.12375pt>
 File: bc_transform_cv_02_before-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_02_before-eps-converted-to.pdf>
@@ -926,18 +930,18 @@ Package pdftex.def Info: bc_transform_cv_02_before-eps-converted-to.pdf used on
  input line 1151.
 (pdftex.def)             Requested size: 34.5021pt x 35.58305pt.
 Package epstopdf Info: Source file: <bc_transform_cv_02_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10288 bytes
 (epstopdf)             Output file: <bc_transform_cv_02_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5821 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_02_root-ep
 s-converted-to.pdf bc_transform_cv_02_root.eps>
 (epstopdf)             \includegraphics on input line 1152.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_02_root-eps-converted-to.pdf, id=442, 44.165pt x 33.12375pt>
+<bc_transform_cv_02_root-eps-converted-to.pdf, id=453, 44.165pt x 33.12375pt>
 File: bc_transform_cv_02_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_02_root-eps-converted-to.pdf>
@@ -945,18 +949,18 @@ Package pdftex.def Info: bc_transform_cv_02_root-eps-converted-to.pdf used on i
 nput line 1152.
 (pdftex.def)             Requested size: 34.5021pt x 25.87685pt.
 Package epstopdf Info: Source file: <bc_transform_cv_02_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11152 bytes
 (epstopdf)             Output file: <bc_transform_cv_02_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6015 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_02_nonroot
 -eps-converted-to.pdf bc_transform_cv_02_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1154.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_02_nonroot-eps-converted-to.pdf, id=443, 41.15375pt x 46.1725p
+<bc_transform_cv_02_nonroot-eps-converted-to.pdf, id=454, 41.15375pt x 46.1725p
 t>
 File: bc_transform_cv_02_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_02_nonroot-eps-converted-to.pdf>
@@ -964,18 +968,18 @@ Package pdftex.def Info: bc_transform_cv_02_nonroot-eps-converted-to.pdf used o
 n input line 1154.
 (pdftex.def)             Requested size: 34.5021pt x 38.71063pt.
 Package epstopdf Info: Source file: <bc_transform_cv_03_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10029 bytes
 (epstopdf)             Output file: <bc_transform_cv_03_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5850 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_03_before-
 eps-converted-to.pdf bc_transform_cv_03_before.eps>
 (epstopdf)             \includegraphics on input line 1158.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_03_before-eps-converted-to.pdf, id=444, 32.12pt x 34.1275pt>
+<bc_transform_cv_03_before-eps-converted-to.pdf, id=455, 32.12pt x 34.1275pt>
 File: bc_transform_cv_03_before-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_03_before-eps-converted-to.pdf>
@@ -983,18 +987,18 @@ Package pdftex.def Info: bc_transform_cv_03_before-eps-converted-to.pdf used on
  input line 1158.
 (pdftex.def)             Requested size: 34.5021pt x 36.66132pt.
 Package epstopdf Info: Source file: <bc_transform_cv_03_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11930 bytes
 (epstopdf)             Output file: <bc_transform_cv_03_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6331 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_03_root-ep
 s-converted-to.pdf bc_transform_cv_03_root.eps>
 (epstopdf)             \includegraphics on input line 1159.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_03_root-eps-converted-to.pdf, id=445, 47.17625pt x 42.1575pt>
+<bc_transform_cv_03_root-eps-converted-to.pdf, id=456, 47.17625pt x 42.1575pt>
 File: bc_transform_cv_03_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_03_root-eps-converted-to.pdf>
@@ -1002,18 +1006,18 @@ Package pdftex.def Info: bc_transform_cv_03_root-eps-converted-to.pdf used on i
 nput line 1159.
 (pdftex.def)             Requested size: 34.5021pt x 30.83131pt.
 Package epstopdf Info: Source file: <bc_transform_cv_03_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12498 bytes
 (epstopdf)             Output file: <bc_transform_cv_03_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6438 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_03_nonroot
 -eps-converted-to.pdf bc_transform_cv_03_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1161.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_03_nonroot-eps-converted-to.pdf, id=446, 40.15pt x 40.15pt>
+<bc_transform_cv_03_nonroot-eps-converted-to.pdf, id=457, 40.15pt x 40.15pt>
 File: bc_transform_cv_03_nonroot-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_03_nonroot-eps-converted-to.pdf>
@@ -1021,18 +1025,18 @@ Package pdftex.def Info: bc_transform_cv_03_nonroot-eps-converted-to.pdf used o
 n input line 1161.
 (pdftex.def)             Requested size: 34.5021pt x 34.50319pt.
 Package epstopdf Info: Source file: <bc_transform_cv_04_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9522 bytes
 (epstopdf)             Output file: <bc_transform_cv_04_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:52
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5724 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_04_before-
 eps-converted-to.pdf bc_transform_cv_04_before.eps>
 (epstopdf)             \includegraphics on input line 1165.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_04_before-eps-converted-to.pdf, id=447, 24.09pt x 34.1275pt>
+<bc_transform_cv_04_before-eps-converted-to.pdf, id=458, 24.09pt x 34.1275pt>
 File: bc_transform_cv_04_before-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_04_before-eps-converted-to.pdf>
@@ -1040,36 +1044,36 @@ Package pdftex.def Info: bc_transform_cv_04_before-eps-converted-to.pdf used on
  input line 1165.
 (pdftex.def)             Requested size: 34.5021pt x 48.87794pt.
 Package epstopdf Info: Source file: <bc_transform_cv_04_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11402 bytes
 (epstopdf)             Output file: <bc_transform_cv_04_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:54
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6219 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_04_nonroot
 -eps-converted-to.pdf bc_transform_cv_04_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1168.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_04_nonroot-eps-converted-to.pdf, id=448, 42.1575pt x 44.165pt>
+<bc_transform_cv_04_nonroot-eps-converted-to.pdf, id=459, 42.1575pt x 44.165pt>
 File: bc_transform_cv_04_nonroot-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_cv_04_nonroot-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_cv_04_nonroot-eps-converted-to.pdf used o
 n input line 1168.
 (pdftex.def)             Requested size: 34.5021pt x 36.14543pt.
 Package epstopdf Info: Source file: <bc_transform_cv_05_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9523 bytes
 (epstopdf)             Output file: <bc_transform_cv_05_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:54
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5715 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_05_before-
 eps-converted-to.pdf bc_transform_cv_05_before.eps>
 (epstopdf)             \includegraphics on input line 1172.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_05_before-eps-converted-to.pdf, id=449, 26.0975pt x 31.11626pt
+<bc_transform_cv_05_before-eps-converted-to.pdf, id=460, 26.0975pt x 31.11626pt
 >
 File: bc_transform_cv_05_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_05_before-eps-converted-to.pdf>
@@ -1077,18 +1081,18 @@ Package pdftex.def Info: bc_transform_cv_05_before-eps-converted-to.pdf used on
  input line 1172.
 (pdftex.def)             Requested size: 34.5021pt x 41.14288pt.
 Package epstopdf Info: Source file: <bc_transform_cv_05_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11394 bytes
 (epstopdf)             Output file: <bc_transform_cv_05_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:54
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6213 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_05_root-ep
 s-converted-to.pdf bc_transform_cv_05_root.eps>
 (epstopdf)             \includegraphics on input line 1173.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_05_root-eps-converted-to.pdf, id=450, 36.135pt x 41.15375pt>
+<bc_transform_cv_05_root-eps-converted-to.pdf, id=461, 36.135pt x 41.15375pt>
 File: bc_transform_cv_05_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_05_root-eps-converted-to.pdf>
@@ -1096,18 +1100,18 @@ Package pdftex.def Info: bc_transform_cv_05_root-eps-converted-to.pdf used on i
 nput line 1173.
 (pdftex.def)             Requested size: 34.5021pt x 39.29614pt.
 Package epstopdf Info: Source file: <bc_transform_cv_05_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11409 bytes
 (epstopdf)             Output file: <bc_transform_cv_05_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:54
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6212 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_05_nonroot
 -eps-converted-to.pdf bc_transform_cv_05_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1175.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_05_nonroot-eps-converted-to.pdf, id=451, 36.135pt x 41.15375pt
+<bc_transform_cv_05_nonroot-eps-converted-to.pdf, id=462, 36.135pt x 41.15375pt
 >
 File: bc_transform_cv_05_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_05_nonroot-eps-converted-to.pdf>
@@ -1115,18 +1119,18 @@ Package pdftex.def Info: bc_transform_cv_05_nonroot-eps-converted-to.pdf used o
 n input line 1175.
 (pdftex.def)             Requested size: 34.5021pt x 39.29614pt.
 Package epstopdf Info: Source file: <bc_transform_cv_06_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10472 bytes
 (epstopdf)             Output file: <bc_transform_cv_06_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:54
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5964 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_06_before-
 eps-converted-to.pdf bc_transform_cv_06_before.eps>
 (epstopdf)             \includegraphics on input line 1179.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_06_before-eps-converted-to.pdf, id=452, 34.1275pt x 33.12375pt
+<bc_transform_cv_06_before-eps-converted-to.pdf, id=463, 34.1275pt x 33.12375pt
 >
 File: bc_transform_cv_06_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_06_before-eps-converted-to.pdf>
@@ -1134,18 +1138,18 @@ Package pdftex.def Info: bc_transform_cv_06_before-eps-converted-to.pdf used on
  input line 1179.
 (pdftex.def)             Requested size: 34.5021pt x 33.48958pt.
 Package epstopdf Info: Source file: <bc_transform_cv_06_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 13824 bytes
 (epstopdf)             Output file: <bc_transform_cv_06_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:54
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6623 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_06_root-ep
 s-converted-to.pdf bc_transform_cv_06_root.eps>
 (epstopdf)             \includegraphics on input line 1180.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_06_root-eps-converted-to.pdf, id=453, 40.15pt x 37.13875pt>
+<bc_transform_cv_06_root-eps-converted-to.pdf, id=464, 40.15pt x 37.13875pt>
 File: bc_transform_cv_06_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_06_root-eps-converted-to.pdf>
@@ -1153,36 +1157,36 @@ Package pdftex.def Info: bc_transform_cv_06_root-eps-converted-to.pdf used on i
 nput line 1180.
 (pdftex.def)             Requested size: 34.5021pt x 31.91547pt.
 Package epstopdf Info: Source file: <bc_transform_cv_06_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 13992 bytes
 (epstopdf)             Output file: <bc_transform_cv_06_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6788 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_06_nonroot
 -eps-converted-to.pdf bc_transform_cv_06_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1182.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_06_nonroot-eps-converted-to.pdf, id=454, 40.15pt x 37.13875pt>
+<bc_transform_cv_06_nonroot-eps-converted-to.pdf, id=465, 40.15pt x 37.13875pt>
 File: bc_transform_cv_06_nonroot-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_cv_06_nonroot-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_cv_06_nonroot-eps-converted-to.pdf used o
 n input line 1182.
 (pdftex.def)             Requested size: 34.5021pt x 31.91547pt.
 Package epstopdf Info: Source file: <bc_transform_cv_07_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9931 bytes
 (epstopdf)             Output file: <bc_transform_cv_07_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5881 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_07_before-
 eps-converted-to.pdf bc_transform_cv_07_before.eps>
 (epstopdf)             \includegraphics on input line 1186.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_07_before-eps-converted-to.pdf, id=455, 26.0975pt x 33.12375pt
+<bc_transform_cv_07_before-eps-converted-to.pdf, id=466, 26.0975pt x 33.12375pt
 >
 File: bc_transform_cv_07_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_07_before-eps-converted-to.pdf>
@@ -1190,18 +1194,18 @@ Package pdftex.def Info: bc_transform_cv_07_before-eps-converted-to.pdf used on
  input line 1186.
 (pdftex.def)             Requested size: 34.5021pt x 43.79726pt.
 Package epstopdf Info: Source file: <bc_transform_cv_07_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11972 bytes
 (epstopdf)             Output file: <bc_transform_cv_07_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6338 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_07_root-ep
 s-converted-to.pdf bc_transform_cv_07_root.eps>
 (epstopdf)             \includegraphics on input line 1187.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_07_root-eps-converted-to.pdf, id=456, 40.15pt x 41.15375pt>
+<bc_transform_cv_07_root-eps-converted-to.pdf, id=467, 40.15pt x 41.15375pt>
 File: bc_transform_cv_07_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_07_root-eps-converted-to.pdf>
@@ -1209,36 +1213,36 @@ Package pdftex.def Info: bc_transform_cv_07_root-eps-converted-to.pdf used on i
 nput line 1187.
 (pdftex.def)             Requested size: 34.5021pt x 35.36577pt.
 Package epstopdf Info: Source file: <bc_transform_cv_07_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12921 bytes
 (epstopdf)             Output file: <bc_transform_cv_07_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6714 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_07_nonroot
 -eps-converted-to.pdf bc_transform_cv_07_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1189.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_07_nonroot-eps-converted-to.pdf, id=457, 40.15pt x 39.14626pt>
+<bc_transform_cv_07_nonroot-eps-converted-to.pdf, id=468, 40.15pt x 39.14626pt>
 File: bc_transform_cv_07_nonroot-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_cv_07_nonroot-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_cv_07_nonroot-eps-converted-to.pdf used o
 n input line 1189.
 (pdftex.def)             Requested size: 34.5021pt x 33.64061pt.
 Package epstopdf Info: Source file: <bc_transform_cv_08_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 9934 bytes
 (epstopdf)             Output file: <bc_transform_cv_08_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5853 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_08_before-
 eps-converted-to.pdf bc_transform_cv_08_before.eps>
 (epstopdf)             \includegraphics on input line 1193.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_08_before-eps-converted-to.pdf, id=458, 26.0975pt x 33.12375pt
+<bc_transform_cv_08_before-eps-converted-to.pdf, id=469, 26.0975pt x 33.12375pt
 >
 File: bc_transform_cv_08_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_08_before-eps-converted-to.pdf>
@@ -1246,18 +1250,18 @@ Package pdftex.def Info: bc_transform_cv_08_before-eps-converted-to.pdf used on
  input line 1193.
 (pdftex.def)             Requested size: 34.5021pt x 43.79726pt.
 Package epstopdf Info: Source file: <bc_transform_cv_08_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12484 bytes
 (epstopdf)             Output file: <bc_transform_cv_08_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6528 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_08_root-ep
 s-converted-to.pdf bc_transform_cv_08_root.eps>
 (epstopdf)             \includegraphics on input line 1194.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_08_root-eps-converted-to.pdf, id=459, 39.14626pt x 38.1425pt>
+<bc_transform_cv_08_root-eps-converted-to.pdf, id=470, 39.14626pt x 38.1425pt>
 File: bc_transform_cv_08_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_08_root-eps-converted-to.pdf>
@@ -1265,18 +1269,18 @@ Package pdftex.def Info: bc_transform_cv_08_root-eps-converted-to.pdf used on i
 nput line 1194.
 (pdftex.def)             Requested size: 34.5021pt x 33.61845pt.
 Package epstopdf Info: Source file: <bc_transform_cv_08_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12360 bytes
 (epstopdf)             Output file: <bc_transform_cv_08_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:56
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6529 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_08_nonroot
 -eps-converted-to.pdf bc_transform_cv_08_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1196.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_08_nonroot-eps-converted-to.pdf, id=460, 41.15375pt x 41.15375
+<bc_transform_cv_08_nonroot-eps-converted-to.pdf, id=471, 41.15375pt x 41.15375
 pt>
 File: bc_transform_cv_08_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_08_nonroot-eps-converted-to.pdf>
@@ -1284,18 +1288,18 @@ Package pdftex.def Info: bc_transform_cv_08_nonroot-eps-converted-to.pdf used o
 n input line 1196.
 (pdftex.def)             Requested size: 34.5021pt x 34.50296pt.
 Package epstopdf Info: Source file: <bc_transform_cv_10_before.eps>
-(epstopdf)                    date: 2016-12-14 08:42:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10103 bytes
 (epstopdf)             Output file: <bc_transform_cv_10_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-14 10:26:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5908 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_10_before-
 eps-converted-to.pdf bc_transform_cv_10_before.eps>
 (epstopdf)             \includegraphics on input line 1200.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_10_before-eps-converted-to.pdf, id=461, 34.1275pt x 31.11626pt
+<bc_transform_cv_10_before-eps-converted-to.pdf, id=472, 34.1275pt x 31.11626pt
 >
 File: bc_transform_cv_10_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_10_before-eps-converted-to.pdf>
@@ -1303,18 +1307,18 @@ Package pdftex.def Info: bc_transform_cv_10_before-eps-converted-to.pdf used on
  input line 1200.
 (pdftex.def)             Requested size: 34.5021pt x 31.45992pt.
 Package epstopdf Info: Source file: <bc_transform_cv_10_root.eps>
-(epstopdf)                    date: 2016-12-14 08:42:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10570 bytes
 (epstopdf)             Output file: <bc_transform_cv_10_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-14 10:26:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6065 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_10_root-ep
 s-converted-to.pdf bc_transform_cv_10_root.eps>
 (epstopdf)             \includegraphics on input line 1201.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_10_root-eps-converted-to.pdf, id=462, 34.1275pt x 31.11626pt>
+<bc_transform_cv_10_root-eps-converted-to.pdf, id=473, 34.1275pt x 31.11626pt>
 File: bc_transform_cv_10_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_10_root-eps-converted-to.pdf>
@@ -1322,18 +1326,18 @@ Package pdftex.def Info: bc_transform_cv_10_root-eps-converted-to.pdf used on i
 nput line 1201.
 (pdftex.def)             Requested size: 34.5021pt x 31.45992pt.
 Package epstopdf Info: Source file: <bc_transform_cv_10_nonroot.eps>
-(epstopdf)                    date: 2016-12-14 08:42:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10570 bytes
 (epstopdf)             Output file: <bc_transform_cv_10_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-14 10:26:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6065 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_10_nonroot
 -eps-converted-to.pdf bc_transform_cv_10_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1203.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_10_nonroot-eps-converted-to.pdf, id=463, 34.1275pt x 31.11626p
+<bc_transform_cv_10_nonroot-eps-converted-to.pdf, id=474, 34.1275pt x 31.11626p
 t>
 File: bc_transform_cv_10_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_10_nonroot-eps-converted-to.pdf>
@@ -1341,18 +1345,18 @@ Package pdftex.def Info: bc_transform_cv_10_nonroot-eps-converted-to.pdf used o
 n input line 1203.
 (pdftex.def)             Requested size: 34.5021pt x 31.45992pt.
 Package epstopdf Info: Source file: <bc_transform_cv_09_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10552 bytes
 (epstopdf)             Output file: <bc_transform_cv_09_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 5932 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_09_before-
 eps-converted-to.pdf bc_transform_cv_09_before.eps>
 (epstopdf)             \includegraphics on input line 1207.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_09_before-eps-converted-to.pdf, id=464, 34.1275pt x 31.11626pt
+<bc_transform_cv_09_before-eps-converted-to.pdf, id=475, 34.1275pt x 31.11626pt
 >
 File: bc_transform_cv_09_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_09_before-eps-converted-to.pdf>
@@ -1360,18 +1364,18 @@ Package pdftex.def Info: bc_transform_cv_09_before-eps-converted-to.pdf used on
  input line 1207.
 (pdftex.def)             Requested size: 34.5021pt x 31.45992pt.
 Package epstopdf Info: Source file: <bc_transform_cv_09_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 10595 bytes
 (epstopdf)             Output file: <bc_transform_cv_09_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6070 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_09_root-ep
 s-converted-to.pdf bc_transform_cv_09_root.eps>
 (epstopdf)             \includegraphics on input line 1208.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_09_root-eps-converted-to.pdf, id=465, 34.1275pt x 31.11626pt>
+<bc_transform_cv_09_root-eps-converted-to.pdf, id=476, 34.1275pt x 31.11626pt>
 File: bc_transform_cv_09_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_cv_09_root-eps-converted-to.pdf>
@@ -1379,18 +1383,18 @@ Package pdftex.def Info: bc_transform_cv_09_root-eps-converted-to.pdf used on i
 nput line 1208.
 (pdftex.def)             Requested size: 34.5021pt x 31.45992pt.
 Package epstopdf Info: Source file: <bc_transform_cv_09_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11001 bytes
 (epstopdf)             Output file: <bc_transform_cv_09_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6071 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_cv_09_nonroot
 -eps-converted-to.pdf bc_transform_cv_09_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1210.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_cv_09_nonroot-eps-converted-to.pdf, id=466, 34.1275pt x 31.11626p
+<bc_transform_cv_09_nonroot-eps-converted-to.pdf, id=477, 34.1275pt x 31.11626p
 t>
 File: bc_transform_cv_09_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_cv_09_nonroot-eps-converted-to.pdf>
@@ -1405,18 +1409,18 @@ LaTeX Warning: Float too large for page by 9.1302pt on input line 1219.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 Package epstopdf Info: Source file: <bc_transform_bl_01_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11794 bytes
 (epstopdf)             Output file: <bc_transform_bl_01_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6166 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_01_before-
 eps-converted-to.pdf bc_transform_bl_01_before.eps>
 (epstopdf)             \includegraphics on input line 1231.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_01_before-eps-converted-to.pdf, id=467, 30.1125pt x 29.10875pt
+<bc_transform_bl_01_before-eps-converted-to.pdf, id=478, 30.1125pt x 29.10875pt
 >
 File: bc_transform_bl_01_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_01_before-eps-converted-to.pdf>
@@ -1424,18 +1428,18 @@ Package pdftex.def Info: bc_transform_bl_01_before-eps-converted-to.pdf used on
  input line 1231.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_01_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11979 bytes
 (epstopdf)             Output file: <bc_transform_bl_01_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6186 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_01_root-ep
 s-converted-to.pdf bc_transform_bl_01_root.eps>
 (epstopdf)             \includegraphics on input line 1232.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_01_root-eps-converted-to.pdf, id=468, 30.1125pt x 29.10875pt>
+<bc_transform_bl_01_root-eps-converted-to.pdf, id=479, 30.1125pt x 29.10875pt>
 File: bc_transform_bl_01_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_01_root-eps-converted-to.pdf>
@@ -1443,18 +1447,18 @@ Package pdftex.def Info: bc_transform_bl_01_root-eps-converted-to.pdf used on i
 nput line 1232.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_01_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11954 bytes
 (epstopdf)             Output file: <bc_transform_bl_01_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6196 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_01_nonroot
 -eps-converted-to.pdf bc_transform_bl_01_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1234.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_01_nonroot-eps-converted-to.pdf, id=469, 30.1125pt x 29.10875p
+<bc_transform_bl_01_nonroot-eps-converted-to.pdf, id=480, 30.1125pt x 29.10875p
 t>
 File: bc_transform_bl_01_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_01_nonroot-eps-converted-to.pdf>
@@ -1462,18 +1466,18 @@ Package pdftex.def Info: bc_transform_bl_01_nonroot-eps-converted-to.pdf used o
 n input line 1234.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_12_before.eps>
-(epstopdf)                    date: 2016-12-14 08:42:24
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11774 bytes
 (epstopdf)             Output file: <bc_transform_bl_12_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-14 10:28:10
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6144 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_12_before-
 eps-converted-to.pdf bc_transform_bl_12_before.eps>
 (epstopdf)             \includegraphics on input line 1238.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_12_before-eps-converted-to.pdf, id=470, 30.1125pt x 29.10875pt
+<bc_transform_bl_12_before-eps-converted-to.pdf, id=481, 30.1125pt x 29.10875pt
 >
 File: bc_transform_bl_12_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_12_before-eps-converted-to.pdf>
@@ -1481,18 +1485,18 @@ Package pdftex.def Info: bc_transform_bl_12_before-eps-converted-to.pdf used on
  input line 1238.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_12_root.eps>
-(epstopdf)                    date: 2016-12-14 08:42:24
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11958 bytes
 (epstopdf)             Output file: <bc_transform_bl_12_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-14 10:28:10
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6182 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_12_root-ep
 s-converted-to.pdf bc_transform_bl_12_root.eps>
 (epstopdf)             \includegraphics on input line 1239.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_12_root-eps-converted-to.pdf, id=471, 30.1125pt x 29.10875pt>
+<bc_transform_bl_12_root-eps-converted-to.pdf, id=482, 30.1125pt x 29.10875pt>
 File: bc_transform_bl_12_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_12_root-eps-converted-to.pdf>
@@ -1500,18 +1504,18 @@ Package pdftex.def Info: bc_transform_bl_12_root-eps-converted-to.pdf used on i
 nput line 1239.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_12_nonroot.eps>
-(epstopdf)                    date: 2016-12-14 08:42:24
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11958 bytes
 (epstopdf)             Output file: <bc_transform_bl_12_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-14 10:28:10
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6182 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_12_nonroot
 -eps-converted-to.pdf bc_transform_bl_12_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1241.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_12_nonroot-eps-converted-to.pdf, id=472, 30.1125pt x 29.10875p
+<bc_transform_bl_12_nonroot-eps-converted-to.pdf, id=483, 30.1125pt x 29.10875p
 t>
 File: bc_transform_bl_12_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_12_nonroot-eps-converted-to.pdf>
@@ -1519,18 +1523,18 @@ Package pdftex.def Info: bc_transform_bl_12_nonroot-eps-converted-to.pdf used o
 n input line 1241.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_02_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11827 bytes
 (epstopdf)             Output file: <bc_transform_bl_02_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:31:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6150 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_02_before-
 eps-converted-to.pdf bc_transform_bl_02_before.eps>
 (epstopdf)             \includegraphics on input line 1245.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_02_before-eps-converted-to.pdf, id=473, 30.1125pt x 29.10875pt
+<bc_transform_bl_02_before-eps-converted-to.pdf, id=484, 30.1125pt x 29.10875pt
 >
 File: bc_transform_bl_02_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_02_before-eps-converted-to.pdf>
@@ -1538,18 +1542,18 @@ Package pdftex.def Info: bc_transform_bl_02_before-eps-converted-to.pdf used on
  input line 1245.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_02_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12116 bytes
 (epstopdf)             Output file: <bc_transform_bl_02_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:32:00
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6209 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_02_root-ep
 s-converted-to.pdf bc_transform_bl_02_root.eps>
 (epstopdf)             \includegraphics on input line 1246.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_02_root-eps-converted-to.pdf, id=474, 30.1125pt x 29.10875pt>
+<bc_transform_bl_02_root-eps-converted-to.pdf, id=485, 30.1125pt x 29.10875pt>
 File: bc_transform_bl_02_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_02_root-eps-converted-to.pdf>
@@ -1557,18 +1561,18 @@ Package pdftex.def Info: bc_transform_bl_02_root-eps-converted-to.pdf used on i
 nput line 1246.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_02_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12098 bytes
 (epstopdf)             Output file: <bc_transform_bl_02_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:32:00
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6221 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_02_nonroot
 -eps-converted-to.pdf bc_transform_bl_02_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1248.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_02_nonroot-eps-converted-to.pdf, id=475, 30.1125pt x 29.10875p
+<bc_transform_bl_02_nonroot-eps-converted-to.pdf, id=486, 30.1125pt x 29.10875p
 t>
 File: bc_transform_bl_02_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_02_nonroot-eps-converted-to.pdf>
@@ -1576,18 +1580,18 @@ Package pdftex.def Info: bc_transform_bl_02_nonroot-eps-converted-to.pdf used o
 n input line 1248.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_03_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12082 bytes
 (epstopdf)             Output file: <bc_transform_bl_03_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:00
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6316 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_03_before-
 eps-converted-to.pdf bc_transform_bl_03_before.eps>
 (epstopdf)             \includegraphics on input line 1252.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_03_before-eps-converted-to.pdf, id=476, 30.1125pt x 31.11626pt
+<bc_transform_bl_03_before-eps-converted-to.pdf, id=487, 30.1125pt x 31.11626pt
 >
 File: bc_transform_bl_03_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_03_before-eps-converted-to.pdf>
@@ -1595,18 +1599,18 @@ Package pdftex.def Info: bc_transform_bl_03_before-eps-converted-to.pdf used on
  input line 1252.
 (pdftex.def)             Requested size: 34.5021pt x 35.65567pt.
 Package epstopdf Info: Source file: <bc_transform_bl_03_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12439 bytes
 (epstopdf)             Output file: <bc_transform_bl_03_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:32:00
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6390 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_03_root-ep
 s-converted-to.pdf bc_transform_bl_03_root.eps>
 (epstopdf)             \includegraphics on input line 1253.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_03_root-eps-converted-to.pdf, id=477, 30.1125pt x 31.11626pt>
+<bc_transform_bl_03_root-eps-converted-to.pdf, id=488, 30.1125pt x 31.11626pt>
 File: bc_transform_bl_03_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_03_root-eps-converted-to.pdf>
@@ -1614,18 +1618,18 @@ Package pdftex.def Info: bc_transform_bl_03_root-eps-converted-to.pdf used on i
 nput line 1253.
 (pdftex.def)             Requested size: 34.5021pt x 35.65567pt.
 Package epstopdf Info: Source file: <bc_transform_bl_03_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12465 bytes
 (epstopdf)             Output file: <bc_transform_bl_03_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:32:00
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6408 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_03_nonroot
 -eps-converted-to.pdf bc_transform_bl_03_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1255.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_03_nonroot-eps-converted-to.pdf, id=478, 30.1125pt x 31.11626p
+<bc_transform_bl_03_nonroot-eps-converted-to.pdf, id=489, 30.1125pt x 31.11626p
 t>
 File: bc_transform_bl_03_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_03_nonroot-eps-converted-to.pdf>
@@ -1633,36 +1637,36 @@ Package pdftex.def Info: bc_transform_bl_03_nonroot-eps-converted-to.pdf used o
 n input line 1255.
 (pdftex.def)             Requested size: 34.5021pt x 35.65567pt.
 Package epstopdf Info: Source file: <bc_transform_bl_04_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12314 bytes
 (epstopdf)             Output file: <bc_transform_bl_04_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:00
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6491 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_04_before-
 eps-converted-to.pdf bc_transform_bl_04_before.eps>
 (epstopdf)             \includegraphics on input line 1259.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_04_before-eps-converted-to.pdf, id=479, 31.11626pt x 28.105pt>
+<bc_transform_bl_04_before-eps-converted-to.pdf, id=490, 31.11626pt x 28.105pt>
 File: bc_transform_bl_04_before-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_bl_04_before-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_bl_04_before-eps-converted-to.pdf used on
  input line 1259.
 (pdftex.def)             Requested size: 34.5021pt x 31.16602pt.
 Package epstopdf Info: Source file: <bc_transform_bl_04_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12876 bytes
 (epstopdf)             Output file: <bc_transform_bl_04_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6638 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_04_root-ep
 s-converted-to.pdf bc_transform_bl_04_root.eps>
 (epstopdf)             \includegraphics on input line 1260.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_04_root-eps-converted-to.pdf, id=480, 31.11626pt x 28.105pt>
+<bc_transform_bl_04_root-eps-converted-to.pdf, id=491, 31.11626pt x 28.105pt>
 File: bc_transform_bl_04_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_04_root-eps-converted-to.pdf>
@@ -1670,18 +1674,18 @@ Package pdftex.def Info: bc_transform_bl_04_root-eps-converted-to.pdf used on i
 nput line 1260.
 (pdftex.def)             Requested size: 34.5021pt x 31.16602pt.
 Package epstopdf Info: Source file: <bc_transform_bl_05_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12078 bytes
 (epstopdf)             Output file: <bc_transform_bl_05_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6284 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_05_before-
 eps-converted-to.pdf bc_transform_bl_05_before.eps>
 (epstopdf)             \includegraphics on input line 1266.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_05_before-eps-converted-to.pdf, id=481, 30.1125pt x 29.10875pt
+<bc_transform_bl_05_before-eps-converted-to.pdf, id=492, 30.1125pt x 29.10875pt
 >
 File: bc_transform_bl_05_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_05_before-eps-converted-to.pdf>
@@ -1689,36 +1693,36 @@ Package pdftex.def Info: bc_transform_bl_05_before-eps-converted-to.pdf used on
  input line 1266.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_05_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12512 bytes
 (epstopdf)             Output file: <bc_transform_bl_05_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6434 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_05_root-ep
 s-converted-to.pdf bc_transform_bl_05_root.eps>
 (epstopdf)             \includegraphics on input line 1267.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_05_root-eps-converted-to.pdf, id=482, 31.11626pt x 29.10875pt>
+<bc_transform_bl_05_root-eps-converted-to.pdf, id=493, 31.11626pt x 29.10875pt>
 File: bc_transform_bl_05_root-eps-converted-to.pdf Graphic file (type pdf)
 <use bc_transform_bl_05_root-eps-converted-to.pdf>
 Package pdftex.def Info: bc_transform_bl_05_root-eps-converted-to.pdf used on i
 nput line 1267.
 (pdftex.def)             Requested size: 34.5021pt x 32.2791pt.
 Package epstopdf Info: Source file: <bc_transform_bl_06_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11791 bytes
 (epstopdf)             Output file: <bc_transform_bl_06_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6163 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_06_before-
 eps-converted-to.pdf bc_transform_bl_06_before.eps>
 (epstopdf)             \includegraphics on input line 1273.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_06_before-eps-converted-to.pdf, id=483, 30.1125pt x 28.105pt>
+<bc_transform_bl_06_before-eps-converted-to.pdf, id=494, 30.1125pt x 28.105pt>
 File: bc_transform_bl_06_before-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_06_before-eps-converted-to.pdf>
@@ -1726,18 +1730,18 @@ Package pdftex.def Info: bc_transform_bl_06_before-eps-converted-to.pdf used on
  input line 1273.
 (pdftex.def)             Requested size: 34.5021pt x 32.20512pt.
 Package epstopdf Info: Source file: <bc_transform_bl_06_root.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12092 bytes
 (epstopdf)             Output file: <bc_transform_bl_06_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6217 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_06_root-ep
 s-converted-to.pdf bc_transform_bl_06_root.eps>
 (epstopdf)             \includegraphics on input line 1274.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_06_root-eps-converted-to.pdf, id=484, 31.11626pt x 28.105pt>
+<bc_transform_bl_06_root-eps-converted-to.pdf, id=495, 31.11626pt x 28.105pt>
 File: bc_transform_bl_06_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_06_root-eps-converted-to.pdf>
@@ -1745,18 +1749,18 @@ Package pdftex.def Info: bc_transform_bl_06_root-eps-converted-to.pdf used on i
 nput line 1274.
 (pdftex.def)             Requested size: 34.5021pt x 31.16602pt.
 Package epstopdf Info: Source file: <bc_transform_bl_11_before.eps>
-(epstopdf)                    date: 2016-12-14 08:42:22
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12253 bytes
 (epstopdf)             Output file: <bc_transform_bl_11_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-14 10:28:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6355 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_11_before-
 eps-converted-to.pdf bc_transform_bl_11_before.eps>
 (epstopdf)             \includegraphics on input line 1280.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_11_before-eps-converted-to.pdf, id=485, 30.1125pt x 31.11626pt
+<bc_transform_bl_11_before-eps-converted-to.pdf, id=496, 30.1125pt x 31.11626pt
 >
 File: bc_transform_bl_11_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_11_before-eps-converted-to.pdf>
@@ -1764,18 +1768,18 @@ Package pdftex.def Info: bc_transform_bl_11_before-eps-converted-to.pdf used on
  input line 1280.
 (pdftex.def)             Requested size: 34.5021pt x 35.65567pt.
 Package epstopdf Info: Source file: <bc_transform_bl_11_nonroot.eps>
-(epstopdf)                    date: 2016-12-14 08:42:22
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12736 bytes
 (epstopdf)             Output file: <bc_transform_bl_11_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-14 10:28:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6499 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_11_nonroot
 -eps-converted-to.pdf bc_transform_bl_11_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1281.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_11_nonroot-eps-converted-to.pdf, id=486, 30.1125pt x 31.11626p
+<bc_transform_bl_11_nonroot-eps-converted-to.pdf, id=497, 30.1125pt x 31.11626p
 t>
 File: bc_transform_bl_11_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_11_nonroot-eps-converted-to.pdf>
@@ -1783,18 +1787,18 @@ Package pdftex.def Info: bc_transform_bl_11_nonroot-eps-converted-to.pdf used o
 n input line 1281.
 (pdftex.def)             Requested size: 34.5021pt x 35.65567pt.
 Package epstopdf Info: Source file: <bc_transform_bl_11_root.eps>
-(epstopdf)                    date: 2016-12-14 08:42:22
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12736 bytes
 (epstopdf)             Output file: <bc_transform_bl_11_root-eps-converted-to.p
 df>
-(epstopdf)                    date: 2016-12-14 10:28:58
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6499 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_11_root-ep
 s-converted-to.pdf bc_transform_bl_11_root.eps>
 (epstopdf)             \includegraphics on input line 1283.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_11_root-eps-converted-to.pdf, id=487, 30.1125pt x 31.11626pt>
+<bc_transform_bl_11_root-eps-converted-to.pdf, id=498, 30.1125pt x 31.11626pt>
 File: bc_transform_bl_11_root-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_11_root-eps-converted-to.pdf>
@@ -1802,18 +1806,18 @@ Package pdftex.def Info: bc_transform_bl_11_root-eps-converted-to.pdf used on i
 nput line 1283.
 (pdftex.def)             Requested size: 34.5021pt x 35.65567pt.
 Package epstopdf Info: Source file: <bc_transform_bl_07_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12270 bytes
 (epstopdf)             Output file: <bc_transform_bl_07_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6449 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_07_before-
 eps-converted-to.pdf bc_transform_bl_07_before.eps>
 (epstopdf)             \includegraphics on input line 1287.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_07_before-eps-converted-to.pdf, id=488, 31.11626pt x 29.10875p
+<bc_transform_bl_07_before-eps-converted-to.pdf, id=499, 31.11626pt x 29.10875p
 t>
 File: bc_transform_bl_07_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_07_before-eps-converted-to.pdf>
@@ -1821,18 +1825,18 @@ Package pdftex.def Info: bc_transform_bl_07_before-eps-converted-to.pdf used on
  input line 1287.
 (pdftex.def)             Requested size: 34.5021pt x 32.2791pt.
 Package epstopdf Info: Source file: <bc_transform_bl_07_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12906 bytes
 (epstopdf)             Output file: <bc_transform_bl_07_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:32:02
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6633 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_07_nonroot
 -eps-converted-to.pdf bc_transform_bl_07_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1290.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_07_nonroot-eps-converted-to.pdf, id=489, 31.11626pt x 29.10875
+<bc_transform_bl_07_nonroot-eps-converted-to.pdf, id=500, 31.11626pt x 29.10875
 pt>
 File: bc_transform_bl_07_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_07_nonroot-eps-converted-to.pdf>
@@ -1840,18 +1844,18 @@ Package pdftex.def Info: bc_transform_bl_07_nonroot-eps-converted-to.pdf used o
 n input line 1290.
 (pdftex.def)             Requested size: 34.5021pt x 32.2791pt.
 Package epstopdf Info: Source file: <bc_transform_bl_08_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12014 bytes
 (epstopdf)             Output file: <bc_transform_bl_08_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6307 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_08_before-
 eps-converted-to.pdf bc_transform_bl_08_before.eps>
 (epstopdf)             \includegraphics on input line 1294.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_08_before-eps-converted-to.pdf, id=490, 30.1125pt x 29.10875pt
+<bc_transform_bl_08_before-eps-converted-to.pdf, id=501, 30.1125pt x 29.10875pt
 >
 File: bc_transform_bl_08_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_08_before-eps-converted-to.pdf>
@@ -1859,18 +1863,18 @@ Package pdftex.def Info: bc_transform_bl_08_before-eps-converted-to.pdf used on
  input line 1294.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_08_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12511 bytes
 (epstopdf)             Output file: <bc_transform_bl_08_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:32:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6420 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_08_nonroot
 -eps-converted-to.pdf bc_transform_bl_08_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1297.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_08_nonroot-eps-converted-to.pdf, id=491, 30.1125pt x 29.10875p
+<bc_transform_bl_08_nonroot-eps-converted-to.pdf, id=502, 30.1125pt x 29.10875p
 t>
 File: bc_transform_bl_08_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_08_nonroot-eps-converted-to.pdf>
@@ -1878,18 +1882,18 @@ Package pdftex.def Info: bc_transform_bl_08_nonroot-eps-converted-to.pdf used o
 n input line 1297.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_09_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 11750 bytes
 (epstopdf)             Output file: <bc_transform_bl_09_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6134 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_09_before-
 eps-converted-to.pdf bc_transform_bl_09_before.eps>
 (epstopdf)             \includegraphics on input line 1301.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_09_before-eps-converted-to.pdf, id=492, 30.1125pt x 29.10875pt
+<bc_transform_bl_09_before-eps-converted-to.pdf, id=503, 30.1125pt x 29.10875pt
 >
 File: bc_transform_bl_09_before-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_09_before-eps-converted-to.pdf>
@@ -1897,18 +1901,18 @@ Package pdftex.def Info: bc_transform_bl_09_before-eps-converted-to.pdf used on
  input line 1301.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_09_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12088 bytes
 (epstopdf)             Output file: <bc_transform_bl_09_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:32:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6205 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_09_nonroot
 -eps-converted-to.pdf bc_transform_bl_09_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1304.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_09_nonroot-eps-converted-to.pdf, id=493, 30.1125pt x 29.10875p
+<bc_transform_bl_09_nonroot-eps-converted-to.pdf, id=504, 30.1125pt x 29.10875p
 t>
 File: bc_transform_bl_09_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_09_nonroot-eps-converted-to.pdf>
@@ -1916,18 +1920,18 @@ Package pdftex.def Info: bc_transform_bl_09_nonroot-eps-converted-to.pdf used o
 n input line 1304.
 (pdftex.def)             Requested size: 34.5021pt x 33.35532pt.
 Package epstopdf Info: Source file: <bc_transform_bl_10_before.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12301 bytes
 (epstopdf)             Output file: <bc_transform_bl_10_before-eps-converted-to
 .pdf>
-(epstopdf)                    date: 2016-12-11 16:32:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6418 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_10_before-
 eps-converted-to.pdf bc_transform_bl_10_before.eps>
 (epstopdf)             \includegraphics on input line 1308.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_10_before-eps-converted-to.pdf, id=494, 30.1125pt x 32.12pt>
+<bc_transform_bl_10_before-eps-converted-to.pdf, id=505, 30.1125pt x 32.12pt>
 File: bc_transform_bl_10_before-eps-converted-to.pdf Graphic file (type pdf)
 
 <use bc_transform_bl_10_before-eps-converted-to.pdf>
@@ -1935,18 +1939,18 @@ Package pdftex.def Info: bc_transform_bl_10_before-eps-converted-to.pdf used on
  input line 1308.
 (pdftex.def)             Requested size: 34.5021pt x 36.80585pt.
 Package epstopdf Info: Source file: <bc_transform_bl_10_nonroot.eps>
-(epstopdf)                    date: 2016-12-09 00:28:16
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 12661 bytes
 (epstopdf)             Output file: <bc_transform_bl_10_nonroot-eps-converted-t
 o.pdf>
-(epstopdf)                    date: 2016-12-11 16:32:04
+(epstopdf)                    date: 2018-09-10 14:17:57
 (epstopdf)                    size: 6506 bytes
 (epstopdf)             Command: <repstopdf --outfile=bc_transform_bl_10_nonroot
 -eps-converted-to.pdf bc_transform_bl_10_nonroot.eps>
 (epstopdf)             \includegraphics on input line 1311.
 Package epstopdf Info: Output file is already uptodate.
 
-<bc_transform_bl_10_nonroot-eps-converted-to.pdf, id=495, 30.1125pt x 31.11626p
+<bc_transform_bl_10_nonroot-eps-converted-to.pdf, id=506, 30.1125pt x 31.11626p
 t>
 File: bc_transform_bl_10_nonroot-eps-converted-to.pdf Graphic file (type pdf)
  <use bc_transform_bl_10_nonroot-eps-converted-to.pdf>
@@ -2008,71 +2012,42 @@ Package rerunfilecheck Info: File `pq_tree_enhancement.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1323.
  ) 
 Here is how much of TeX's memory you used:
- 8672 strings out of 492995
- 139434 string characters out of 6132704
+ 8674 strings out of 492995
+ 139455 string characters out of 6132704
  236397 words of memory out of 5000000
- 11946 multiletter control sequences out of 15000+600000
- 15752 words of font info for 59 fonts, out of 8000000 for 9000
+ 11947 multiletter control sequences out of 15000+600000
+ 15920 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,14n,45p,345b,471s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{cite.HSU01} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.HSU99} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.JUNGER97} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.KANT92} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.JTS89} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.OZAWA81} has been referenced but does not exis
-t, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.TARJAN86} has been referenced but does not exi
-st, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.LEC67} has been referenced but does not exist,
- replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.EVEN79} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{cite.BL76} has been referenced but does not exist, 
-replaced by a fixed one
-
-</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
-usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/
-local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/lo
-cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/loca
-l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/
-texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/20
-17/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2017/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2017/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2017/texmf-dis
-t/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2017/texmf
--dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on pq_tree_enhancement.pdf (25 pages, 807312 bytes).
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><
+/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/
+local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/lo
+cal/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/loca
+l/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/
+texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
+ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2017/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2017/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2017/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017/texmf-di
+st/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2017/texm
+f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on pq_tree_enhancement.pdf (25 pages, 825792 bytes).
 PDF statistics:
- 974 PDF objects out of 1000 (max. 8388607)
- 666 compressed objects within 7 object streams
+ 987 PDF objects out of 1000 (max. 8388607)
+ 678 compressed objects within 7 object streams
  84 named destinations out of 1000 (max. 500000)
  495 words of extra memory for PDF output out of 10000 (max. 10000000)
 

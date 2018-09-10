@@ -344,9 +344,9 @@ the subgraph is biconnected.
 [bl_planarity_tester.hpp](include/undirected/bl_planarity_tester.hpp) :
 Tests if a given biconnected graph is planar, and finds a combinatorial planar
 embedding of a given planar biconnected graph. [BL76]
-I believe the original [BL76] is incorrect as it is incapable of handling 
-certain arrangement of pertinent frontiers. This may be the only correct
-implementation of PQ-tree planarity algorithm available so far.
+The original [BL76] algorithm requires s and t to be adjacent as in {s,t}.
+Wailea's implementation works for any node pair as long as the graph is
+biconnected. A relevant technical report is found [here](docs/pq_tree_enhancement/pq_tree_enhancement.pdf)
 
 
 * **PlanarDualGraphMaker**

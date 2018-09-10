@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2017)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: pq_tree_enhancement.aux
+The style file: abbrvurl.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: pq_tree_enhancement.bib
+Warning--can't use both author and editor fields in EVEN79
+Warning--can't use both author and editor fields in JUNGER97
+Warning--empty booktitle in LEC67
+Warning--can't use both author and editor fields in OZAWA81
+You've used 10 entries,
+            2849 wiz_defined-function locations,
+            707 strings with 6911 characters,
+and the built_in function-call counts, 4740 in all, are:
+= -- 515
+> -- 136
+< -- 4
++ -- 52
+- -- 38
+* -- 263
+:= -- 684
+add.period$ -- 35
+call.type$ -- 10
+change.case$ -- 47
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 146
+empty$ -- 450
+format.name$ -- 38
+if$ -- 1237
+int.to.chr$ -- 0
+int.to.str$ -- 10
+missing$ -- 12
+newline$ -- 56
+num.names$ -- 20
+pop$ -- 84
+preamble$ -- 1
+purify$ -- 39
+quote$ -- 0
+skip$ -- 345
+stack$ -- 0
+substring$ -- 246
+swap$ -- 43
+text.length$ -- 4
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 34
+warning$ -- 4
+while$ -- 33
+width$ -- 12
+write$ -- 128
+(There were 4 warnings)

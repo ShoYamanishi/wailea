@@ -314,6 +314,10 @@ bool BLTree::templateL1(BLTreeNode& X, reductionType reduction)
         X.setFullInParent();
     }
 
+    if (mCollectingEdges) {
+        assignGraphEdge()
+    }
+
     return true;
 }
 
@@ -342,6 +346,13 @@ bool BLTree::templateP1(BLTreeNode& X, reductionType reduction)
 //cerr << "templateP1:[" << X.mNodeNum << "]\n";
     X.mPertinentType = BLTreeNode::Full;
 
+    if (mCollectingEdges) {
+
+        resetGraphEdges();
+        X.collectGraphEdges(X.mFullChildren);
+
+    }
+
     if (reduction == NOT_FINAL_REDUCTION) {
         X.setFullInParent();
     }
@@ -366,7 +377,7 @@ bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot)
 {
 
     if ( !( X.mNodeType == BLTreeNode::PType          &&
-            X.mFullChildren.size() >= 2                 &&
+            X.mFullChildren.size() >= 2               &&
             X.mFullChildren.size() < X.mChildrenCount &&
             isNil(X.mSinglyPartialChild1)             &&
             isNil(X.mSinglyPartialChild2)             && 
@@ -383,9 +394,18 @@ bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     unlinkFromPTypeParent(fullChildren);
 
-    pertinentRoot = makePNode(fullChildren);
+    pertinentRootIt = makePNode(fullChildren);
 
-    toNodeRef(pertinentRoot).linkToPTypeParent(X);
+    auto& pertinentRoot = toNodeRef(pertinentRootIt);
+
+    pertinentRoot.linkToPTypeParent(X);
+
+    if (mCollectingEdges) {
+
+        pertinentRoot.resetGraphEdges();
+        pertinentRoot.collectGraphEdges(fullChildren);
+
+    }
 
     return true;
 }
@@ -490,9 +510,9 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
         fullIt = *(fullChildren.begin());
     }
 
-    // We know there is at least one (empty) children left.
+    // We know there is at least one (empty) child left.
     if (X.mChildrenCount > 1) {
-
+        // More than one empty children.
         auto  SPIt = makeQNode();
         auto& SP   = toNodeRef(SPIt);
         auto& P    = toNodeRef(X.mParent);
@@ -589,34 +609,23 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
             }
         }
 
+        // Full node is on EndChild1 of SP.
         SP.addTwoInitialChildrenToQType(fullIt, X.backIt());
         earlyOut = false;
         if (!SP.setSinglyPartialInParent()){
             earlyOut = true;
         }
 
-        if (mTrackQFlippings) {
+        if (mCollectingEdges) {
 
-            // Transfer the orientation information from X to C.
-            SP.mOrientInNorm.splice(SP.mOrientInNorm.end(), X.mOrientInNorm);
-            SP.mOrientInReversed.splice(
-                               SP.mOrientInReversed.end(),X.mOrientInReversed);
-            SP.mOrientOutNorm.splice(
-                                    SP.mOrientOutNorm.end(), X.mOrientOutNorm);
-            SP.mOrientOutReversed.splice(
-                            SP.mOrientOutReversed.end(), X.mOrientOutReversed);
-            SP.mAssumedOrientInNorm.splice(
-                        SP.mAssumedOrientInNorm.end(), X.mAssumedOrientInNorm);
-            SP.mAssumedOrientInReversed.splice(
-                SP.mAssumedOrientInReversed.end(), X.mAssumedOrientInReversed);
-            SP.mAssumedOrientOutNorm.splice(
-                      SP.mAssumedOrientOutNorm.end(), X.mAssumedOrientOutNorm);
-            SP.mAssumedOrientOutReversed.splice(
-              SP.mAssumedOrientOutReversed.end(), X.mAssumedOrientOutReversed);
+            SP.resetGraphEdges();
+            // Assuming from EndChild1 toward EndChild2
+            SP.collectGraphEdges(fullChildren);
+
         }
     }
     else {
-
+        // One empty child.
         auto& E = toNodeRef(*(X.mChildren.begin()));
         E.unlinkFromPTypeParent();
         X.mNodeType      = BLTreeNode::QType;
@@ -628,13 +637,17 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
             earlyOut = true;
 
         }
+
+        if (mCollectingEdges) {
+
+            X.resetGraphEdges();
+            X.collectGraphEdges(fullChildren);
+
+        }
     }
 
     return true;
 }
-
-
-
 
 
 /**
@@ -700,6 +713,13 @@ bool BLTree::templateP4(BLTreeNode& X, node_list_it_t& pertinentRoot)
     }
 
     pertinentRoot = partialIt;
+
+
+    if (mCollectingEdges) {
+
+        Partial.collectGraphEdgesOnFullSideOfQ(fullChildren);
+
+    }
 
     return true;
 }
@@ -955,27 +975,12 @@ bool BLTree::templateP5(BLTreeNode& X, bool& earlyOut)
         if (!SP.setSinglyPartialInParent()){
             earlyOut = true;
         }
+    }
 
-        if (mTrackQFlippings) {
+    if (mCollectingEdges) {
 
-            // Transfer the orientation information from X to C.
-            SP.mOrientInNorm.splice(SP.mOrientInNorm.end(), X.mOrientInNorm);
-            SP.mOrientInReversed.splice(
-                               SP.mOrientInReversed.end(),X.mOrientInReversed);
-            SP.mOrientOutNorm.splice(
-                                    SP.mOrientOutNorm.end(), X.mOrientOutNorm);
-            SP.mOrientOutReversed.splice(
-                            SP.mOrientOutReversed.end(), X.mOrientOutReversed);
-            SP.mAssumedOrientInNorm.splice(
-                        SP.mAssumedOrientInNorm.end(), X.mAssumedOrientInNorm);
-            SP.mAssumedOrientInReversed.splice(
-                SP.mAssumedOrientInReversed.end(), X.mAssumedOrientInReversed);
-            SP.mAssumedOrientOutNorm.splice(
-                      SP.mAssumedOrientOutNorm.end(), X.mAssumedOrientOutNorm);
-            SP.mAssumedOrientOutReversed.splice(
-              SP.mAssumedOrientOutReversed.end(), X.mAssumedOrientOutReversed);
+        SP.collectGraphEdgesOnFullSideOfQ(fullChildren);
 
-        }
     }
 
     return true;
@@ -1030,6 +1035,10 @@ bool BLTree::templateP6(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     }
 
+    if (mCollectingEdges) {
+        PartialBase.collectGraphEdgesOnFullSideOfQ(fullChildren);
+    }
+
     PartialAbsorbed.unlinkFromPTypeParent();
 
     concatenateOneSinglyPartialToTheOther(
@@ -1044,6 +1053,8 @@ bool BLTree::templateP6(BLTreeNode& X, node_list_it_t& pertinentRoot)
     PartialBase.mPertinentType = BLTreeNode::DoublyPartial;
 
     pertinentRoot = partialItBase;
+
+
 
     return true;
 }
@@ -1086,6 +1097,13 @@ void BLTree::concatenateOneSinglyPartialToTheOther(
 
         absorbedFullEndIt  = Absorbed.mEndChild2;
         absorbedEmptyEndIt = Absorbed.mEndChild1;
+
+    }
+
+
+    if (mCollectingEdges) {
+
+        Main.collectGraphEdgesFromSPNode(Absorbed);
 
     }
 
@@ -1312,7 +1330,7 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
         return templateP7ReuseX(X, earlyOut);
     }
 
-    list<node_list_it_t> fullChildren;  // Not used.                            
+    list<node_list_it_t> fullChildren;  // Not used.
     list<node_list_it_t> emptyChildren;
 
     X.sortFullAndEmptyChildrenOnPNode(fullChildren, emptyChildren);
@@ -1326,7 +1344,10 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
 
     node_list_it_t emptyIt;
     if (emptyChildren.size() > 1) {
-        // Must not come here.                                                  
+        // Must not come here.
+#ifdef UNIT_TESTS
+        cerr << "ERROR template7 CKP1\n";
+#endif
         emptyIt = makePNode(emptyChildren);
         toNodeRef(emptyIt).linkToQTypeParentToEnd(PartialBase, EMPTY_END);
 

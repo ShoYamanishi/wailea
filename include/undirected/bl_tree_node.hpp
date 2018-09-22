@@ -159,6 +159,141 @@ class BLTreeNode : public Node {
     inline void assumeGraphNodeOrientationsFrom(
                         BLTreeNode& P, BLTree::scanDirectionType type);
 
+    inline void resetGraphEdges() {
+
+        mCollectedEdges.clear();
+
+    }
+
+
+    inline void collectGraphEdges(list<node_list_it_t>& children) {
+
+        for (auto cit : children) {
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+            mCollectedEdges.splice( mCollectedEdges.end(), C.mCollectedEdges );
+            C.mCollectedEdges.clear();
+
+        }
+    }
+
+
+    inline void collectGraphEdgesOnFullSideOfQ(list<node_list_it_t>& children)
+    {
+        if ( mNodeType == QType ) {
+
+            if ( isEndChild1Full() ) {
+
+                // Append the edges to the front of the list
+                for (auto rcit  = children.rbegin(); 
+                          rcit != children.rend();
+                          rcit++                        ) {
+
+                    auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+                    mCollectedEdges.splice( mCollectedEdges.begin(),
+                                            C.mCollectedEdges        );
+                    C.mCollectedEdges.clear();
+                }
+            }
+            else {
+                // Append the edges to the back of the list
+                for ( auto cit  = children.begin(); 
+                           cit != children.end();
+                           cit++                    ) {
+
+                    auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+                    mCollectedEdges.splice( mCollectedEdges.end(),
+                                            C.mCollectedEdges      );
+                    C.mCollectedEdges.clear();
+                }
+            }
+        }
+        else {
+#ifdef UNIT_TESTS  
+      cerr << "ERROR collectGraphEdgesOnFullSideOfQ() CKP1\n";
+#endif
+        }
+
+    }
+
+    inline void collectGraphEdgesFromSPNode(BLTreeNode& SP)
+    {
+        if ( mNodeType == QType || SP.mNodeType == QType) {
+
+            if ( isEndChild1Full() ) {
+                if ( SP.isEndChild1Full() ) {
+                    for ( auto cit  = children.begin(); 
+                               cit != children.end();
+                               cit++                    ) {
+
+                        auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+                        mCollectedEdges.splice( mCollectedEdges.begin(),
+                                                C.mCollectedEdges        );
+                        C.mCollectedEdges.clear();
+                    }
+                }
+                else {
+                    for ( auto rcit  = children.rbegin(); 
+                               rcit != children.rend();
+                               rcit++                    ) {
+
+                        auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+                        mCollectedEdges.splice( mCollectedEdges.begin(),
+                                                C.mCollectedEdges        );
+                        C.mCollectedEdges.clear();
+                    }
+                }
+            }
+            else {
+                if ( SP.isEndChild1Full() ) {
+                    for ( auto cit  = children.begin(); 
+                               cit != children.end();
+                               cit++                    ) {
+
+                        auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+                        mCollectedEdges.splice( mCollectedEdges.end(),
+                                                C.mCollectedEdges        );
+                        C.mCollectedEdges.clear();
+                    }
+                }
+                else {
+                    for ( auto rcit  = children.rbegin(); 
+                               rcit != children.rend();
+                               rcit++                    ) {
+
+                        auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+                        mCollectedEdges.splice( mCollectedEdges.end(),
+                                                C.mCollectedEdges        );
+                        C.mCollectedEdges.clear();
+                    }
+                }
+            }
+        }
+        else {
+#ifdef UNIT_TESTS  
+      cerr << "ERROR collectGraphEdgesFromSPNode() CKP2\n";
+#endif
+        }
+
+    }
+
+    inline void assignGraphEdge() {
+
+        mCollectedEdges.clear();
+        mCollectedEdges.push_back(mGraphEdge);
+
+    }
+
+
+
+
+
 #ifdef UNIT_TESTS
   public:
 #else
@@ -476,6 +611,7 @@ class BLTreeNode : public Node {
     list<node_list_it_t> mAssumedOrientOutNorm;
     list<node_list_it_t> mAssumedOrientOutReversed;
 
+    list<edge_list_it_t> mCollectedEdges;
 
   friend class BLTree;
   friend class BLPlanarityTester;

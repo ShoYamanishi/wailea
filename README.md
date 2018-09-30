@@ -140,6 +140,8 @@ are shown below.
 
 ![alt text](docs/readme/readme_legends.png "legends")
 
+## Samples
+
 [Input file](samples/sample_original_input_05.txt)
 
 ![alt text](docs/readme/tree_01.png    "sample tree")

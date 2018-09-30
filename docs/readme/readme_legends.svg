@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.2 5c3e80d, 2017-08-06"
-   sodipodi:docname="readme_legends.svg">
+   sodipodi:docname="readme_legends.svg"
+   inkscape:export-filename="/Users/shoichiroyamanishi/Desktop/readme_legends.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="244.85686"
-     inkscape:cy="1006.8937"
+     inkscape:zoom="1.4"
+     inkscape:cx="217.07766"
+     inkscape:cy="897.3614"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -87,48 +90,48 @@
        width="83.377251"
        height="20.809986"
        x="7.5595236"
-       y="31.093748" />
+       y="32.983627" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="11.528274"
-       y="30.148808"
+       y="32.038689"
        id="text829"><tspan
          sodipodi:role="line"
          id="tspan827"
          x="11.528274"
-         y="30.148808"
+         y="32.038689"
          style="stroke-width:0.26458332">Edge Label</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="10.514548"
-       y="36.131577"
+       y="38.021458"
        id="text833"><tspan
          sodipodi:role="line"
          id="tspan831"
          x="10.514548"
-         y="36.131577"
+         y="38.021458"
          style="stroke-width:0.26458332">{ u, v } : Edge ID</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="11.703831"
-       y="41.247688"
+       y="43.137569"
        id="text837"><tspan
          sodipodi:role="line"
          id="tspan835"
          x="11.703831"
-         y="41.247688"
+         y="43.137569"
          style="stroke-width:0.26458332">Side 1 : The edge label near the incident vertex 1</tspan></text>
     <text
        id="text841"
-       y="45.123096"
+       y="47.012978"
        x="11.703831"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        xml:space="preserve"><tspan
          style="stroke-width:0.26458332"
-         y="45.123096"
+         y="47.012978"
          x="11.703831"
          id="tspan839"
          sodipodi:role="line">Side 2 : The edge label near the incident vertex 2</tspan></text>
@@ -136,12 +139,75 @@
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="11.75986"
-       y="49.107513"
+       y="50.997395"
        id="text845"><tspan
          sodipodi:role="line"
          id="tspan843"
          x="11.75986"
-         y="49.107513"
+         y="50.997395"
          style="stroke-width:0.26458332">Mid     : The edge label in the middle of the edge</tspan></text>
+    <ellipse
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#9ae0ff;stroke-width:0.74441463;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path866"
+       cx="16.37026"
+       cy="65.076874"
+       rx="8.4297342"
+       ry="5.0888658" />
+    <text
+       id="text876"
+       y="64.535538"
+       x="10.321629"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       xml:space="preserve"><tspan
+         style="stroke-width:0.26458332"
+         y="64.535538"
+         x="10.321629"
+         id="tspan874"
+         sodipodi:role="line">Source</tspan><tspan
+         style="stroke-width:0.26458332"
+         y="68.063316"
+         x="10.321629"
+         sodipodi:role="line"
+         id="tspan882">Node ID</tspan></text>
+    <path
+       style="fill:#004c75;fill-opacity:1;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 25.25697,65.010049 h 35.012306 v 3.34087 l 5.656136,-3.265572 -5.643176,-3.353332 -0.01296,3.278034"
+       id="path878"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccc" />
+    <ellipse
+       ry="5.0888658"
+       rx="8.4297342"
+       cy="65.076874"
+       cx="75.169556"
+       id="ellipse884"
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#9ae0ff;stroke-width:0.74441463;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="69.120926"
+       y="64.535538"
+       id="text890"><tspan
+         sodipodi:role="line"
+         id="tspan886"
+         x="69.120926"
+         y="64.535538"
+         style="stroke-width:0.26458332">  Sink</tspan><tspan
+         id="tspan888"
+         sodipodi:role="line"
+         x="69.120926"
+         y="68.063316"
+         style="stroke-width:0.26458332">Node ID</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52777767px;line-height:1;font-family:'.Helvetica LT MM';-inkscape-font-specification:'.Helvetica LT MM';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="28.537201"
+       y="68.513397"
+       id="text894"><tspan
+         sodipodi:role="line"
+         id="tspan892"
+         x="28.537201"
+         y="68.513397"
+         style="stroke-width:0.26458332">Directed Edge</tspan></text>
   </g>
 </svg>

@@ -315,9 +315,11 @@ bool BLTree::templateL1(BLTreeNode& X, reductionType reduction)
     }
 
     if (mCollectingEdges) {
-        assignGraphEdge()
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
+        X.mCollectedEdges.push_back(X.mGraphEdge);
     }
-
+//cerr << "templateL1 END\n";
     return true;
 }
 
@@ -348,15 +350,22 @@ bool BLTree::templateP1(BLTreeNode& X, reductionType reduction)
 
     if (mCollectingEdges) {
 
-        resetGraphEdges();
-        X.collectGraphEdges(X.mFullChildren);
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
 
+        for (auto cit : X.mFullChildren) {
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
     }
 
     if (reduction == NOT_FINAL_REDUCTION) {
         X.setFullInParent();
     }
-
+//cerr << "templateP1 END\n";
     return true;
 }
 
@@ -373,7 +382,7 @@ bool BLTree::templateP1(BLTreeNode& X, reductionType reduction)
  *   Pertinent type : N/A (the root is Full)
  *   This is a final reduction.
  */
-bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot)
+bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRootIt)
 {
 
     if ( !( X.mNodeType == BLTreeNode::PType          &&
@@ -402,11 +411,16 @@ bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     if (mCollectingEdges) {
 
-        pertinentRoot.resetGraphEdges();
-        pertinentRoot.collectGraphEdges(fullChildren);
+        for (auto cit : fullChildren) {
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
 
+            pertinentRoot.mCollectedEdges.splice( 
+                                 pertinentRoot.mCollectedEdges.end(), 
+                                 C.mCollectedEdges                    );
+            C.mCollectedEdges.clear();
+        }
     }
-
+//cerr << "templateP2 END\n";
     return true;
 }
 
@@ -618,10 +632,17 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
 
         if (mCollectingEdges) {
 
-            SP.resetGraphEdges();
-            // Assuming from EndChild1 toward EndChild2
-            SP.collectGraphEdges(fullChildren);
+            SP.mCollectedEdges.clear();
+            SP.mCollectedEdgesSide2.clear();
 
+            for (auto cit : fullChildren) {
+
+                auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+                SP.mCollectedEdges.splice( SP.mCollectedEdges.end(), 
+                                           C.mCollectedEdges        );
+                C.mCollectedEdges.clear();
+            }
         }
     }
     else {
@@ -640,12 +661,21 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
 
         if (mCollectingEdges) {
 
-            X.resetGraphEdges();
-            X.collectGraphEdges(fullChildren);
+            X.mCollectedEdges.clear();
+            X.mCollectedEdgesSide2.clear();
 
+            for (auto cit : fullChildren) {
+
+                auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                C.mCollectedEdges.clear();
+            }
         }
     }
 
+//cerr << "templateP3 END\n";
     return true;
 }
 
@@ -717,11 +747,47 @@ bool BLTree::templateP4(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     if (mCollectingEdges) {
 
-        Partial.collectGraphEdgesOnFullSideOfQ(fullChildren);
+        collectGraphEdgesP4( Partial, fullChildren );
+    }
+//cerr << "templateP4 END\n";
+    return true;
+}
 
+
+void BLTree::collectGraphEdgesP4 (
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
     }
 
-    return true;
 }
 
 
@@ -979,11 +1045,50 @@ bool BLTree::templateP5(BLTreeNode& X, bool& earlyOut)
 
     if (mCollectingEdges) {
 
-        SP.collectGraphEdgesOnFullSideOfQ(fullChildren);
+        collectGraphEdgesP5( SP, fullChildren );
 
     }
-
+//cerr << "templateP5 END\n";
     return true;
+}
+
+
+void BLTree::collectGraphEdgesP5 (
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+cerr << "P5 ckp1\n";
+printEdgeList(X.mCollectedEdges);
+    if ( X.isEndChild1Full() ) {
+cerr << "P5 ckp2\n";
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+cerr << "P5 ckp3\n";
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+cerr << "P5 ckp4\n";
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+cerr << "P5 ckp5\n";
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
+cerr << "P5 ckp6\n";
+printEdgeList(X.mCollectedEdges);
 }
 
 
@@ -1036,7 +1141,9 @@ bool BLTree::templateP6(BLTreeNode& X, node_list_it_t& pertinentRoot)
     }
 
     if (mCollectingEdges) {
-        PartialBase.collectGraphEdgesOnFullSideOfQ(fullChildren);
+
+        collectGraphEdgesP6Step1( PartialBase, fullChildren );
+
     }
 
     PartialAbsorbed.unlinkFromPTypeParent();
@@ -1055,8 +1162,45 @@ bool BLTree::templateP6(BLTreeNode& X, node_list_it_t& pertinentRoot)
     pertinentRoot = partialItBase;
 
 
-
+//cerr << "templateP6 END\n";
     return true;
+}
+
+
+void BLTree::collectGraphEdgesP6Step1(
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
+
 }
 
 
@@ -1103,7 +1247,69 @@ void BLTree::concatenateOneSinglyPartialToTheOther(
 
     if (mCollectingEdges) {
 
-        Main.collectGraphEdgesFromSPNode(Absorbed);
+        if (type==FULL_END) {
+            // Called by P6
+            if (( Main.isEndChild1Full() &&  Absorbed.isEndChild1Full() )||
+                (!Main.isEndChild1Full() && !Absorbed.isEndChild1Full() )   ){
+                Absorbed.mCollectedEdges.reverse();
+            }
+            
+            if ( Main.isEndChild1Full() ) {
+                Main.mCollectedEdges.splice( Main.mCollectedEdges.begin(), 
+                                             Absorbed.mCollectedEdges     );
+            }
+            else {
+                Main.mCollectedEdges.splice( Main.mCollectedEdges.end(), 
+                                             Absorbed.mCollectedEdges     );
+            }
+            Absorbed.mCollectedEdges.clear();
+        }
+
+        if (type==EMPTY_END) {
+
+            // Called by P7
+            if (Main.isEndChild1Full()) {
+                if (Absorbed.isEndChild1Full()) {
+                    Absorbed.mCollectedEdges.reverse();
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+                else {
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+            }
+
+            else {
+                if (Absorbed.isEndChild1Full()) {
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Main.mCollectedEdges               );
+                    Main.mCollectedEdges.clear();
+
+                    Main.mCollectedEdges.splice( 
+                                         Main.mCollectedEdges.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+                else {
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Main.mCollectedEdges               );
+                    Main.mCollectedEdges.clear();
+
+                    Absorbed.mCollectedEdges.reverse();
+                    Main.mCollectedEdges.splice( 
+                                         Main.mCollectedEdges.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+            }
+        }
 
     }
 
@@ -1330,7 +1536,7 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
         return templateP7ReuseX(X, earlyOut);
     }
 
-    list<node_list_it_t> fullChildren;  // Not used.
+    list<node_list_it_t> fullChildren;
     list<node_list_it_t> emptyChildren;
 
     X.sortFullAndEmptyChildrenOnPNode(fullChildren, emptyChildren);
@@ -1359,14 +1565,20 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
 
     }
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP7Step1(PartialBase, fullChildren);
+
+    }
+
     size_t savedPartialAbsorbedPertinentLeavesCount
                                       = PartialAbsorbed.mPertinentLeavesCount;
 
     PartialAbsorbed.unlinkFromPTypeParent();
 
+
     concatenateOneSinglyPartialToTheOther(
                                       PartialBase, PartialAbsorbed, EMPTY_END);
-
 
     X.mPertinentLeavesCount += savedPartialAbsorbedPertinentLeavesCount;
     X.mSinglyPartialChild1 = nil();
@@ -1398,10 +1610,46 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
         X.mPertinentType = BLTreeNode::CDPartial;
 
     }
-
+//cerr << "templateP7 END\n";
     return true;
 }
 
+
+void BLTree::collectGraphEdgesP7Step1(
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
+
+}
 
 
 bool BLTree::templateP7ReuseX(BLTreeNode& X, bool& earlyOut)
@@ -1518,6 +1766,12 @@ bool BLTree::templateP7ReuseX(BLTreeNode& X, bool& earlyOut)
         }
     }
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP7Step1(PartialBase, fullChildren);
+
+    }
+
     X.linkToQTypeParentToEnd(PartialBase, EMPTY_END);
     concatenateOneSinglyPartialToTheOther(
                                       PartialBase, PartialAbsorbed, EMPTY_END);
@@ -1589,6 +1843,33 @@ bool BLTree::templateP8(BLTreeNode& X, reductionType reduction, bool& earlyOut)
 
     }
 
+    if (mCollectingEdges) {
+
+        // Full children, and then End1 of CDPartial
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
+
+        for (auto cit : X.mFullChildren) {
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges       );
+            C.mCollectedEdges.clear();
+        }
+
+        auto& CD = toNodeRef(X.mCDPartialChild);
+
+        X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                  CD.mCollectedEdges        );
+        CD.mCollectedEdges.clear();
+
+        X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.begin(),
+                                       CD.mCollectedEdgesSide2         );
+        CD.mCollectedEdgesSide2.clear();
+
+    }
+
+//cerr << "templateP8 END\n";
     return true;
 }
 
@@ -1619,6 +1900,26 @@ bool BLTree::templateQ1(BLTreeNode& X, reductionType reduction)
 
     }
 
+    if (mCollectingEdges) {
+
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
+
+        node_list_it_t prevIt = nil();
+        node_list_it_t curIt  = X.mEndChild1;
+
+        while (!isNil(curIt)) {
+
+            auto& C = toNodeRef(curIt);
+
+            X.mCollectedEdges.splice( 
+                                  X.mCollectedEdges.end(), C.mCollectedEdges );
+            C.mCollectedEdges.clear();
+
+            advanceSib(prevIt, curIt);
+        }
+    }
+
     if (mTrackQFlippings) {
 
         // Sweep all the children (full), collect the node orientation
@@ -1626,6 +1927,7 @@ bool BLTree::templateQ1(BLTreeNode& X, reductionType reduction)
         transferGraphNodeOrientationsQ1(X);
 
     }
+//cerr << "templateQ1 END\n";
     return true;
 }
 
@@ -1723,11 +2025,8 @@ bool BLTree::templateQ2(BLTreeNode& X, reductionType reduction, bool& earlyOut)
 
 //cerr << "templateQ2:[" << X.mNodeNum << "]\n";
 
-
     node_list_it_t partialIt = nil();
-
     if (!isNil(X.mSinglyPartialChild1)) {
-
         partialIt = X.mSinglyPartialChild1;
     }
     else if (!isNil(X.mSinglyPartialChild2)) {
@@ -1735,31 +2034,26 @@ bool BLTree::templateQ2(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         partialIt = X.mSinglyPartialChild2;
     }
 
-    if (mTrackQFlippings) {
+    if (mCollectingEdges) {
+        collectGraphEdgesQ2(X, partialIt);
+    }
 
+    if (mTrackQFlippings) {
         // Scan the full children, collect the node orientation information
         // and transfer them to X.
         transferGraphNodeOrientationsQ2(X, partialIt);
-
     }
 
     if (!isNil(partialIt)) {
-
         flattenSinglyPartialChildToQNode(X, partialIt, NORMAL_REDUCTION);
-
     }
-
     earlyOut = false;
     X.mPertinentType = BLTreeNode::SinglyPartial;
-
     if (reduction == NOT_FINAL_REDUCTION) {
-
         if (!X.setSinglyPartialInParent()) {
-
             earlyOut = true;
         }
     }    
-
     return true;
 }
 
@@ -1829,6 +2123,79 @@ bool BLTree::checkSequenceQ2(BLTreeNode& X)
 
     return X.mPertinentChildrenCount == pertinentChildrenFound;
 
+}
+
+
+void BLTree::collectGraphEdgesQ2(BLTreeNode& X, node_list_it_t partialIt)
+{
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+    auto& XEnd1 = toNodeRef(X.mEndChild1);
+    auto& XEnd2 = toNodeRef(X.mEndChild2);
+    if ( XEnd1.isFull() || (XEnd1.isSinglyPartial() && XEnd2.isEmpty()) ) {
+        node_list_it_t prevIt = nil();
+        node_list_it_t curIt = X.mEndChild1;
+        while (!isNil(curIt)) {
+            auto& C = toNodeRef(curIt);
+            if (C.isEmpty()) {
+                break;
+            }
+            if ( curIt == partialIt ) {
+                auto& CEnd1 = toNodeRef(C.mEndChild1);
+                if ( CEnd1.isFull() ) {
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                }
+                else {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                }
+            }
+            else {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges      );
+            }
+            C.mCollectedEdges.clear();
+            advanceSib(prevIt, curIt);
+        }
+    }
+    else {
+        node_list_it_t prevIt = nil();
+        node_list_it_t curIt = X.mEndChild2;
+
+        while (!isNil(curIt)) {
+            auto& C = toNodeRef(curIt);
+            if (C.isEmpty()) {
+                break;
+            }
+            advanceSib(prevIt, curIt);
+        }
+
+        std::swap(curIt, prevIt);
+
+        while (!isNil(curIt)) {
+            auto& C = toNodeRef(curIt);
+            if ( curIt == partialIt ) {
+                auto& CEnd1 = toNodeRef(C.mEndChild1);
+                if ( CEnd1.isFull() ) {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                }
+                else {
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                }
+            }
+            else {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges      );
+            }
+            C.mCollectedEdges.clear();
+            advanceSib(prevIt, curIt);
+        }
+    }
 }
 
 
@@ -2165,6 +2532,12 @@ bool BLTree::templateQ3(BLTreeNode& X)
     }
 //cerr << "templateQ3:[" << X.mNodeNum << "]\n";
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesQ3(X);
+
+    }
+
     if (mTrackQFlippings) {
 
         transferGraphNodeOrientationsQ3(X);
@@ -2186,9 +2559,10 @@ bool BLTree::templateQ3(BLTreeNode& X)
     }
 
     X.mPertinentType = BLTreeNode::DoublyPartial;
-
+//cerr << "templateQ3 END\n";
     return true;
 }
+
 
 
 bool BLTree::checkSequenceQ3(BLTreeNode& X)
@@ -2282,11 +2656,229 @@ bool BLTree::checkSequenceQ3(BLTreeNode& X)
 }
 
 
+void BLTree::collectGraphEdgesQ3(BLTreeNode& X)
+{
+    if (X.mNodeType == BLTreeNode::QType) {
+
+        collectGraphEdgesQ3OnRealRoot(X);
+
+    }
+    else {
+
+        collectGraphEdgesQ3OnVirtualRoot(X);
+
+    }
+}
+
+
+void BLTree::collectGraphEdgesQ3OnRealRoot(BLTreeNode& X)
+{
+cerr << "Q3OnRealRoot ckp1\n";
+printEdgeList(X.mCollectedEdges);
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+
+    node_list_it_t prevIt, curIt;
+
+    auto& XEnd1 = toNodeRef(X.mEndChild1);
+
+    if ( XEnd1.isFull() || XEnd1.isSinglyPartial() ) {
+        prevIt = nil();
+        curIt  = X.mEndChild1;
+    }
+    else {
+        prevIt = nil();
+        curIt  = X.mEndChild2;
+        while (!isNil(curIt)) {
+
+            auto& C = toNodeRef(curIt);
+            if (C.isEmpty()) {
+                break;
+            }
+
+            advanceSib(prevIt, curIt);                
+        }
+        std::swap(prevIt, curIt);
+    }
+
+    bool first = true;
+    while (!isNil(curIt)) {
+cerr << "ckp2\n";
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+
+        if( (X.mSinglyPartialChild1 == curIt) || 
+            (X.mSinglyPartialChild2 == curIt)   ) {
+
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+                
+            if (first) {
+                if (CEnd1.isFull()) {
+cerr << "ckp3\n";
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+printEdgeList(X.mCollectedEdges);
+                }
+                else {
+cerr << "ckp4\n";
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                }
+            }
+            else {
+
+                if (CEnd1.isFull()) {
+cerr << "ckp5\n";
+                    X.mCollectedEdges.splice( 
+                                       X.mCollectedEdges.end(), 
+                                       C.mCollectedEdges        );
+                }
+                else {
+cerr << "ckp6\n";
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( 
+                                       X.mCollectedEdges.end(), 
+                                       C.mCollectedEdges        );
+                }
+            }
+        }
+        else {
+cerr << "ckp7\n";
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+        }
+        C.mCollectedEdges.clear();
+printEdgeList(X.mCollectedEdges);
+
+        first = false;
+        advanceSib(prevIt, curIt);
+    }
+cerr << "ckp8\n";
+printEdgeList(X.mCollectedEdges);
+}
+
+
+void BLTree::collectGraphEdgesQ3OnVirtualRoot(BLTreeNode& X)
+{
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+
+    // We don't know the true parent.
+    // First we find the boundary node.
+    node_list_it_t prevIt;
+    node_list_it_t curIt;
+
+    if (X.mFullChildren.size() == 0) {
+
+        // There must be two singly partial children, which 
+        // are an immediate sibling to each other.
+        curIt = X.mSinglyPartialChild1;
+
+        auto& PC1 = toNodeRef(X.mSinglyPartialChild1);
+
+        if (PC1.mSibling1==X.mSinglyPartialChild2) {
+
+            prevIt = PC1.mSibling2;
+
+        }
+        else {
+
+            prevIt = PC1.mSibling1;
+
+        }
+    }
+
+    else {
+
+        // There is a full children somewhere in X.
+        // Pick mSibling1 arbitrarily for the direction of searching.
+        prevIt = toNodeRef(*(X.mFullChildren.rbegin())).mSibling2;
+        curIt  = *(X.mFullChildren.rbegin());    
+
+        while (!isNil(curIt)) {
+
+            auto& C = toNodeRef(curIt);      
+
+            if (C.isEmpty()) {
+                break;
+            }
+
+            advanceSib(prevIt, curIt);
+        }
+
+        std::swap(curIt, prevIt);
+        // Now curIt points to the end of pertinent nodes, and 
+        // prevIt is the boundary non-pertinent node.
+    }
+
+    /*
+     * Now curIt is at the boundary pertinent node.
+     * Scanning from one end to the other 
+     * assuming the direction in the following while loop is in 
+     * the parent's end1->end2.
+     */
+    bool first = true;
+    while (!isNil(curIt)) {
+
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+
+        if( (X.mSinglyPartialChild1 == curIt) || 
+            (X.mSinglyPartialChild2 == curIt)   ) {
+
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+
+            if (first) {// Assumed left end
+                if (CEnd1.isFull()) {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                }
+                else {
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                }
+            }
+            else { // Assumed right end
+                if (CEnd1.isFull()) {
+                    X.mCollectedEdges.splice( 
+                                         X.mCollectedEdges.end(), 
+                                         C.mCollectedEdges        );
+                }
+                else {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( 
+                                               X.mCollectedEdges.end(), 
+                                               C.mCollectedEdges        );
+                }
+            }
+        }
+        else {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+        }
+
+        C.mCollectedEdges.clear();
+        advanceSib(prevIt, curIt);
+        first = false;
+    }
+}
+
+
 void BLTree::transferGraphNodeOrientationsQ3(BLTreeNode& X)
 {
     if (X.mNodeType == BLTreeNode::QType) {
 
         // All the children are pertinent. Scanning from end1 to end2.
+        // <= WRONG! end1 can be empty!
+
         auto prevIt = nil();
         auto curIt  = X.mEndChild1;
 
@@ -2505,7 +3097,15 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         return false;
 
     }
+
+
 //cerr << "templateQ4:[" << X.mNodeNum << "]\n";
+
+    if (mCollectingEdges) {
+
+        collectGraphEdgesQ4(X);
+
+    }
 
     if (mTrackQFlippings) {
 
@@ -2531,6 +3131,7 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
     if (!isNil(mCDPartialRoot)) {
 
         earlyOut = true;
+//cerr << "templateQ4 END\n";
         return true;
 
     }
@@ -2542,7 +3143,7 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         X.setCDPartialInParent();
 
     }
-
+//cerr << "templateQ4 END\n";
     return true;
 }
 
@@ -2605,6 +3206,107 @@ bool BLTree::checkSequenceQ4(BLTreeNode& X)
 
     return X.mPertinentChildrenCount == pertinentChildrenFound;
 
+}
+
+
+void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
+{
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+
+    auto prevIt = nil();
+    auto curIt  = X.mEndChild1;
+    auto partIt = nil();
+
+    long SPcount = 0;
+    while (!isNil(curIt)) {
+
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+
+        if (C.isSinglyPartial()) {
+            if (SPcount==1) {
+                break;
+            }
+
+            partIt = curIt;
+
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+            if (CEnd1.isFull()) {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+            }
+            else {
+                C.mCollectedEdges.reverse();
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+            }
+            break;
+            SPcount++;
+        }
+        else {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+        }
+
+        C.mCollectedEdges.clear();
+        advanceSib(prevIt, curIt);                
+    }
+
+    prevIt = nil();
+    curIt  = X.mEndChild2;
+
+    while (!isNil(curIt)) {
+
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+        else if (C.isSinglyPartial()) {
+
+            if (curIt == partIt) {
+                break;
+            }
+        }
+
+        advanceSib(prevIt, curIt);                
+    }
+
+    std::swap(prevIt, curIt);
+
+
+    while (!isNil(curIt)) {
+
+        auto& C = toNodeRef(curIt);
+
+        if (C.isSinglyPartial()) {
+
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+            if (CEnd1.isFull()) {
+                C.mCollectedEdges.reverse();
+                X.mCollectedEdgesSide2.splice( 
+                                              X.mCollectedEdgesSide2.end(), 
+                                              C.mCollectedEdges             );
+            }
+            else {
+                X.mCollectedEdgesSide2.splice( 
+                                              X.mCollectedEdgesSide2.end(), 
+                                              C.mCollectedEdges             );
+            }
+            break;
+        }
+        else {
+            X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.end(), 
+                                           C.mCollectedEdges            );
+        }
+
+        C.mCollectedEdges.clear();
+        advanceSib(prevIt, curIt);                
+    }
 }
 
 
@@ -2722,10 +3424,17 @@ bool BLTree::templateQ5(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         auto& C = toNodeRef(curIt);
 
         if (C.isEmpty()) {
+//cerr << "templateQ5 END2\n";
             return false;;
         }
 
         advanceSib(prevIt, curIt);
+    }
+
+    if (mCollectingEdges) {
+
+        collectGraphEdgesQ5(X);
+
     }
 
     if (mTrackQFlippings) {
@@ -2746,7 +3455,54 @@ bool BLTree::templateQ5(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         }
 
     }
+//cerr << "templateQ5 END\n";
     return true;
+}
+
+
+void BLTree::collectGraphEdgesQ5(BLTreeNode& X)
+{
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+
+    auto prevIt = nil();
+    auto curIt  = X.mEndChild1;
+
+    bool onSide1 = true;
+    while (!isNil(curIt)) {
+
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+
+        if (C.isCDPartial()) {
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+
+            onSide1 = false;
+
+            X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.end(), 
+                                           C.mCollectedEdgesSide2       );
+            C.mCollectedEdgesSide2.clear();
+        }
+        else if (onSide1) {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+        }
+        else {
+            X.mCollectedEdgesSide2.splice(
+                                           X.mCollectedEdgesSide2.end(), 
+                                           C.mCollectedEdges        );
+        }
+
+        C.mCollectedEdges.clear();
+
+        advanceSib(prevIt, curIt);
+
+    }
 }
 
 
@@ -2780,7 +3536,22 @@ void BLTree::transferGraphNodeOrientationsQ5(BLTreeNode& X)
 }
 
 
+
+
 #ifdef UNIT_TESTS
+
+void BLTree::printEdgeList(list<edge_list_it_t>& edgeList)
+{
+    for(auto eit : edgeList) {
+        auto& e = dynamic_cast<BLGraphEdge&>(*(*eit));
+        auto& GN1 = dynamic_cast<BLGraphNode&>(e.incidentNode1());
+        auto& GN2 = dynamic_cast<BLGraphNode&>(e.incidentNode2());
+        auto& N1 = dynamic_cast<NumNode&>(GN1.IGBackwardLinkRef());
+        auto& N2 = dynamic_cast<NumNode&>(GN2.IGBackwardLinkRef());
+        cerr << "Edge: [" << N1.num() << "," << N2.num() << "]\n";
+    }
+}
+
 void BLTree::printTree(ostream& os, node_list_it_t pr) {
 
     // Find the root.

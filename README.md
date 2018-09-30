@@ -136,6 +136,10 @@ yamanishi72@gmail.com
 Some drawings by the sample drawers and their corresponding input files 
 are shown below.
 
+## Legends
+
+![alt text](docs/readme/readme_legends.png "legends")
+
 [Input file](samples/sample_original_input_05.txt)
 
 ![alt text](docs/readme/tree_01.png    "sample tree")

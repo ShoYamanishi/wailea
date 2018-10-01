@@ -361,6 +361,8 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
             cerr << "\n";
 #endif
             collectEdgeOrdering(pqTree, pertinentRoot, N, OUTGOING);
+
+
             attachmentNode = removePertinentTree(pqTree, pertinentRoot);
             if (!pqTree.isNil(virtualRoot)) {
                 pqTree.removeVirtualRoot(virtualRoot);
@@ -370,6 +372,9 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
+            if (index == stOrderCopy.size() - 1) {
+
+            }
 
         }
         if (index < stOrderCopy.size() - 1) {
@@ -382,6 +387,7 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
 #endif
 
         }
+
         index++;
 
 
@@ -404,21 +410,24 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
     }
 
     // At this point, pqTree consists of a single node of Q type.
-    auto& Q = pqTree.toNodeRef(pqTree.nodes().first);
+
+
 #ifdef UNIT_TESTS2
+
     cerr << "\nFinal Tree\n";
+    cerr << "num nodes: " << pqTree.numNodes() << "\n";
     pqTree.printTree(cerr, pqTree.nil());
     cerr << "\n";
 #endif
-
 
     /*
      * Transfer all the orientation information to the lists in 
      * BLPlanarityTestser object.
      */
-    mOrientInNorm.splice(mOrientInNorm.end(), Q.mOrientInNorm);
-    mOrientInReversed.splice(mOrientInReversed.end(), Q.mOrientInReversed);
-    mOrientOutNorm.splice(mOrientOutNorm.end(), Q.mOrientOutNorm);
+    auto& Q = pqTree.toNodeRef(pqTree.nodes().first);
+    mOrientInNorm.splice     (mOrientInNorm.end(),      Q.mOrientInNorm);
+    mOrientInReversed.splice (mOrientInReversed.end(),  Q.mOrientInReversed);
+    mOrientOutNorm.splice    (mOrientOutNorm.end(),     Q.mOrientOutNorm);
     mOrientOutReversed.splice(mOrientOutReversed.end(), Q.mOrientOutReversed);
 
 #ifdef UNIT_TESTS2
@@ -482,6 +491,11 @@ void BLPlanarityTester::rearrangeIncidentEdges(
         auto& NOrg  = dynamic_cast<Node&>(NCopy.IGBackwardLinkRef());
         vector<edge_list_it_t> rearrangedEdges;
 
+        auto& NN = dynamic_cast<NumNode&>(NCopy.IGBackwardLinkRef());
+//        if (NN.num()==13) {
+//            cerr << "Num is 13: ";
+//            cerr << NCopy.mIncomingEdgesInReverse << "," << NCopy.mOutgoingEdgesInReverse << "\n";
+//        }
         // Concatenate mIncomingEdgesOrdered and mOutgoingEdgesOrdered
         // into rearrangedEdges. Note that one of them must be in reversed 
         // order to make it a circular ordering.
@@ -1242,6 +1256,26 @@ node_list_it_t BLPlanarityTester::removePertinentTreeCDPartial(
     }
     auto& newTreeRoot = pqTree.toNodeRef(pqTree.CDPartialRoot());
 
+    if (pqTree.isTrackingQFlippings()) {
+
+        newTreeRoot.mOrientInNorm.splice(
+            newTreeRoot.mOrientInNorm.end(), 
+            treeRoot.mOrientInNorm               );
+
+        newTreeRoot.mOrientInReversed.splice(
+            newTreeRoot.mOrientInReversed.end(),
+            treeRoot.mOrientInReversed           );
+
+        newTreeRoot.mOrientOutNorm.splice(
+            newTreeRoot.mOrientOutNorm.end(), 
+            treeRoot.mOrientOutNorm              );
+
+        newTreeRoot.mOrientOutReversed.splice(
+            newTreeRoot.mOrientOutReversed.end(),
+            treeRoot.mOrientOutReversed          );
+
+    }
+
     // Remove the full children from End1.
     auto prevIt  = pqTree.nil();
     auto curIt   = newTreeRoot.mEndChild1;
@@ -1561,17 +1595,6 @@ void BLPlanarityTester::removePertinentNodesAndDescendants(
                 pqTree.advanceSib(prevIt, curIt);
             }
 
-            // Transfer the orientation info from the Q-node.
-            if (pqTree.isTrackingQFlippings()) {
-
-                mOrientInNorm.splice(mOrientInNorm.end(), C.mOrientInNorm);
-                mOrientInReversed.splice(
-                                 mOrientInReversed.end(), C.mOrientInReversed);
-                mOrientOutNorm.splice(mOrientOutNorm.end(), C.mOrientOutNorm);
-                mOrientOutReversed.splice(
-                               mOrientOutReversed.end(), C.mOrientOutReversed);
-
-            }
         }
 
         pqTree.removeNode(C);
@@ -1612,6 +1635,21 @@ void BLPlanarityTester::collectEdgeOrdering(
         edgeList.push_back(eit);
     }
     R.mCollectedEdges.clear();
+
+    if ( R.nodeType() == BLTreeNode::VirtualRootType ) { 
+        auto& NextSib = pqTree.toNodeRef(pqTree.mVirtualNextSib);
+        if (pqTree.mVirtualNextSibAssumeReversed) {
+            NextSib.mAssumedOrientOutReversed.push_back(graphNode.backIt());
+        }
+        else {
+            NextSib.mAssumedOrientOutNorm.push_back(graphNode.backIt());
+        }
+    }
+    else {
+        // The orientation of the edges collected will be tracked
+        // in this root Q-node.
+        R.mOrientOutNorm.push_back(graphNode.backIt());
+    }
 
 }
 

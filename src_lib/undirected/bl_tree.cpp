@@ -175,25 +175,35 @@ node_list_it_t BLTree::bringUpOnlyChildOfPNodeAndRemove(BLTreeNode& X)
         C.mParent = X.mParent;
     }
 
-    if (mTrackQFlippings) {
+    if (mCollectingEdges) {
 
-        // Transfer the orientation information from X to C.
-        C.mOrientInNorm.splice(C.mOrientInNorm.end(), X.mOrientInNorm);
-        C.mOrientInReversed.splice(
+        C.mCollectedEdges.splice( C.mCollectedEdges.end(),
+                                  X.mCollectedEdges             );
+
+        C.mCollectedEdgesSide2.splice(
+                                  C.mCollectedEdgesSide2.end(), 
+                                  X.mCollectedEdgesSide2        );
+
+        if (mTrackQFlippings) {
+
+            // Transfer the orientation information from X to C.
+            C.mOrientInNorm.splice(C.mOrientInNorm.end(), X.mOrientInNorm);
+            C.mOrientInReversed.splice(
                                 C.mOrientInReversed.end(),X.mOrientInReversed);
-        C.mOrientOutNorm.splice(C.mOrientOutNorm.end(), X.mOrientOutNorm);
-        C.mOrientOutReversed.splice(
+            C.mOrientOutNorm.splice(C.mOrientOutNorm.end(), X.mOrientOutNorm);
+            C.mOrientOutReversed.splice(
                              C.mOrientOutReversed.end(), X.mOrientOutReversed);
 
-        C.mAssumedOrientInNorm.splice(
+            C.mAssumedOrientInNorm.splice(
                        C.mAssumedOrientInNorm.end(), X.mAssumedOrientInNorm);
-        C.mAssumedOrientInReversed.splice(
+            C.mAssumedOrientInReversed.splice(
                C.mAssumedOrientInReversed.end(), X.mAssumedOrientInReversed);
-        C.mAssumedOrientOutNorm.splice(
+            C.mAssumedOrientOutNorm.splice(
                        C.mAssumedOrientOutNorm.end(), X.mAssumedOrientOutNorm);
-        C.mAssumedOrientOutReversed.splice(
+            C.mAssumedOrientOutReversed.splice(
                C.mAssumedOrientOutReversed.end(), X.mAssumedOrientOutReversed);
 
+        }
     }
     X.discardOldFullLink();
     X.clearFullChildren();
@@ -289,8 +299,9 @@ void BLTree::fanOutLeavesFromQAttachment(
 
         // The orientation of the edges fanned-out will be tracked
         // in this Q-node.
-        A.mOrientInNorm.push_back(nIt);
-
+        if (mTrackQFlippings) {
+            A.mOrientInNorm.push_back(nIt);
+        }
     }
 }
 
@@ -314,6 +325,14 @@ bool BLTree::templateL1(BLTreeNode& X, reductionType reduction)
         X.setFullInParent();
     }
 
+    if (mCollectingEdges) {
+
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
+        X.mCollectedEdges.push_back(X.mGraphEdge);
+
+    }
+//cerr << "templateL1 END\n";
     return true;
 }
 
@@ -342,10 +361,26 @@ bool BLTree::templateP1(BLTreeNode& X, reductionType reduction)
 //cerr << "templateP1:[" << X.mNodeNum << "]\n";
     X.mPertinentType = BLTreeNode::Full;
 
+    if (mCollectingEdges) {
+
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
+
+        for (auto cit : X.mFullChildren) {
+
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+
+        }
+    }
+
     if (reduction == NOT_FINAL_REDUCTION) {
         X.setFullInParent();
     }
-
+//cerr << "templateP1 END\n";
     return true;
 }
 
@@ -362,11 +397,11 @@ bool BLTree::templateP1(BLTreeNode& X, reductionType reduction)
  *   Pertinent type : N/A (the root is Full)
  *   This is a final reduction.
  */
-bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot)
+bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRootIt)
 {
 
     if ( !( X.mNodeType == BLTreeNode::PType          &&
-            X.mFullChildren.size() >= 2                 &&
+            X.mFullChildren.size() >= 2               &&
             X.mFullChildren.size() < X.mChildrenCount &&
             isNil(X.mSinglyPartialChild1)             &&
             isNil(X.mSinglyPartialChild2)             && 
@@ -383,10 +418,24 @@ bool BLTree::templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     unlinkFromPTypeParent(fullChildren);
 
-    pertinentRoot = makePNode(fullChildren);
+    pertinentRootIt = makePNode(fullChildren);
 
-    toNodeRef(pertinentRoot).linkToPTypeParent(X);
+    auto& pertinentRoot = toNodeRef(pertinentRootIt);
 
+    pertinentRoot.linkToPTypeParent(X);
+
+    if (mCollectingEdges) {
+
+        for (auto cit : fullChildren) {
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+            pertinentRoot.mCollectedEdges.splice( 
+                                 pertinentRoot.mCollectedEdges.end(), 
+                                 C.mCollectedEdges                    );
+            C.mCollectedEdges.clear();
+        }
+    }
+//cerr << "templateP2 END\n";
     return true;
 }
 
@@ -490,9 +539,9 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
         fullIt = *(fullChildren.begin());
     }
 
-    // We know there is at least one (empty) children left.
+    // We know there is at least one (empty) child left.
     if (X.mChildrenCount > 1) {
-
+        // More than one empty children.
         auto  SPIt = makeQNode();
         auto& SP   = toNodeRef(SPIt);
         auto& P    = toNodeRef(X.mParent);
@@ -589,34 +638,30 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
             }
         }
 
+        // Full node is on EndChild1 of SP.
         SP.addTwoInitialChildrenToQType(fullIt, X.backIt());
         earlyOut = false;
         if (!SP.setSinglyPartialInParent()){
             earlyOut = true;
         }
 
-        if (mTrackQFlippings) {
+        if (mCollectingEdges) {
 
-            // Transfer the orientation information from X to C.
-            SP.mOrientInNorm.splice(SP.mOrientInNorm.end(), X.mOrientInNorm);
-            SP.mOrientInReversed.splice(
-                               SP.mOrientInReversed.end(),X.mOrientInReversed);
-            SP.mOrientOutNorm.splice(
-                                    SP.mOrientOutNorm.end(), X.mOrientOutNorm);
-            SP.mOrientOutReversed.splice(
-                            SP.mOrientOutReversed.end(), X.mOrientOutReversed);
-            SP.mAssumedOrientInNorm.splice(
-                        SP.mAssumedOrientInNorm.end(), X.mAssumedOrientInNorm);
-            SP.mAssumedOrientInReversed.splice(
-                SP.mAssumedOrientInReversed.end(), X.mAssumedOrientInReversed);
-            SP.mAssumedOrientOutNorm.splice(
-                      SP.mAssumedOrientOutNorm.end(), X.mAssumedOrientOutNorm);
-            SP.mAssumedOrientOutReversed.splice(
-              SP.mAssumedOrientOutReversed.end(), X.mAssumedOrientOutReversed);
+            SP.mCollectedEdges.clear();
+            SP.mCollectedEdgesSide2.clear();
+
+            for (auto cit : fullChildren) {
+
+                auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+                SP.mCollectedEdges.splice( SP.mCollectedEdges.end(), 
+                                           C.mCollectedEdges        );
+                C.mCollectedEdges.clear();
+            }
         }
     }
     else {
-
+        // One empty child.
         auto& E = toNodeRef(*(X.mChildren.begin()));
         E.unlinkFromPTypeParent();
         X.mNodeType      = BLTreeNode::QType;
@@ -628,13 +673,26 @@ bool BLTree::templateP3(BLTreeNode& X, bool& earlyOut)
             earlyOut = true;
 
         }
+
+        if (mCollectingEdges) {
+
+            X.mCollectedEdges.clear();
+            X.mCollectedEdgesSide2.clear();
+
+            for (auto cit : fullChildren) {
+
+                auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                C.mCollectedEdges.clear();
+            }
+        }
     }
 
+//cerr << "templateP3 END\n";
     return true;
 }
-
-
-
 
 
 /**
@@ -701,7 +759,50 @@ bool BLTree::templateP4(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     pertinentRoot = partialIt;
 
+
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP4( Partial, fullChildren );
+    }
+//cerr << "templateP4 END\n";
     return true;
+}
+
+
+void BLTree::collectGraphEdgesP4 (
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
+
 }
 
 
@@ -955,30 +1056,47 @@ bool BLTree::templateP5(BLTreeNode& X, bool& earlyOut)
         if (!SP.setSinglyPartialInParent()){
             earlyOut = true;
         }
-
-        if (mTrackQFlippings) {
-
-            // Transfer the orientation information from X to C.
-            SP.mOrientInNorm.splice(SP.mOrientInNorm.end(), X.mOrientInNorm);
-            SP.mOrientInReversed.splice(
-                               SP.mOrientInReversed.end(),X.mOrientInReversed);
-            SP.mOrientOutNorm.splice(
-                                    SP.mOrientOutNorm.end(), X.mOrientOutNorm);
-            SP.mOrientOutReversed.splice(
-                            SP.mOrientOutReversed.end(), X.mOrientOutReversed);
-            SP.mAssumedOrientInNorm.splice(
-                        SP.mAssumedOrientInNorm.end(), X.mAssumedOrientInNorm);
-            SP.mAssumedOrientInReversed.splice(
-                SP.mAssumedOrientInReversed.end(), X.mAssumedOrientInReversed);
-            SP.mAssumedOrientOutNorm.splice(
-                      SP.mAssumedOrientOutNorm.end(), X.mAssumedOrientOutNorm);
-            SP.mAssumedOrientOutReversed.splice(
-              SP.mAssumedOrientOutReversed.end(), X.mAssumedOrientOutReversed);
-
-        }
     }
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP5( SP, fullChildren );
+
+    }
+//cerr << "templateP5 END\n";
     return true;
+}
+
+
+void BLTree::collectGraphEdgesP5 (
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
 }
 
 
@@ -1030,6 +1148,12 @@ bool BLTree::templateP6(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     }
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP6Step1( PartialBase, fullChildren );
+
+    }
+
     PartialAbsorbed.unlinkFromPTypeParent();
 
     concatenateOneSinglyPartialToTheOther(
@@ -1045,7 +1169,46 @@ bool BLTree::templateP6(BLTreeNode& X, node_list_it_t& pertinentRoot)
 
     pertinentRoot = partialItBase;
 
+
+//cerr << "templateP6 END\n";
     return true;
+}
+
+
+void BLTree::collectGraphEdgesP6Step1(
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
+
 }
 
 
@@ -1086,6 +1249,75 @@ void BLTree::concatenateOneSinglyPartialToTheOther(
 
         absorbedFullEndIt  = Absorbed.mEndChild2;
         absorbedEmptyEndIt = Absorbed.mEndChild1;
+
+    }
+
+
+    if (mCollectingEdges) {
+
+        if (type==FULL_END) {
+            // Called by P6
+            if (( Main.isEndChild1Full() &&  Absorbed.isEndChild1Full() )||
+                (!Main.isEndChild1Full() && !Absorbed.isEndChild1Full() )   ){
+                Absorbed.mCollectedEdges.reverse();
+            }
+            
+            if ( Main.isEndChild1Full() ) {
+                Main.mCollectedEdges.splice( Main.mCollectedEdges.begin(), 
+                                             Absorbed.mCollectedEdges     );
+            }
+            else {
+                Main.mCollectedEdges.splice( Main.mCollectedEdges.end(), 
+                                             Absorbed.mCollectedEdges     );
+            }
+            Absorbed.mCollectedEdges.clear();
+        }
+
+        if (type==EMPTY_END) {
+
+            // Called by P7
+            if (Main.isEndChild1Full()) {
+                if (Absorbed.isEndChild1Full()) {
+                    Absorbed.mCollectedEdges.reverse();
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+                else {
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+            }
+
+            else {
+                if (Absorbed.isEndChild1Full()) {
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Main.mCollectedEdges               );
+                    Main.mCollectedEdges.clear();
+
+                    Main.mCollectedEdges.splice( 
+                                         Main.mCollectedEdges.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+                else {
+                    Main.mCollectedEdgesSide2.splice( 
+                                         Main.mCollectedEdgesSide2.begin(), 
+                                         Main.mCollectedEdges               );
+                    Main.mCollectedEdges.clear();
+
+                    Absorbed.mCollectedEdges.reverse();
+                    Main.mCollectedEdges.splice( 
+                                         Main.mCollectedEdges.begin(), 
+                                         Absorbed.mCollectedEdges           );
+                    Absorbed.mCollectedEdges.clear();
+                }
+            }
+        }
 
     }
 
@@ -1168,24 +1400,6 @@ void BLTree::concatenateOneSinglyPartialToTheOther(
         F.discardOldFullLink();
 
         F.createFullLink(Main);
-
-    }
-
-    if (mTrackQFlippings) {
-
-        scanDirectionType direction;
-
-        if( ( MainEnd1.isFull() &&  AbsorbedEnd1.isFull() )||
-            (!MainEnd1.isFull() && !AbsorbedEnd1.isFull() )  ) {
-
-            direction = REVERSED_DIRECTION; 
-        }
-        else {
-
-            direction = NORMAL_DIRECTION; 
-        }
-
-        Main.transferGraphNodeOrientationsFrom(Absorbed, direction);
 
     }
 
@@ -1312,7 +1526,7 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
         return templateP7ReuseX(X, earlyOut);
     }
 
-    list<node_list_it_t> fullChildren;  // Not used.                            
+    list<node_list_it_t> fullChildren;
     list<node_list_it_t> emptyChildren;
 
     X.sortFullAndEmptyChildrenOnPNode(fullChildren, emptyChildren);
@@ -1326,7 +1540,10 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
 
     node_list_it_t emptyIt;
     if (emptyChildren.size() > 1) {
-        // Must not come here.                                                  
+        // Must not come here.
+#ifdef UNIT_TESTS
+        cerr << "ERROR template7 CKP1\n";
+#endif
         emptyIt = makePNode(emptyChildren);
         toNodeRef(emptyIt).linkToQTypeParentToEnd(PartialBase, EMPTY_END);
 
@@ -1338,14 +1555,20 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
 
     }
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP7Step1(PartialBase, fullChildren);
+
+    }
+
     size_t savedPartialAbsorbedPertinentLeavesCount
                                       = PartialAbsorbed.mPertinentLeavesCount;
 
     PartialAbsorbed.unlinkFromPTypeParent();
 
+
     concatenateOneSinglyPartialToTheOther(
                                       PartialBase, PartialAbsorbed, EMPTY_END);
-
 
     X.mPertinentLeavesCount += savedPartialAbsorbedPertinentLeavesCount;
     X.mSinglyPartialChild1 = nil();
@@ -1377,10 +1600,46 @@ bool BLTree::templateP7(BLTreeNode& X, bool& earlyOut)
         X.mPertinentType = BLTreeNode::CDPartial;
 
     }
-
+//cerr << "templateP7 END\n";
     return true;
 }
 
+
+void BLTree::collectGraphEdgesP7Step1(
+    BLTreeNode&           X,
+    list<node_list_it_t>& fullChildren
+) {
+
+    if ( X.isEndChild1Full() ) {
+
+        // Append the edges to the front of the list
+        for (auto rcit  = fullChildren.rbegin();
+                  rcit != fullChildren.rend();
+                  rcit++                        ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*rcit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.begin(),
+                                      C.mCollectedEdges        );
+            C.mCollectedEdges.clear();
+        }
+    }
+    else {
+
+        // Append the edges to the back of the list
+        for ( auto cit  = fullChildren.begin();
+                   cit != fullChildren.end();
+                   cit++                    ) {
+
+            auto& C = dynamic_cast< BLTreeNode& >( *(*(*cit)) );
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                      C.mCollectedEdges      );
+            C.mCollectedEdges.clear();
+        }
+    }
+
+}
 
 
 bool BLTree::templateP7ReuseX(BLTreeNode& X, bool& earlyOut)
@@ -1497,6 +1756,12 @@ bool BLTree::templateP7ReuseX(BLTreeNode& X, bool& earlyOut)
         }
     }
 
+    if (mCollectingEdges) {
+
+        collectGraphEdgesP7Step1(PartialBase, fullChildren);
+
+    }
+
     X.linkToQTypeParentToEnd(PartialBase, EMPTY_END);
     concatenateOneSinglyPartialToTheOther(
                                       PartialBase, PartialAbsorbed, EMPTY_END);
@@ -1568,6 +1833,33 @@ bool BLTree::templateP8(BLTreeNode& X, reductionType reduction, bool& earlyOut)
 
     }
 
+    if (mCollectingEdges) {
+
+        // Full children, and then End1 of CDPartial
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
+
+        for (auto cit : X.mFullChildren) {
+            auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges       );
+            C.mCollectedEdges.clear();
+        }
+
+        auto& CD = toNodeRef(X.mCDPartialChild);
+
+        X.mCollectedEdges.splice( X.mCollectedEdges.end(),
+                                  CD.mCollectedEdges        );
+        CD.mCollectedEdges.clear();
+
+        X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.begin(),
+                                       CD.mCollectedEdgesSide2         );
+        CD.mCollectedEdgesSide2.clear();
+
+    }
+
+//cerr << "templateP8 END\n";
     return true;
 }
 
@@ -1598,13 +1890,44 @@ bool BLTree::templateQ1(BLTreeNode& X, reductionType reduction)
 
     }
 
-    if (mTrackQFlippings) {
+    if (mCollectingEdges) {
 
-        // Sweep all the children (full), collect the node orientation
-        // information, and transfer them to X.
-        transferGraphNodeOrientationsQ1(X);
+        X.mCollectedEdges.clear();
+        X.mCollectedEdgesSide2.clear();
 
+        node_list_it_t prevIt = nil();
+        node_list_it_t curIt  = X.mEndChild1;
+
+        while (!isNil(curIt)) {
+
+            auto& C = toNodeRef(curIt);
+
+            X.mCollectedEdges.splice( 
+                                  X.mCollectedEdges.end(), C.mCollectedEdges );
+            C.mCollectedEdges.clear();
+
+
+            if (mTrackQFlippings) {
+
+                // Assumes the natural orientation is in Sib1->C->->Sib2.
+                if (C.mSibling1 == prevIt) {
+                    // Forward direction
+                    X.solveAssumedGraphNodeOrientationsFrom(
+                                                      C, NORMAL_DIRECTION );
+                }
+                else {
+                    // Reverse direction
+                    X.solveAssumedGraphNodeOrientationsFrom(
+                                                      C, REVERSED_DIRECTION );
+                }
+                X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+            }
+
+            advanceSib(prevIt, curIt);
+        }
     }
+
+//cerr << "templateQ1 END\n";
     return true;
 }
 
@@ -1650,37 +1973,6 @@ bool BLTree::checkSequenceQ1(BLTreeNode& X)
 }
 
 
-void BLTree::transferGraphNodeOrientationsQ1(BLTreeNode& X)
-{
-    // Scan from End1 to End2 (natural orientation), and transfer
-    // the saved orientations to X (Q-node).
-
-    auto prevIt = nil();
-    auto curIt  = X.mEndChild1;
-
-    while (!isNil(curIt)) {
-
-        auto& C = toNodeRef(curIt);
-
-        // Assumes the natural orientation is in Sib1->C->->Sib2.
-        if (C.mSibling1 == prevIt) {
-
-            // Forward direction
-            X.solveAssumedGraphNodeOrientationsFrom(C, NORMAL_DIRECTION);
-        }
-        else {
-
-            // Reverse direction
-            X.solveAssumedGraphNodeOrientationsFrom(C, REVERSED_DIRECTION);
-        }
-
-        advanceSib(prevIt, curIt);
-
-    }
-}
-
-
-
 /**
  *   Assumption: Number of children is greater than 1
  *   Condition:
@@ -1702,11 +1994,8 @@ bool BLTree::templateQ2(BLTreeNode& X, reductionType reduction, bool& earlyOut)
 
 //cerr << "templateQ2:[" << X.mNodeNum << "]\n";
 
-
     node_list_it_t partialIt = nil();
-
     if (!isNil(X.mSinglyPartialChild1)) {
-
         partialIt = X.mSinglyPartialChild1;
     }
     else if (!isNil(X.mSinglyPartialChild2)) {
@@ -1714,31 +2003,20 @@ bool BLTree::templateQ2(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         partialIt = X.mSinglyPartialChild2;
     }
 
-    if (mTrackQFlippings) {
-
-        // Scan the full children, collect the node orientation information
-        // and transfer them to X.
-        transferGraphNodeOrientationsQ2(X, partialIt);
-
+    if (mCollectingEdges) {
+        collectGraphEdgesQ2(X, partialIt);
     }
 
     if (!isNil(partialIt)) {
-
         flattenSinglyPartialChildToQNode(X, partialIt, NORMAL_REDUCTION);
-
     }
-
     earlyOut = false;
     X.mPertinentType = BLTreeNode::SinglyPartial;
-
     if (reduction == NOT_FINAL_REDUCTION) {
-
         if (!X.setSinglyPartialInParent()) {
-
             earlyOut = true;
         }
     }    
-
     return true;
 }
 
@@ -1766,7 +2044,7 @@ bool BLTree::checkSequenceQ2(BLTreeNode& X)
             }
             else {
 
-                return false;
+               return false;
             }
         }
         else {
@@ -1811,81 +2089,125 @@ bool BLTree::checkSequenceQ2(BLTreeNode& X)
 }
 
 
-void BLTree::transferGraphNodeOrientationsQ2(
-                                        BLTreeNode& X, node_list_it_t pIt)
+void BLTree::collectGraphEdgesQ2(BLTreeNode& X, node_list_it_t partialIt)
 {
-    /**
-     * Transfer the node orientations of full children to X.
-     * The natural direction of children is from end1 to end2.
-     * The natural direction of each child is in sib1->C->sib2
-     */
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
     auto& XEnd1 = toNodeRef(X.mEndChild1);
     auto& XEnd2 = toNodeRef(X.mEndChild2);
-
-    node_list_it_t curIt;
-
-    // We can't use isFull() to check the full side,
-    // as X may have a singly partial node.
-    bool XEnd1IsFull;
     if ( XEnd1.isFull() || (XEnd1.isSinglyPartial() && XEnd2.isEmpty()) ) {
+        node_list_it_t prevIt = nil();
+        node_list_it_t curIt = X.mEndChild1;
+        while (!isNil(curIt)) {
 
-        curIt = X.mEndChild1;
-        XEnd1IsFull = true;
+            auto& C = toNodeRef(curIt);
 
+            if (C.isEmpty()) {
+                break;
+            }
+
+            if ( curIt == partialIt ) {
+                auto& CEnd1 = toNodeRef(C.mEndChild1);
+                if ( CEnd1.isFull() ) {
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                    }
+                }
+                else {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
+                    }
+                }
+            }
+            else {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges      );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+                }
+
+            }
+            C.mCollectedEdges.clear();
+
+            if (mTrackQFlippings) {
+                if (C.mSibling1 == prevIt) {
+                    X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+                }
+                else {
+                    X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
+                }
+            }
+
+            advanceSib(prevIt, curIt);
+        }
     }
     else {
+        node_list_it_t prevIt = nil();
+        node_list_it_t curIt = X.mEndChild2;
 
-        curIt = X.mEndChild2;
-        XEnd1IsFull = false;
-
-    }
-
-    // Scan from the full end.
-    auto prevIt = nil();
-    
-    while (!isNil(curIt)) {
-
-        auto& C = toNodeRef(curIt);
-
-        if (C.isEmpty()) {
-            break;
+        while (!isNil(curIt)) {
+            auto& C = toNodeRef(curIt);
+            if (C.isEmpty()) {
+                break;
+            }
+            advanceSib(prevIt, curIt);
         }
 
-        BLTree::scanDirectionType direction;
+        std::swap(curIt, prevIt);
 
-        if( ( C.mSibling1 == prevIt &&  XEnd1IsFull )||
-            ( C.mSibling1 != prevIt && !XEnd1IsFull )  ) {
-            direction = BLTree::NORMAL_DIRECTION;
+        while (!isNil(curIt)) {
+            auto& C = toNodeRef(curIt);
+            if ( curIt == partialIt ) {
+                auto& CEnd1 = toNodeRef(C.mEndChild1);
+                if ( CEnd1.isFull() ) {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
+                    }
+                }
+                else {
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges       );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                    }
+                }
+            }
+            else {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges      );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+                }
+            }
+            C.mCollectedEdges.clear();
+
+            if (mTrackQFlippings) {
+                if (C.mSibling1 == prevIt) {
+                    X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+                }
+                else {
+                    X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
+                }
+            }
+
+            advanceSib(prevIt, curIt);
         }
-        else {
-            direction = BLTree::REVERSED_DIRECTION;
-            // Forward direction
-        }
-
-        X.solveAssumedGraphNodeOrientationsFrom(C, direction);
-
-        advanceSib(prevIt, curIt);
-    }
-
-
-    if (!isNil(pIt)) {
-
-        // Transfer the node orientation of the partial Q to X.
-        auto& P     = toNodeRef(pIt);
-        auto& PEnd1 = toNodeRef(P.mEndChild1);
-
-        BLTree::scanDirectionType direction;
-
-        if ( ( XEnd1IsFull &&  PEnd1.isFull()) ||
-             (!XEnd1IsFull && !PEnd1.isFull())   ) {
-            direction = BLTree::NORMAL_DIRECTION;
-        }
-        else {
-            direction = BLTree::REVERSED_DIRECTION;
-        }
-
-        X.transferGraphNodeOrientationsFrom(P, direction);
-
     }
 }
 
@@ -2122,6 +2444,155 @@ void BLTree::flattenSinglyPartialChildToQNode(
 }
 
 
+void BLTree::flattenSinglyPartialChildToQNodePreservingOrientation(
+    BLTreeNode&    P,
+    node_list_it_t spIt
+) {
+
+    auto& SP = toNodeRef(spIt);
+
+    // Partially Unlink C from P.
+    if(P.mSinglyPartialChild1 == spIt) {
+
+        P.mSinglyPartialChild1 = nil();
+
+    }
+    else if(P.mSinglyPartialChild2 == spIt) {
+
+        P.mSinglyPartialChild2 = nil();
+
+    }
+
+    P.mPertinentChildrenCount--;
+    P.mPertinentLeavesCount -= SP.mPertinentLeavesCount;
+
+    node_list_it_t prevIt = nil();
+    node_list_it_t curIt  = (SP.isEndChild1Full()) ? 
+                             SP.mEndChild1 : 
+                             SP.mEndChild2 ;
+
+    while (!isNil(curIt)) {
+
+        auto& GC = toNodeRef(curIt);
+        if (GC.isEmpty()) {
+            break;
+        }
+
+        GC.mParent  = P.backIt();
+        P.mPertinentChildrenCount++;
+        P.mPertinentLeavesCount += GC.mPertinentLeavesCount;
+        GC.discardOldFullLink();
+        GC.createFullLink(P);
+
+        advanceSib(prevIt, curIt);
+    }
+
+
+    auto& SPEnd1 = toNodeRef(SP.mEndChild1);
+    auto& SPEnd2 = toNodeRef(SP.mEndChild2);
+
+    if (spIt == P.mEndChild1) {
+        auto& SibNext = toNodeRef( isNil(SP.mSibling1) ? 
+                                   SP.mSibling2 :
+                                   SP.mSibling1         );
+
+        P.mEndChild1   = SPEnd1.backIt();
+        SPEnd1.mParent = P.backIt();
+        SPEnd2.mParent = nil();
+
+        if (isNil(SPEnd2.mSibling1)) {
+            SPEnd2.mSibling1 = SibNext.backIt();
+        }
+        else {
+            SPEnd2.mSibling2 = SibNext.backIt();
+        }
+        if (isNil(SibNext.mSibling1)) {
+             SibNext.mSibling1 = SPEnd2.backIt();
+        }
+        else {
+             SibNext.mSibling2 = SPEnd2.backIt();
+        }
+    }
+    else if (spIt == P.mEndChild2) {
+        auto& SibPrev = toNodeRef( isNil(SP.mSibling1) ? 
+                                   SP.mSibling2 :
+                                   SP.mSibling1         );
+        P.mEndChild2   = SPEnd2.backIt();
+        SPEnd2.mParent = P.backIt();
+        SPEnd1.mParent = nil();
+
+        if (isNil(SPEnd1.mSibling1)) {
+            SPEnd1.mSibling1 = SibPrev.backIt();
+        }
+        else {
+            SPEnd1.mSibling2 = SibPrev.backIt();
+        }
+        if (isNil(SibPrev.mSibling1)) {
+             SibPrev.mSibling1 = SPEnd1.backIt();
+        }
+        else {
+             SibPrev.mSibling2 = SPEnd1.backIt();
+        }
+    }
+    else {
+        // relink parent of full children of C to P.
+        prevIt = nil();
+        curIt  = P.mEndChild1;
+
+        while (!isNil(curIt)) {
+
+            if (curIt == spIt) {
+                break;
+            }
+
+            advanceSib(prevIt, curIt);
+        }
+        auto& SibPrev = toNodeRef( prevIt );
+        auto& SibNext = toNodeRef( (SP.mSibling1==prevIt) ?
+                                    SP.mSibling2 :
+                                    SP.mSibling1           );
+
+        unlinkSiblings( SibPrev, SP      );
+        unlinkSiblings( SP,      SibNext );
+
+        SPEnd1.mParent = nil();
+        SPEnd2.mParent = nil();
+
+        if (isNil(SPEnd1.mSibling1)) {
+            SPEnd1.mSibling1 = SibPrev.backIt();
+        }
+        else {
+            SPEnd1.mSibling2 = SibPrev.backIt();
+        }
+        if (isNil(SibPrev.mSibling1)) {
+             SibPrev.mSibling1 = SPEnd1.backIt();
+        }
+        else {
+             SibPrev.mSibling2 = SPEnd1.backIt();
+        }
+
+        if (isNil(SPEnd2.mSibling1)) {
+            SPEnd2.mSibling1 = SibNext.backIt();
+        }
+        else {
+            SPEnd2.mSibling2 = SibNext.backIt();
+        }
+        if (isNil(SibNext.mSibling1)) {
+             SibNext.mSibling1 = SPEnd2.backIt();
+        }
+        else {
+             SibNext.mSibling2 = SPEnd2.backIt();
+        }
+    }
+
+    SP.discardOldFullLink();
+    SP.clearFullChildren();
+    removeNode(SP);
+
+}
+
+
+
 /**
  *   Assumption: Number of children is greater than 1
  *   Condition:
@@ -2144,9 +2615,9 @@ bool BLTree::templateQ3(BLTreeNode& X)
     }
 //cerr << "templateQ3:[" << X.mNodeNum << "]\n";
 
-    if (mTrackQFlippings) {
+    if (mCollectingEdges) {
 
-        transferGraphNodeOrientationsQ3(X);
+        collectGraphEdgesQ3(X);
 
     }
 
@@ -2165,9 +2636,10 @@ bool BLTree::templateQ3(BLTreeNode& X)
     }
 
     X.mPertinentType = BLTreeNode::DoublyPartial;
-
+//cerr << "templateQ3 END\n";
     return true;
 }
+
 
 
 bool BLTree::checkSequenceQ3(BLTreeNode& X)
@@ -2261,208 +2733,290 @@ bool BLTree::checkSequenceQ3(BLTreeNode& X)
 }
 
 
-void BLTree::transferGraphNodeOrientationsQ3(BLTreeNode& X)
+void BLTree::collectGraphEdgesQ3(BLTreeNode& X)
 {
     if (X.mNodeType == BLTreeNode::QType) {
 
-        // All the children are pertinent. Scanning from end1 to end2.
-        auto prevIt = nil();
-        auto curIt  = X.mEndChild1;
+        collectGraphEdgesQ3OnRealRoot(X);
 
+    }
+    else {
+
+        collectGraphEdgesQ3OnVirtualRoot(X);
+
+    }
+}
+
+
+void BLTree::collectGraphEdgesQ3OnRealRoot(BLTreeNode& X)
+{
+
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+
+    node_list_it_t prevIt, curIt;
+
+    auto& XEnd1 = toNodeRef(X.mEndChild1);
+
+    if ( XEnd1.isFull() || XEnd1.isSinglyPartial() ) {
+        prevIt = nil();
+        curIt  = X.mEndChild1;
+    }
+    else {
+        prevIt = nil();
+        curIt  = X.mEndChild2;
         while (!isNil(curIt)) {
 
             auto& C = toNodeRef(curIt);
-
-            
-            if (C.mSibling1 == prevIt) {
-                // C's natural orientation is aligned with X's.
-                X.solveAssumedGraphNodeOrientationsFrom(C, NORMAL_DIRECTION);
-            }
-            else {
-                X.solveAssumedGraphNodeOrientationsFrom(C, REVERSED_DIRECTION);
+            if (C.isEmpty()) {
+                break;
             }
 
-            if( (X.mSinglyPartialChild1 == curIt) || 
-                (X.mSinglyPartialChild2 == curIt)   ) {
+            advanceSib(prevIt, curIt);                
+        }
+        std::swap(prevIt, curIt);
+    }
 
-                auto& CEnd1 = toNodeRef(C.mEndChild1);
+    bool first = true;
+    while (!isNil(curIt)) {
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+
+        if( (X.mSinglyPartialChild1 == curIt) || 
+            (X.mSinglyPartialChild2 == curIt)   ) {
+
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
                 
-                if (isNil(prevIt)) {
-                    if (CEnd1.isFull()) {
+            if (first) {
+                if (CEnd1.isFull()) {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                    if (mTrackQFlippings) {
                         X.transferGraphNodeOrientationsFrom(
-                                                        C, REVERSED_DIRECTION);
-                    }
-                    else {
-                        X.transferGraphNodeOrientationsFrom(
-                                                          C, NORMAL_DIRECTION);
+                                                       C, REVERSED_DIRECTION );
                     }
                 }
                 else {
-                    auto& Prev = toNodeRef(prevIt);
-                    if ( Prev.isFull() || Prev.isSinglyPartial() ) {
-                        if (CEnd1.isFull()) {
-                            X.transferGraphNodeOrientationsFrom(
-                                                          C, NORMAL_DIRECTION);
-                        }
-                        else {
-                            X.transferGraphNodeOrientationsFrom(
-                                                        C, REVERSED_DIRECTION);
-                        }
-                    }
-                    else {
-                        if (CEnd1.isFull()) {
-                            X.transferGraphNodeOrientationsFrom(
-                                                        C, REVERSED_DIRECTION);
-                        }
-                        else {
-                            X.transferGraphNodeOrientationsFrom(
-                                                          C, NORMAL_DIRECTION);
-                        }
-                    }
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                   }
                 }
-            }
-
-            advanceSib(prevIt, curIt);
-
-        }
-    }
-   
-    else { //(X.mNodeType == BLTreeNode::VirtualRootType)
-
-        // We don't know the true parent.
-        // First we find the boundary node.
-        node_list_it_t prevIt;
-        node_list_it_t curIt;
-
-        if (X.mFullChildren.size() == 0) {
-
-            // There must be two singly partial children, which 
-            // are an immediate sibling to each other.
-            curIt = X.mSinglyPartialChild1;
-
-            auto& PC1 = toNodeRef(X.mSinglyPartialChild1);
-
-            if (PC1.mSibling1==X.mSinglyPartialChild2) {
-
-                prevIt = PC1.mSibling2;
-
             }
             else {
 
-                prevIt = PC1.mSibling1;
+                if (CEnd1.isFull()) {
+                    X.mCollectedEdges.splice( 
+                                       X.mCollectedEdges.end(), 
+                                       C.mCollectedEdges        );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                    }
+                }
+                else {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( 
+                                       X.mCollectedEdges.end(), 
+                                       C.mCollectedEdges        );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
+                    }
+                }
+            }
+        }
+        else {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+            if (mTrackQFlippings) {
+                X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+            }
+        }
+        C.mCollectedEdges.clear();
 
+        if (mTrackQFlippings) {
+            if (C.mSibling1 == prevIt) {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+            }
+            else {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
             }
         }
 
+        first = false;
+        advanceSib(prevIt, curIt);
+    }
+}
+
+
+void BLTree::collectGraphEdgesQ3OnVirtualRoot(BLTreeNode& X)
+{
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
+
+    // We don't know the true parent.
+    // First we find the boundary node.
+    node_list_it_t prevIt;
+    node_list_it_t curIt;
+
+    if (X.mFullChildren.size() == 0) {
+
+        // There must be two singly partial children, which 
+        // are an immediate sibling to each other.
+        curIt = X.mSinglyPartialChild1;
+
+        auto& PC1 = toNodeRef(X.mSinglyPartialChild1);
+
+        if (PC1.mSibling1==X.mSinglyPartialChild2) {
+
+            prevIt = PC1.mSibling2;
+
+        }
         else {
 
-            // There is a full children somewhere in X.
-            // Pick X.mSibling1 arbitrarily for the direction of searching.
-            prevIt = toNodeRef(*(X.mFullChildren.rbegin())).mSibling2;
-            curIt  = *(X.mFullChildren.rbegin());
+            prevIt = PC1.mSibling1;
 
-            while (!isNil(curIt)) {
-
-                auto& C = toNodeRef(curIt);      
-
-                if (C.isEmpty()) {
-                    break;
-                }
-
-                advanceSib(prevIt, curIt);
-            }
-
-            std::swap(curIt, prevIt);
-            // Now curIt points to the end of pertinent nodes, and 
-            // prevIt is the boundary non-pertinent node.
         }
+    }
 
-        /*
-         * Now curIt is at the boundary pertinent node.
-         * Scanning from one end to the other 
-         * assuming the direction in the following while loop is in 
-         * the parent's end1->end2.
-         */
+    else {
+
+        // There is a full children somewhere in X.
+        // Pick mSibling1 arbitrarily for the direction of searching.
+        prevIt = toNodeRef(*(X.mFullChildren.rbegin())).mSibling2;
+        curIt  = *(X.mFullChildren.rbegin());    
+
         while (!isNil(curIt)) {
 
-            auto& C = toNodeRef(curIt);
+            auto& C = toNodeRef(curIt);      
 
             if (C.isEmpty()) {
                 break;
             }
 
-            if (C.mSibling1 == prevIt) {
-                // C's natural orientation is aligned with X's.
-                X.solveAssumedGraphNodeOrientationsFrom(C, NORMAL_DIRECTION);
-            }
-            else {
-                X.solveAssumedGraphNodeOrientationsFrom(C, REVERSED_DIRECTION);
-            }
-
-            if( (X.mSinglyPartialChild1==curIt) ||
-                (X.mSinglyPartialChild2==curIt)    ) {
-
-                auto& CEnd1 = toNodeRef(C.mEndChild1);
-                
-                if (isNil(prevIt)) {
-
-                    if (CEnd1.isFull()) {
-                        X.transferGraphNodeOrientationsFrom(
-                                                        C, REVERSED_DIRECTION);
-                    }
-                    else {
-                        X.transferGraphNodeOrientationsFrom(
-                                                        C, NORMAL_DIRECTION);
-                    }
-
-                }
-                else {
-
-                    auto& Prev = toNodeRef(prevIt);
-                    if ( Prev.isFull() || Prev.isSinglyPartial() ) {
-                        if (CEnd1.isFull()) {
-                            X.transferGraphNodeOrientationsFrom(
-                                                        C, NORMAL_DIRECTION);
-                        }
-                        else {
-                            X.transferGraphNodeOrientationsFrom(
-                                                        C, REVERSED_DIRECTION);
-                        }
-                    }
-                    else {
-                        if (CEnd1.isFull()) {
-                            X.transferGraphNodeOrientationsFrom(
-                                                        C, REVERSED_DIRECTION);
-                        }
-                        else {
-                            X.transferGraphNodeOrientationsFrom(
-                                                        C, NORMAL_DIRECTION);
-                        }
-                    }
-
-                }
-            }
-
             advanceSib(prevIt, curIt);
         }
 
+        std::swap(curIt, prevIt);
+        // Now curIt points to the end of pertinent nodes, and 
+        // prevIt is the boundary non-pertinent node.
+    }
 
-        // Now the the node orientaitons are accumulated to the virtual
-        // root. Transfer them to the next sibling in the direction above, 
-        // assuming the next sibling's direction is in sib1->next->sib2.
+    /*
+     * Now curIt is at the boundary pertinent node.
+     * Scanning from one end to the other 
+     * assuming the direction in the following while loop is in 
+     * the parent's end1->end2.
+     */
+    bool first = true;
+    while (!isNil(curIt)) {
 
-        auto& Next = toNodeRef(curIt);
+        auto& C = toNodeRef(curIt);
 
-        if (Next.mSibling1 == prevIt) {
+        if (C.isEmpty()) {
+            break;
+        }
 
-            // Next's natural orientation is aligend with the assumed
-            // orientation.
-            Next.assumeGraphNodeOrientationsFrom(X, NORMAL_DIRECTION);
+        if( (X.mSinglyPartialChild1 == curIt) || 
+            (X.mSinglyPartialChild2 == curIt)   ) {
+
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+
+            if (first) {// Assumed left end
+                if (CEnd1.isFull()) {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
+                    }
+                }
+                else {
+                    X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                              C.mCollectedEdges      );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                    }
+                }
+            }
+            else { // Assumed right end
+                if (CEnd1.isFull()) {
+                    X.mCollectedEdges.splice( 
+                                         X.mCollectedEdges.end(), 
+                                         C.mCollectedEdges        );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                    }
+                }
+                else {
+                    C.mCollectedEdges.reverse();
+                    X.mCollectedEdges.splice( 
+                                               X.mCollectedEdges.end(), 
+                                               C.mCollectedEdges        );
+                    if (mTrackQFlippings) {
+                        X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
+                    }
+                }
+            }
         }
         else {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
 
-            Next.assumeGraphNodeOrientationsFrom(X, REVERSED_DIRECTION);
+            if (mTrackQFlippings) {
+                X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+            }
         }
+
+        C.mCollectedEdges.clear();
+
+        if (mTrackQFlippings) {
+            if (C.mSibling1 == prevIt) {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+            }
+            else {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
+            }
+        }
+
+        advanceSib(prevIt, curIt);
+        first = false;
+    }
+
+    // Now the the node orientaitons are accumulated to the virtual
+    // root. Transfer them to the next sibling in the direction above, 
+    // assuming the next sibling's direction is in sib1->next->sib2.
+
+    auto& Next = toNodeRef(curIt);
+
+    mVirtualNextSib = curIt;
+
+    if (Next.mSibling1 == prevIt) {
+
+        // Next's natural orientation is aligend with the assumed
+        // orientation.
+        Next.assumeGraphNodeOrientationsFrom(X, NORMAL_DIRECTION);
+        mVirtualNextSibAssumeReversed = false;
+    }
+    else {
+
+        Next.assumeGraphNodeOrientationsFrom(X, REVERSED_DIRECTION);
+        mVirtualNextSibAssumeReversed = true;
     }
 }
 
@@ -2484,24 +3038,41 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         return false;
 
     }
+
 //cerr << "templateQ4:[" << X.mNodeNum << "]\n";
 
-    if (mTrackQFlippings) {
+    if (mCollectingEdges) {
 
-        transferGraphNodeOrientationsQ4(X);
+        collectGraphEdgesQ4(X);
 
     }
 
-    if (!isNil(X.mSinglyPartialChild1)) {
+    if (  !isNil(X.mSinglyPartialChild1)
+        && isNil(X.mSinglyPartialChild2)
+        && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
 
-        flattenSinglyPartialChildToQNode(
+        flattenSinglyPartialChildToQNodePreservingOrientation(
+                                                   X, X.mSinglyPartialChild1);
+    }
+    else if (  !isNil(X.mSinglyPartialChild2)
+             && isNil(X.mSinglyPartialChild1)
+             && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
+
+        flattenSinglyPartialChildToQNodePreservingOrientation(
+                                                   X, X.mSinglyPartialChild2);
+    }
+    else {
+        if (!isNil(X.mSinglyPartialChild1)) {
+
+            flattenSinglyPartialChildToQNode(
                            X, X.mSinglyPartialChild1, COMPLEMENTARY_REDUCTION);
-    }
+        }
 
-    if (!isNil(X.mSinglyPartialChild2)) {
+        if (!isNil(X.mSinglyPartialChild2)) {
 
-        flattenSinglyPartialChildToQNode(
+            flattenSinglyPartialChildToQNode(
                            X, X.mSinglyPartialChild2, COMPLEMENTARY_REDUCTION);
+        }
     }
 
     X.mPertinentType = BLTreeNode::CDPartial;
@@ -2510,6 +3081,7 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
     if (!isNil(mCDPartialRoot)) {
 
         earlyOut = true;
+//cerr << "templateQ4 END\n";
         return true;
 
     }
@@ -2521,7 +3093,7 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         X.setCDPartialInParent();
 
     }
-
+//cerr << "templateQ4 END\n";
     return true;
 }
 
@@ -2587,88 +3159,173 @@ bool BLTree::checkSequenceQ4(BLTreeNode& X)
 }
 
 
-void BLTree::transferGraphNodeOrientationsQ4(BLTreeNode& X)
+void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
 {
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
 
-    // Scan from the end1.
     auto prevIt = nil();
-    auto curIt  = X.mEndChild1;    
+    auto curIt  = X.mEndChild1;
     auto partIt = nil();
+
+
     while (!isNil(curIt)) {
 
         auto& C = toNodeRef(curIt);
 
         if (C.isEmpty()) {
-
             break;
         }
 
-        if (C.mSibling1 == prevIt) {
+        if (C.isSinglyPartial()) {
 
-            X.solveAssumedGraphNodeOrientationsFrom(C, NORMAL_DIRECTION);
-        }
-        else {
+            partIt = curIt;
 
-            X.solveAssumedGraphNodeOrientationsFrom(C, REVERSED_DIRECTION);
-        }
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+            if (  !isNil(X.mSinglyPartialChild1)
+                && isNil(X.mSinglyPartialChild2)
+                && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
 
-        if ( X.mSinglyPartialChild1==curIt || X.mSinglyPartialChild2==curIt ) {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                }
 
-            // Transfer the node orientation of the partial Q to X.
-            auto& P     = toNodeRef(curIt);
-            auto& PEnd1 = toNodeRef(P.mEndChild1);
-            if (PEnd1.isFull()) {
-                X.transferGraphNodeOrientationsFrom(P, NORMAL_DIRECTION);
+            }
+            else if (  !isNil(X.mSinglyPartialChild2)
+                     && isNil(X.mSinglyPartialChild1)
+                     && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
+
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                }
+
+            }
+            else if (CEnd1.isFull()) {
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                }
             }
             else {
-                X.transferGraphNodeOrientationsFrom(P, REVERSED_DIRECTION);
+                C.mCollectedEdges.reverse();
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
+                }
             }
-            partIt = curIt;
             break;
-        }        
+
+        }
+        else {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+            if (mTrackQFlippings) {
+                X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+            }
+        }
+
+        C.mCollectedEdges.clear();
+
+        if (mTrackQFlippings) {
+            if (C.mSibling1 == prevIt) {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+            }
+            else {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
+            }
+        }
+
+        advanceSib(prevIt, curIt);                
+    }
+
+    prevIt = nil();
+    curIt  = X.mEndChild2;
+
+    while (!isNil(curIt)) {
+
+        auto& C = toNodeRef(curIt);
+
+        if (C.isEmpty()) {
+            break;
+        }
+        else if (C.isSinglyPartial()) {
+
+            if (curIt == partIt) {
+                break;
+            }
+            else {
+                advanceSib(prevIt, curIt);
+                break;
+            }
+        }
+
         advanceSib(prevIt, curIt);
     }
 
-    // Scan from the end2.
-    prevIt = nil();
-    curIt = X.mEndChild2;
+    std::swap(prevIt, curIt);
+
 
     while (!isNil(curIt)) {
 
         auto& C = toNodeRef(curIt);
 
-        if (C.isEmpty()) {
+        if (C.isSinglyPartial()) {
 
-            break;
-        }
-
-        if (C.mSibling1 == prevIt) {
-
-            X.solveAssumedGraphNodeOrientationsFrom(C, REVERSED_DIRECTION);
-        }
-        else {
-
-            X.solveAssumedGraphNodeOrientationsFrom(C, NORMAL_DIRECTION);
-        }
-
-        if ( X.mSinglyPartialChild1==curIt || X.mSinglyPartialChild2==curIt ) {
-
-            if (curIt != partIt) {            
-
-                // Transfer the node orientation of the partial Q to X.
-                auto& P     = toNodeRef(curIt);
-                auto& PEnd1 = toNodeRef(P.mEndChild1);
-                if (PEnd1.isFull()) {
-                    X.transferGraphNodeOrientationsFrom(P, REVERSED_DIRECTION);
-                }
-                else {
-                    X.transferGraphNodeOrientationsFrom(P, NORMAL_DIRECTION);
+            auto& CEnd1 = toNodeRef(C.mEndChild1);
+            if (CEnd1.isFull()) {
+                C.mCollectedEdges.reverse();
+                X.mCollectedEdgesSide2.splice( 
+                                              X.mCollectedEdgesSide2.end(), 
+                                              C.mCollectedEdges             );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, REVERSED_DIRECTION );
                 }
             }
-            break;
+            else {
+                X.mCollectedEdgesSide2.splice( 
+                                              X.mCollectedEdgesSide2.end(), 
+                                              C.mCollectedEdges             );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                }
+            }
+        }
+        else {
+            X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.end(), 
+                                           C.mCollectedEdges            );
+            if (mTrackQFlippings) {
+                X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+            }
+        }
 
-        }        
-        advanceSib(prevIt, curIt);
+        C.mCollectedEdges.clear();
+
+        if (mTrackQFlippings) {
+            if (C.mSibling1 == prevIt) {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+            }
+            else {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
+            }
+        }
+
+        advanceSib(prevIt, curIt);                
     }
 }
 
@@ -2701,15 +3358,16 @@ bool BLTree::templateQ5(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         auto& C = toNodeRef(curIt);
 
         if (C.isEmpty()) {
+//cerr << "templateQ5 END2\n";
             return false;;
         }
 
         advanceSib(prevIt, curIt);
     }
 
-    if (mTrackQFlippings) {
+    if (mCollectingEdges) {
 
-        transferGraphNodeOrientationsQ5(X);
+        collectGraphEdgesQ5(X);
 
     }
 
@@ -2725,41 +3383,119 @@ bool BLTree::templateQ5(BLTreeNode& X, reductionType reduction, bool& earlyOut)
         }
 
     }
+//cerr << "templateQ5 END\n";
     return true;
 }
 
 
-void BLTree::transferGraphNodeOrientationsQ5(BLTreeNode& X)
+void BLTree::collectGraphEdgesQ5(BLTreeNode& X)
 {
-    // Scan from End1 to End2 (natural orientation), and transfer
-    // the saved orientations to X (Q-node).
+    X.mCollectedEdges.clear();
+    X.mCollectedEdgesSide2.clear();
 
     auto prevIt = nil();
     auto curIt  = X.mEndChild1;
 
+    bool onSide1 = true;
     while (!isNil(curIt)) {
 
         auto& C = toNodeRef(curIt);
 
-        // Assumes the natural orientation is in Sib1->C->->Sib2.
-        if (C.mSibling1 == prevIt) {
+        if (C.isEmpty()) {
+            break;
+        }
 
-            // Forward direction
-            X.solveAssumedGraphNodeOrientationsFrom(C, NORMAL_DIRECTION);
+        if (C.isCDPartial()) {
+
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
+
+            onSide1 = false;
+
+            X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.end(), 
+                                           C.mCollectedEdgesSide2       );
+            C.mCollectedEdgesSide2.clear();
+        }
+        else if (onSide1) {
+            X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                      C.mCollectedEdges        );
         }
         else {
+            X.mCollectedEdgesSide2.splice(
+                                           X.mCollectedEdgesSide2.end(), 
+                                           C.mCollectedEdges        );
+        }
 
-            // Reverse direction
-            X.solveAssumedGraphNodeOrientationsFrom(C, REVERSED_DIRECTION);
+        C.mCollectedEdges.clear();
+
+        if (mTrackQFlippings) {
+            X.transferGraphNodeOrientationsFrom( C, NORMAL_DIRECTION );
+
+            if (C.mSibling1 == prevIt) {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, NORMAL_DIRECTION );
+            }
+            else {
+                X.solveAssumedGraphNodeOrientationsFrom(
+                                                    C, REVERSED_DIRECTION );
+            }
         }
 
         advanceSib(prevIt, curIt);
-
     }
 }
 
 
+node_list_it_t BLTree::findRoot()
+{
+    auto pIt = nodes().first;
+    while (!isNil(pIt)) {
+        auto& P = toNodeRef(pIt);
+        if (!isNil(P.mSibling1)&&!isNil(P.mSibling2)) {
+            auto it1 = P.mSibling1;
+            auto it2 = pIt;
+            while (!isNil(it2)) {
+                advanceSib(it1, it2);
+            }
+
+            auto& P2 = toNodeRef(it1);
+            if (isNil(P2.mParent)) {
+                break;
+            }
+            else {
+                pIt = P2.mParent;
+            }
+        }
+        else {
+            if (isNil(P.mParent)) {
+                break;
+            }
+            else {
+                pIt = P.mParent;
+            }
+        }
+    }
+    return pIt;
+}
+
+
+
 #ifdef UNIT_TESTS
+
+void BLTree::printEdgeList(list<edge_list_it_t>& edgeList)
+{
+    for(auto eit : edgeList) {
+        auto& e = dynamic_cast<BLGraphEdge&>(*(*eit));
+        auto& GN1 = dynamic_cast<BLGraphNode&>(e.incidentNode1());
+        auto& GN2 = dynamic_cast<BLGraphNode&>(e.incidentNode2());
+        auto& N1 = dynamic_cast<NumNode&>(GN1.IGBackwardLinkRef());
+        auto& N2 = dynamic_cast<NumNode&>(GN2.IGBackwardLinkRef());
+        cerr << "Edge: [" << N1.num() << "," << N2.num() << "]\n";
+    }
+}
+
+
+
 void BLTree::printTree(ostream& os, node_list_it_t pr) {
 
     // Find the root.

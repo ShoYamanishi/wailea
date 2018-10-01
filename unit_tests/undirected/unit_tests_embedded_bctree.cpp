@@ -3030,858 +3030,858 @@ TEST_F(EmbeddedBCTreeTests, MultipleUGs) {
 }
 
 
-/**  @brief realistic example
- */
-TEST_F(EmbeddedBCTreeTests, Realistic1) {
-
-    auto  gp1 = generate_graph();
-    auto& g1  = *gp1;
-
-    auto  np01 = generate_node(1);
-    auto& n01  = g1.addNode(std::move(np01));
-    auto  np02 = generate_node(2);
-    auto& n02  = g1.addNode(std::move(np02));
-    auto  np03 = generate_node(3);
-    auto& n03  = g1.addNode(std::move(np03));
-    auto  np04 = generate_node(4);
-    auto& n04  = g1.addNode(std::move(np04));
-    auto  np05 = generate_node(5);
-    auto& n05  = g1.addNode(std::move(np05));
-    auto  np06 = generate_node(6);
-    auto& n06  = g1.addNode(std::move(np06));
-    auto  np07 = generate_node(7);
-    auto& n07  = g1.addNode(std::move(np07));
-    auto  np08 = generate_node(8);
-    auto& n08  = g1.addNode(std::move(np08));
-    auto  np09 = generate_node(9);
-    auto& n09  = g1.addNode(std::move(np09));
-    auto  np10 = generate_node(10);
-    auto& n10  = g1.addNode(std::move(np10));
-    auto  np11 = generate_node(11);
-    auto& n11  = g1.addNode(std::move(np11));
-    auto  np12 = generate_node(12);
-    auto& n12  = g1.addNode(std::move(np12));
-    auto  np13 = generate_node(13);
-    auto& n13  = g1.addNode(std::move(np13));
-
-    auto  ep01_02 = generate_edge();
-    auto& e01_02  = g1.addEdge(std::move(ep01_02),n01,n02);
-    auto  ep01_03 = generate_edge();
-    auto& e01_03  = g1.addEdge(std::move(ep01_03),n01,n03);
-    auto  ep01_04 = generate_edge();
-    auto& e01_04  = g1.addEdge(std::move(ep01_04),n01,n04);
-    auto  ep01_05 = generate_edge();
-    auto& e01_05  = g1.addEdge(std::move(ep01_05),n01,n05);
-    auto  ep03_04 = generate_edge();
-    auto& e03_04  = g1.addEdge(std::move(ep03_04),n03,n04);
-    auto  ep04_07 = generate_edge();
-    auto& e04_07  = g1.addEdge(std::move(ep04_07),n04,n07);
-    auto  ep04_08 = generate_edge();
-    auto& e04_08  = g1.addEdge(std::move(ep04_08),n04,n08);
-    auto  ep04_10 = generate_edge();
-    auto& e04_10  = g1.addEdge(std::move(ep04_10),n04,n10);
-    auto  ep05_06 = generate_edge();
-    auto& e05_06  = g1.addEdge(std::move(ep05_06),n05,n06);
-    auto  ep05_07 = generate_edge();
-    auto& e05_07  = g1.addEdge(std::move(ep05_07),n05,n07);
-    auto  ep06_07 = generate_edge();
-    auto& e06_07  = g1.addEdge(std::move(ep06_07),n06,n07);
-    auto  ep08_09 = generate_edge();
-    auto& e08_09  = g1.addEdge(std::move(ep08_09),n08,n09);
-    auto  ep10_11 = generate_edge();
-    auto& e10_11  = g1.addEdge(std::move(ep10_11),n10,n11);
-    auto  ep10_12 = generate_edge();
-    auto& e10_12  = g1.addEdge(std::move(ep10_12),n10,n12);
-    auto  ep10_13 = generate_edge();
-    auto& e10_13  = g1.addEdge(std::move(ep10_13),n10,n13);
-    auto  ep11_12 = generate_edge();
-    auto& e11_12  = g1.addEdge(std::move(ep11_12),n11,n12);
-
-    BiconnectedDecomposer decomp;
-    BCTree bcT = decomp.decompose(g1);
-
-    EmbeddedBCTree ebcT(bcT);
-
-    ebcT.makeDefaultEmbedding();
-
-    EXPECT_EQ(&(ebcT.bcTree()),&bcT);
-    EXPECT_EQ(ebcT.numNodes(), 11);
-    EXPECT_EQ(ebcT.numEdges(), 10);
-
-    auto ebcNit = ebcT.nodes().first;
-    auto& ebcN01 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN02 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN03 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN04 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN05 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN06 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN07 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN08 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN09 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN10 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-    ebcNit++;
-    auto& ebcN11 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
-
-    auto bcNit = bcT.nodes().first;
-    auto& bcN01 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN02 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN03 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN04 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN05 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN06 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN07 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN08 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN09 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN10 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-    bcNit++;
-    auto& bcN11 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
-
-    auto ebcEit = ebcT.edges().first;
-    auto& ebcE01 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE02 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE03 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE04 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE05 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE06 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE07 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE08 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE09 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-    ebcEit++;
-    auto& ebcE10 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
-
-    auto bcEit = bcT.edges().first;
-    auto& bcE01 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE02 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE03 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE04 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE05 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE06 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE07 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE08 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE09 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-    bcEit++;
-    auto& bcE10 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
-
-
-    EXPECT_EQ(ebcN01.type(),      BCTreeNode::CutVertexType);
-    EXPECT_EQ(&ebcN01.IGBackwardLinkRef(), &bcN01);
-    EXPECT_EQ(&bcN01.IGBackwardLinkRef(), &n01);
-    EXPECT_THROW(ebcN01.embeddedGraph(), std::invalid_argument);
-    EXPECT_THROW(ebcN01.dualGraph(), std::invalid_argument);
-    EXPECT_EQ(ebcN01.numUnificationGroups(), 1);
-    auto& ebcN01UG1 = ebcN01.unificationGroup(0);
-
-
-    EXPECT_EQ(ebcN02.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN02.IGBackwardLinkRef(), &bcN02);
-    auto& ebcN02eg = ebcN02.embeddedGraph();
-    auto& ebcN02dg = ebcN02.dualGraph();
-    EXPECT_EQ(ebcN02eg.numNodes(), 2);
-    EXPECT_EQ(ebcN02eg.numEdges(), 1);
-    EXPECT_EQ(ebcN02dg.numNodes(), 1);
-    EXPECT_EQ(ebcN02dg.numEdges(), 1);
-
-    auto  ebcN02egNit = ebcN02eg.nodes().first;
-    auto& ebcN02egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN02egNit)));
-    auto& ebcN02egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN02egN01.IGBackwardLink())));
-    auto& ebcN02egN01GN = dynamic_cast<NumNode&>(ebcN02egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN02egN01GN.backIt(), n01.backIt());
-    ebcN02egNit++;
-    auto& ebcN02egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN02egNit)));
-    auto& ebcN02egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN02egN02.IGBackwardLink())));
-    auto& ebcN02egN02GN = dynamic_cast<NumNode&>(ebcN02egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN02egN02GN.backIt(), n02.backIt());
-
-    auto  ebcN02egEit = ebcN02eg.edges().first;
-    auto& ebcN02egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN02egEit)));
-    auto& ebcN02egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN02egE01.IGBackwardLink())));
-    auto& ebcN02egE01GE = dynamic_cast<Edge&>(ebcN02egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN02egE01GE.backIt(), e01_02.backIt());
-
-    auto  ebcN02dgFit = ebcN02dg.nodes().first;
-    auto& ebcN02dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN02dgFit)));
-
-    //auto  ebcN02dgEit = ebcN02dg.edges().first;
-    //auto& ebcN02dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN02dgEit)));
-
-
-    EXPECT_EQ(ebcN03.type(),      BCTreeNode::CutVertexType);
-    EXPECT_EQ(&ebcN03.IGBackwardLinkRef(), &bcN03);
-    EXPECT_EQ(&bcN03.IGBackwardLinkRef(), &n08);
-    EXPECT_THROW(ebcN03.embeddedGraph(), std::invalid_argument);
-    EXPECT_THROW(ebcN03.dualGraph(), std::invalid_argument);
-    EXPECT_EQ(ebcN03.numUnificationGroups(), 1);
-    auto& ebcN03UG1 = ebcN03.unificationGroup(0);
-
-
-    EXPECT_EQ(ebcN04.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN04.IGBackwardLinkRef(), &bcN04);
-    auto& ebcN04eg = ebcN04.embeddedGraph();
-    auto& ebcN04dg = ebcN04.dualGraph();
-    EXPECT_EQ(ebcN04eg.numNodes(), 2);
-    EXPECT_EQ(ebcN04eg.numEdges(), 1);
-    EXPECT_EQ(ebcN04dg.numNodes(), 1);
-    EXPECT_EQ(ebcN04dg.numEdges(), 1);
-
-    auto  ebcN04egNit = ebcN04eg.nodes().first;
-    auto& ebcN04egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN04egNit)));
-    auto& ebcN04egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN04egN01.IGBackwardLink())));
-    auto& ebcN04egN01GN = dynamic_cast<NumNode&>(ebcN04egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN04egN01GN.backIt(), n08.backIt());
-    ebcN04egNit++;
-    auto& ebcN04egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN04egNit)));
-    auto& ebcN04egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN04egN02.IGBackwardLink())));
-    auto& ebcN04egN02GN = dynamic_cast<NumNode&>(ebcN04egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN04egN02GN.backIt(), n09.backIt());
-
-    auto  ebcN04egEit = ebcN04eg.edges().first;
-    auto& ebcN04egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN04egEit)));
-    auto& ebcN04egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN04egE01.IGBackwardLink())));
-    auto& ebcN04egE01GE = dynamic_cast<Edge&>(ebcN04egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN04egE01GE.backIt(), e08_09.backIt());
-
-    auto  ebcN04dgFit = ebcN04dg.nodes().first;
-    auto& ebcN04dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN04dgFit)));
-
-    //auto  ebcN04dgEit = ebcN04dg.edges().first;
-    //auto& ebcN04dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN04dgEit)));
-
-
-    EXPECT_EQ(ebcN05.type(),      BCTreeNode::CutVertexType);
-    EXPECT_EQ(&ebcN05.IGBackwardLinkRef(), &bcN05);
-    EXPECT_EQ(&bcN05.IGBackwardLinkRef(), &n04);
-    EXPECT_THROW(ebcN05.embeddedGraph(), std::invalid_argument);
-    EXPECT_THROW(ebcN05.dualGraph(), std::invalid_argument);
-    EXPECT_EQ(ebcN05.numUnificationGroups(), 1);
-    auto& ebcN05UG1 = ebcN05.unificationGroup(0);
-
-
-    EXPECT_EQ(ebcN06.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN06.IGBackwardLinkRef(), &bcN06);
-    auto& ebcN06eg = ebcN06.embeddedGraph();
-    auto& ebcN06dg = ebcN06.dualGraph();
-    EXPECT_EQ(ebcN06eg.numNodes(), 2);
-    EXPECT_EQ(ebcN06eg.numEdges(), 1);
-    EXPECT_EQ(ebcN06dg.numNodes(), 1);
-    EXPECT_EQ(ebcN06dg.numEdges(), 1);
-
-    auto  ebcN06egNit = ebcN06eg.nodes().first;
-    auto& ebcN06egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN06egNit)));
-    auto& ebcN06egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN06egN01.IGBackwardLink())));
-    auto& ebcN06egN01GN = dynamic_cast<NumNode&>(ebcN06egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN06egN01GN.backIt(), n04.backIt());
-    ebcN06egNit++;
-    auto& ebcN06egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN06egNit)));
-    auto& ebcN06egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN06egN02.IGBackwardLink())));
-    auto& ebcN06egN02GN = dynamic_cast<NumNode&>(ebcN06egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN06egN02GN.backIt(), n08.backIt());
-
-    auto  ebcN06egEit = ebcN06eg.edges().first;
-    auto& ebcN06egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN06egEit)));
-    auto& ebcN06egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN06egE01.IGBackwardLink())));
-    auto& ebcN06egE01GE = dynamic_cast<Edge&>(ebcN06egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN06egE01GE.backIt(), e04_08.backIt());
-
-    auto  ebcN06dgFit = ebcN06dg.nodes().first;
-    auto& ebcN06dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN06dgFit)));
-
-    //auto  ebcN06dgEit = ebcN06dg.edges().first;
-    //auto& ebcN06dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN06dgEit)));
-
-
-    EXPECT_EQ(ebcN07.type(),      BCTreeNode::CutVertexType);
-    EXPECT_EQ(&ebcN07.IGBackwardLinkRef(), &bcN07);
-    EXPECT_EQ(&bcN07.IGBackwardLinkRef(), &n10);
-    EXPECT_THROW(ebcN07.embeddedGraph(), std::invalid_argument);
-    EXPECT_THROW(ebcN07.dualGraph(), std::invalid_argument);
-    EXPECT_EQ(ebcN07.numUnificationGroups(), 1);
-    auto& ebcN07UG1 = ebcN07.unificationGroup(0);
-
-
-    EXPECT_EQ(ebcN08.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN08.IGBackwardLinkRef(), &bcN08);
-    auto& ebcN08eg = ebcN08.embeddedGraph();
-    auto& ebcN08dg = ebcN08.dualGraph();
-    EXPECT_EQ(ebcN08eg.numNodes(), 3);
-    EXPECT_EQ(ebcN08eg.numEdges(), 3);
-    EXPECT_EQ(ebcN08dg.numNodes(), 2);
-    EXPECT_EQ(ebcN08dg.numEdges(), 3);
-
-    auto  ebcN08egNit = ebcN08eg.nodes().first;
-    auto& ebcN08egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN08egNit)));
-    auto& ebcN08egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN08egN01.IGBackwardLink())));
-    auto& ebcN08egN01GN = dynamic_cast<NumNode&>(ebcN08egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN08egN01GN.backIt(), n10.backIt());
-    ebcN08egNit++;
-    auto& ebcN08egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN08egNit)));
-    auto& ebcN08egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN08egN02.IGBackwardLink())));
-    auto& ebcN08egN02GN = dynamic_cast<NumNode&>(ebcN08egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN08egN02GN.backIt(), n12.backIt());
-    ebcN08egNit++;
-    auto& ebcN08egN03 = dynamic_cast<EmbeddedNode&>(*(*(ebcN08egNit)));
-    auto& ebcN08egN03BN =dynamic_cast<BlockNode&>(*(*(ebcN08egN03.IGBackwardLink())));
-    auto& ebcN08egN03GN = dynamic_cast<NumNode&>(ebcN08egN03BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN08egN03GN.backIt(), n11.backIt());
-
-    auto  ebcN08egEit = ebcN08eg.edges().first;
-    auto& ebcN08egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN08egEit)));
-    auto& ebcN08egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN08egE01.IGBackwardLink())));
-    auto& ebcN08egE01GE = dynamic_cast<Edge&>(ebcN08egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN08egE01GE.backIt(), e10_12.backIt());
-    ebcN08egEit++;
-    auto& ebcN08egE02   = dynamic_cast<EmbeddedEdge&>(*(*(ebcN08egEit)));
-    auto& ebcN08egE02BE =dynamic_cast<BlockEdge&>(*(*(ebcN08egE02.IGBackwardLink())));
-    auto& ebcN08egE02GE = dynamic_cast<Edge&>(ebcN08egE02BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN08egE02GE.backIt(), e11_12.backIt());
-    ebcN08egEit++;
-    auto& ebcN08egE03   = dynamic_cast<EmbeddedEdge&>(*(*(ebcN08egEit)));
-    auto& ebcN08egE03BE =dynamic_cast<BlockEdge&>(*(*(ebcN08egE03.IGBackwardLink())));
-    auto& ebcN08egE03GE = dynamic_cast<Edge&>(ebcN08egE03BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN08egE03GE.backIt(), e10_11.backIt());
-
-    auto  ebcN08dgFit = ebcN08dg.nodes().first;
-    auto& ebcN08dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN08dgFit)));
-    ebcN08dgFit++;
-    /*auto& ebcN08dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN08dgFit)));*/
-
-    auto eit = ebcN08dgF01.mCycleEdges.begin();
-    EXPECT_EQ(ebcN08egE03.backIt(), 
-              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN08egE02.backIt(), 
-              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN08egE01.backIt(), 
-              dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    // ebcN08dgF01 : 10 -> 11-> 12
-    // ebcN08dgF02 : 10 -> 12-> 11
-
-    //auto  ebcN08dgEit = ebcN08dg.edges().first;
-    //auto& ebcN08dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
-    //ebcN08dgEit++;
-    //auto& ebcN08dgE02 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
-    //ebcN08dgEit++;
-    //auto& ebcN08dgE03 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
-
-
-    EXPECT_EQ(ebcN09.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN09.IGBackwardLinkRef(), &bcN09);
-    auto& ebcN09eg = ebcN09.embeddedGraph();
-    auto& ebcN09dg = ebcN09.dualGraph();
-    EXPECT_EQ(ebcN09eg.numNodes(), 2);
-    EXPECT_EQ(ebcN09eg.numEdges(), 1);
-    EXPECT_EQ(ebcN09dg.numNodes(), 1);
-    EXPECT_EQ(ebcN09dg.numEdges(), 1);
-
-    auto  ebcN09egNit = ebcN09eg.nodes().first;
-    auto& ebcN09egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN09egNit)));
-    auto& ebcN09egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN09egN01.IGBackwardLink())));
-    auto& ebcN09egN01GN = dynamic_cast<NumNode&>(ebcN09egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN09egN01GN.backIt(), n10.backIt());
-    ebcN09egNit++;
-    auto& ebcN09egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN09egNit)));
-    auto& ebcN09egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN09egN02.IGBackwardLink())));
-    auto& ebcN09egN02GN = dynamic_cast<NumNode&>(ebcN09egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN09egN02GN.backIt(), n13.backIt());
-
-    auto  ebcN09egEit = ebcN09eg.edges().first;
-    auto& ebcN09egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN09egEit)));
-    auto& ebcN09egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN09egE01.IGBackwardLink())));
-    auto& ebcN09egE01GE = dynamic_cast<Edge&>(ebcN09egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN09egE01GE.backIt(), e10_13.backIt());
-
-    auto  ebcN09dgFit = ebcN09dg.nodes().first;
-    auto& ebcN09dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN09dgFit)));
-
-    //auto  ebcN09dgEit = ebcN09dg.edges().first;
-    //auto& ebcN09dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN09dgEit)));
-
-
-    EXPECT_EQ(ebcN10.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN10.IGBackwardLinkRef(), &bcN10);
-    auto& ebcN10eg = ebcN10.embeddedGraph();
-    auto& ebcN10dg = ebcN10.dualGraph();
-    EXPECT_EQ(ebcN10eg.numNodes(), 2);
-    EXPECT_EQ(ebcN10eg.numEdges(), 1);
-    EXPECT_EQ(ebcN10dg.numNodes(), 1);
-    EXPECT_EQ(ebcN10dg.numEdges(), 1);
-
-    auto  ebcN10egNit = ebcN10eg.nodes().first;
-    auto& ebcN10egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN10egNit)));
-    auto& ebcN10egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN10egN01.IGBackwardLink())));
-    auto& ebcN10egN01GN = dynamic_cast<NumNode&>(ebcN10egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN10egN01GN.backIt(), n04.backIt());
-    ebcN10egNit++;
-    auto& ebcN10egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN10egNit)));
-    auto& ebcN10egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN10egN02.IGBackwardLink())));
-    auto& ebcN10egN02GN = dynamic_cast<NumNode&>(ebcN10egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN10egN02GN.backIt(), n10.backIt());
-
-    auto  ebcN10egEit = ebcN10eg.edges().first;
-    auto& ebcN10egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN10egEit)));
-    auto& ebcN10egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN10egE01.IGBackwardLink())));
-    auto& ebcN10egE01GE = dynamic_cast<Edge&>(ebcN10egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN10egE01GE.backIt(), e04_10.backIt());
-
-    auto  ebcN10dgFit = ebcN10dg.nodes().first;
-    auto& ebcN10dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN10dgFit)));
-
-    //auto  ebcN10dgEit = ebcN10dg.edges().first;
-    //auto& ebcN10dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN10dgEit)));
-
-
-    EXPECT_EQ(ebcN11.type(),      BCTreeNode::BlockType);
-    EXPECT_EQ(&ebcN11.IGBackwardLinkRef(), &bcN11);
-    auto& ebcN11eg = ebcN11.embeddedGraph();
-    auto& ebcN11dg = ebcN11.dualGraph();
-    EXPECT_EQ(ebcN11eg.numNodes(), 6);
-    EXPECT_EQ(ebcN11eg.numEdges(), 8);
-    EXPECT_EQ(ebcN11dg.numNodes(), 4);
-    EXPECT_EQ(ebcN11dg.numEdges(), 8);
-
-    auto  ebcN11egNit = ebcN11eg.nodes().first;
-    auto& ebcN11egN01   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
-    auto& ebcN11egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN01.IGBackwardLink())));
-    auto& ebcN11egN01GN = dynamic_cast<NumNode&>(ebcN11egN01BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egN01GN.backIt(), n06.backIt());
-    ebcN11egNit++;
-    auto& ebcN11egN02   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
-    auto& ebcN11egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN02.IGBackwardLink())));
-    auto& ebcN11egN02GN = dynamic_cast<NumNode&>(ebcN11egN02BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egN02GN.backIt(), n07.backIt());
-    ebcN11egNit++;
-    auto& ebcN11egN03   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
-    auto& ebcN11egN03BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN03.IGBackwardLink())));
-    auto& ebcN11egN03GN = dynamic_cast<NumNode&>(ebcN11egN03BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egN03GN.backIt(), n05.backIt());
-    ebcN11egNit++;
-    auto& ebcN11egN04   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
-    auto& ebcN11egN04BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN04.IGBackwardLink())));
-    auto& ebcN11egN04GN = dynamic_cast<NumNode&>(ebcN11egN04BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egN04GN.backIt(), n01.backIt());
-    ebcN11egNit++;
-    auto& ebcN11egN05   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
-    auto& ebcN11egN05BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN05.IGBackwardLink())));
-    auto& ebcN11egN05GN = dynamic_cast<NumNode&>(ebcN11egN05BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egN05GN.backIt(), n04.backIt());
-    ebcN11egNit++;
-    auto& ebcN11egN06   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
-    auto& ebcN11egN06BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN06.IGBackwardLink())));
-    auto& ebcN11egN06GN = dynamic_cast<NumNode&>(ebcN11egN06BN.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egN06GN.backIt(), n03.backIt());
-
-
-    auto  ebcN11egEit = ebcN11eg.edges().first;
-    auto& ebcN11egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE01.IGBackwardLink())));
-    auto& ebcN11egE01GE = dynamic_cast<Edge&>(ebcN11egE01BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE01GE.backIt(), e06_07.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE02 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE02BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE02.IGBackwardLink())));
-    auto& ebcN11egE02GE = dynamic_cast<Edge&>(ebcN11egE02BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE02GE.backIt(), e05_06.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE03 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE03BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE03.IGBackwardLink())));
-    auto& ebcN11egE03GE = dynamic_cast<Edge&>(ebcN11egE03BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE03GE.backIt(), e01_05.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE04 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE04BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE04.IGBackwardLink())));
-    auto& ebcN11egE04GE = dynamic_cast<Edge&>(ebcN11egE04BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE04GE.backIt(), e05_07.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE05 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE05BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE05.IGBackwardLink())));
-    auto& ebcN11egE05GE = dynamic_cast<Edge&>(ebcN11egE05BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE05GE.backIt(), e04_07.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE06 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE06BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE06.IGBackwardLink())));
-    auto& ebcN11egE06GE = dynamic_cast<Edge&>(ebcN11egE06BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE06GE.backIt(), e01_04.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE07 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE07BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE07.IGBackwardLink())));
-    auto& ebcN11egE07GE = dynamic_cast<Edge&>(ebcN11egE07BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE07GE.backIt(), e03_04.backIt());
-    ebcN11egEit++;
-    auto& ebcN11egE08 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
-    auto& ebcN11egE08BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE08.IGBackwardLink())));
-    auto& ebcN11egE08GE = dynamic_cast<Edge&>(ebcN11egE08BE.IGBackwardLinkRef());
-    EXPECT_EQ(ebcN11egE08GE.backIt(), e01_03.backIt());
-
-    auto  ebcN11dgFit = ebcN11dg.nodes().first;
-    auto& ebcN11dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
-    ebcN11dgFit++;
-    auto& ebcN11dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
-    ebcN11dgFit++;
-    auto& ebcN11dgF03 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
-    ebcN11dgFit++;
-    auto& ebcN11dgF04 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
-
-    eit = ebcN11dgF01.mCycleEdges.begin();
-    EXPECT_EQ(ebcN11egE01.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE04.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE02.backIt(), // 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-
-    eit = ebcN11dgF02.mCycleEdges.begin();
-    EXPECT_EQ(ebcN11egE02.backIt(), // 05-06
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE03.backIt(), // 01-05
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE08.backIt(), // 01-03
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE07.backIt(), // 03-04
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE05.backIt(), // 04-07
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE01.backIt(), // 06-07
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-
-    eit = ebcN11dgF03.mCycleEdges.begin();
-    EXPECT_EQ(ebcN11egE05.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE06.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE03.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE04.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-
-    eit = ebcN11dgF04.mCycleEdges.begin();
-    EXPECT_EQ(ebcN11egE06.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE07.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-    EXPECT_EQ(ebcN11egE08.backIt(), 
-                        dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
-
-    EXPECT_EQ(&ebcE01.IGBackwardLinkRef(), &bcE01);
-    EXPECT_EQ(&ebcE01.incidentNodeBlockType(), &ebcN02);
-
-    EXPECT_EQ(&ebcE02.IGBackwardLinkRef(), &bcE02);
-    EXPECT_EQ(&ebcE02.incidentNodeBlockType(), &ebcN04);
-
-    EXPECT_EQ(&ebcE03.IGBackwardLinkRef(), &bcE03);
-    EXPECT_EQ(&ebcE03.incidentNodeBlockType(), &ebcN06);
-
-    EXPECT_EQ(&ebcE04.IGBackwardLinkRef(), &bcE04);
-    EXPECT_EQ(&ebcE04.incidentNodeBlockType(), &ebcN06);
-
-    EXPECT_EQ(&ebcE05.IGBackwardLinkRef(), &bcE05);
-    EXPECT_EQ(&ebcE05.incidentNodeBlockType(), &ebcN08);
-
-    EXPECT_EQ(&ebcE06.IGBackwardLinkRef(), &bcE06);
-    EXPECT_EQ(&ebcE06.incidentNodeBlockType(), &ebcN09);
-
-    EXPECT_EQ(&ebcE07.IGBackwardLinkRef(), &bcE07);
-    EXPECT_EQ(&ebcE07.incidentNodeBlockType(), &ebcN10);
-
-    EXPECT_EQ(&ebcE08.IGBackwardLinkRef(), &bcE08);
-    EXPECT_EQ(&ebcE08.incidentNodeBlockType(), &ebcN10);
-
-    EXPECT_EQ(&ebcE09.IGBackwardLinkRef(), &bcE09);
-    EXPECT_EQ(&ebcE09.incidentNodeBlockType(), &ebcN11);
-
-    EXPECT_EQ(&ebcE10.IGBackwardLinkRef(), &bcE10);
-    EXPECT_EQ(&ebcE10.incidentNodeBlockType(), &ebcN11);
-
-    EXPECT_EQ(ebcN01UG1.size(), 2);
-    UnificationFace& uf1 = ebcN01UG1.at(0);
-    UnificationFace& uf2 = ebcN01UG1.at(1);
-
-    EXPECT_EQ(&uf1.treeNode(),       &ebcN02);
-    EXPECT_EQ(&uf1.faceInDG(),       &ebcN02dgF01);
-    EXPECT_EQ( uf1.faceInDGIt(),      ebcN02dgF01.backIt());
-    EXPECT_EQ(&uf1.cutVertexInEG(),  &ebcN02egN01);
-    EXPECT_EQ( uf1.cutVertexInEGIt(), ebcN02egN01.backIt());
-    EXPECT_EQ(&uf1.edgeCCWInEG(),    &ebcN02egE01);
-    EXPECT_EQ( uf1.edgeCCWInEGIt(),   ebcN02egE01.backIt());
-    EXPECT_EQ(&uf1.edgeCWInEG()    , &ebcN02egE01);
-    EXPECT_EQ( uf1.edgeCWInEGIt(),    ebcN02egE01.backIt());
-    EXPECT_EQ( uf1.roleOfECWReversed(), false);
-
-    EXPECT_EQ(&uf2.treeNode(),       &ebcN11);
-    EXPECT_EQ(&uf2.faceInDG(),       &ebcN11dgF02);
-    EXPECT_EQ( uf2.faceInDGIt(),      ebcN11dgF02.backIt());
-    EXPECT_EQ(&uf2.cutVertexInEG(),  &ebcN11egN04);
-    EXPECT_EQ( uf2.cutVertexInEGIt(), ebcN11egN04.backIt());
-    EXPECT_EQ(&uf2.edgeCCWInEG(),    &ebcN11egE03); // 1->3
-    EXPECT_EQ( uf2.edgeCCWInEGIt(),   ebcN11egE03.backIt());
-    EXPECT_EQ(&uf2.edgeCWInEG()    , &ebcN11egE08); // 1->5
-    EXPECT_EQ( uf2.edgeCWInEGIt(),    ebcN11egE08.backIt());
-    EXPECT_EQ( uf2.roleOfECWReversed(), false);
-
-    EXPECT_EQ(ebcN05UG1.size(), 3);
-    UnificationFace& uf3 = ebcN05UG1.at(0);
-    UnificationFace& uf4 = ebcN05UG1.at(1);
-    UnificationFace& uf5 = ebcN05UG1.at(2);
-
-    EXPECT_EQ(&uf3.treeNode(),       &ebcN06);
-    EXPECT_EQ(&uf3.faceInDG(),       &ebcN06dgF01);
-    EXPECT_EQ( uf3.faceInDGIt(),      ebcN06dgF01.backIt());
-    EXPECT_EQ(&uf3.cutVertexInEG(),  &ebcN06egN01);
-    EXPECT_EQ( uf3.cutVertexInEGIt(), ebcN06egN01.backIt());
-    EXPECT_EQ(&uf3.edgeCCWInEG(),    &ebcN06egE01);
-    EXPECT_EQ( uf3.edgeCCWInEGIt(),   ebcN06egE01.backIt());
-    EXPECT_EQ(&uf3.edgeCWInEG()    , &ebcN06egE01);
-    EXPECT_EQ( uf3.edgeCWInEGIt(),    ebcN06egE01.backIt());
-    EXPECT_EQ( uf3.roleOfECWReversed(), false);
-
-    EXPECT_EQ(&uf4.treeNode(),       &ebcN10);
-    EXPECT_EQ(&uf4.faceInDG(),       &ebcN10dgF01);
-    EXPECT_EQ( uf4.faceInDGIt(),      ebcN10dgF01.backIt());
-    EXPECT_EQ(&uf4.cutVertexInEG(),  &ebcN10egN01);
-    EXPECT_EQ( uf4.cutVertexInEGIt(), ebcN10egN01.backIt());
-    EXPECT_EQ(&uf4.edgeCCWInEG(),    &ebcN10egE01);
-    EXPECT_EQ( uf4.edgeCCWInEGIt(),   ebcN10egE01.backIt());
-    EXPECT_EQ(&uf4.edgeCWInEG()    , &ebcN10egE01);
-    EXPECT_EQ( uf4.edgeCWInEGIt(),    ebcN10egE01.backIt());
-    EXPECT_EQ( uf4.roleOfECWReversed(), false);
-
-    EXPECT_EQ(&uf5.treeNode(),       &ebcN11);
-    EXPECT_EQ(&uf5.faceInDG(),       &ebcN11dgF02);
-    EXPECT_EQ( uf5.faceInDGIt(),      ebcN11dgF02.backIt());
-    EXPECT_EQ(&uf5.cutVertexInEG(),  &ebcN11egN05);
-    EXPECT_EQ( uf5.cutVertexInEGIt(), ebcN11egN05.backIt());
-    EXPECT_EQ(&uf5.edgeCCWInEG(),    &ebcN11egE07); // 4 -> 7
-    EXPECT_EQ( uf5.edgeCCWInEGIt(),   ebcN11egE07.backIt());
-    EXPECT_EQ(&uf5.edgeCWInEG()    , &ebcN11egE05); // 3 -> 4
-    EXPECT_EQ( uf5.edgeCWInEGIt(),    ebcN11egE05.backIt());
-    EXPECT_EQ( uf5.roleOfECWReversed(), false);
-
-    EXPECT_EQ(ebcN03UG1.size(), 2);
-    UnificationFace& uf6 = ebcN03UG1.at(0);
-    UnificationFace& uf7 = ebcN03UG1.at(1);
-
-    EXPECT_EQ(&uf6.treeNode(),       &ebcN04);
-    EXPECT_EQ(&uf6.faceInDG(),       &ebcN04dgF01);
-    EXPECT_EQ( uf6.faceInDGIt(),      ebcN04dgF01.backIt());
-    EXPECT_EQ(&uf6.cutVertexInEG(),  &ebcN04egN01);
-    EXPECT_EQ( uf6.cutVertexInEGIt(), ebcN04egN01.backIt());
-    EXPECT_EQ(&uf6.edgeCCWInEG(),    &ebcN04egE01);
-    EXPECT_EQ( uf6.edgeCCWInEGIt(),   ebcN04egE01.backIt());
-    EXPECT_EQ(&uf6.edgeCWInEG()    , &ebcN04egE01);
-    EXPECT_EQ( uf6.edgeCWInEGIt(),    ebcN04egE01.backIt());
-    EXPECT_EQ( uf6.roleOfECWReversed(), false);
-
-    EXPECT_EQ(&uf7.treeNode(),       &ebcN06);
-    EXPECT_EQ(&uf7.faceInDG(),       &ebcN06dgF01);
-    EXPECT_EQ( uf7.faceInDGIt(),      ebcN06dgF01.backIt());
-    EXPECT_EQ(&uf7.cutVertexInEG(),  &ebcN06egN02);
-    EXPECT_EQ( uf7.cutVertexInEGIt(), ebcN06egN02.backIt());
-    EXPECT_EQ(&uf7.edgeCCWInEG(),    &ebcN06egE01);
-    EXPECT_EQ( uf7.edgeCCWInEGIt(),   ebcN06egE01.backIt());
-    EXPECT_EQ(&uf7.edgeCWInEG()    , &ebcN06egE01);
-    EXPECT_EQ( uf7.edgeCWInEGIt(),    ebcN06egE01.backIt());
-    EXPECT_EQ( uf7.roleOfECWReversed(), false);
-
-    EXPECT_EQ(ebcN07UG1.size(), 3);
-    UnificationFace& uf8 = ebcN07UG1.at(0);
-    UnificationFace& uf9 = ebcN07UG1.at(1);
-    UnificationFace& uf10= ebcN07UG1.at(2);
-
-    EXPECT_EQ(&uf8.treeNode(),       &ebcN08);
-    EXPECT_EQ(&uf8.faceInDG(),       &ebcN08dgF01);
-    EXPECT_EQ( uf8.faceInDGIt(),      ebcN08dgF01.backIt());
-    EXPECT_EQ(&uf8.cutVertexInEG(),  &ebcN08egN01);
-    EXPECT_EQ( uf8.cutVertexInEGIt(), ebcN08egN01.backIt());
-    EXPECT_EQ(&uf8.edgeCCWInEG(),    &ebcN08egE01);
-    EXPECT_EQ( uf8.edgeCCWInEGIt(),   ebcN08egE01.backIt());
-    EXPECT_EQ(&uf8.edgeCWInEG()    , &ebcN08egE03);
-    EXPECT_EQ( uf8.edgeCWInEGIt(),    ebcN08egE03.backIt());
-    EXPECT_EQ( uf8.roleOfECWReversed(), false);
-
-    EXPECT_EQ(&uf9.treeNode(),       &ebcN09);
-    EXPECT_EQ(&uf9.faceInDG(),       &ebcN09dgF01);
-    EXPECT_EQ( uf9.faceInDGIt(),      ebcN09dgF01.backIt());
-    EXPECT_EQ(&uf9.cutVertexInEG(),  &ebcN09egN01);
-    EXPECT_EQ( uf9.cutVertexInEGIt(), ebcN09egN01.backIt());
-    EXPECT_EQ(&uf9.edgeCCWInEG(),    &ebcN09egE01);
-    EXPECT_EQ( uf9.edgeCCWInEGIt(),   ebcN09egE01.backIt());
-    EXPECT_EQ(&uf9.edgeCWInEG()    , &ebcN09egE01);
-    EXPECT_EQ( uf9.edgeCWInEGIt(),    ebcN09egE01.backIt());
-    EXPECT_EQ( uf9.roleOfECWReversed(), false);
-
-    EXPECT_EQ(&uf10.treeNode(),       &ebcN10);
-    EXPECT_EQ(&uf10.faceInDG(),       &ebcN10dgF01);
-    EXPECT_EQ( uf10.faceInDGIt(),      ebcN10dgF01.backIt());
-    EXPECT_EQ(&uf10.cutVertexInEG(),  &ebcN10egN02);
-    EXPECT_EQ( uf10.cutVertexInEGIt(), ebcN10egN02.backIt());
-    EXPECT_EQ(&uf10.edgeCCWInEG(),    &ebcN10egE01);
-    EXPECT_EQ( uf10.edgeCCWInEGIt(),   ebcN10egE01.backIt());
-    EXPECT_EQ(&uf10.edgeCWInEG()    , &ebcN10egE01);
-    EXPECT_EQ( uf10.edgeCWInEGIt(),    ebcN10egE01.backIt());
-    EXPECT_EQ( uf10.roleOfECWReversed(), false);
-    ebcT.findGeometricEmbedding(
-                  ebcN11.backIt(),ebcN11dgF03.backIt(), ebcN11egN04.backIt());
-    auto& ebcTR = ebcT.root();
-
-    EXPECT_EQ(&ebcTR, &ebcN11);
-
-    EmbeddedBCTree::ExplorationTree& expT =  ebcT.explorationTree();
-
-    auto& expTR = expT.root();
-
-    EXPECT_EQ(expT.numNodes(),7);
-    EXPECT_EQ(expT.numEdges(),6);
-
-    auto expNit = expT.nodes().first;
-    auto& expN01 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-    expNit++;
-    auto& expN02 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-    expNit++;
-    auto& expN03 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-    expNit++;
-    auto& expN04 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-    expNit++;
-    auto& expN05 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-    expNit++;
-    auto& expN06 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-    expNit++;
-    auto& expN07 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
-
-    EXPECT_EQ(&expTR, &expN07);
-
-    EXPECT_EQ(&expN01.IGBackwardLinkRef(), &ebcN02);
-    EXPECT_EQ(expN01.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN01UGs=expN01.sortedUnificationGroups();
-    EXPECT_EQ(expN01UGs.size(), 0);
-
-    EXPECT_EQ(&expN02.IGBackwardLinkRef(), &ebcN04);
-    EXPECT_EQ(expN02.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN02UGs=expN02.sortedUnificationGroups();
-    EXPECT_EQ(expN02UGs.size(), 0);
-
-    EXPECT_EQ(&expN03.IGBackwardLinkRef(), &ebcN06);
-    EXPECT_EQ(expN03.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN03UGs=expN03.sortedUnificationGroups();
-    EXPECT_EQ(expN03UGs.size(), 1);
-
-    EXPECT_EQ(expN03UGs[0].absorbeesSize(), 1);
-    EXPECT_EQ(expN03UGs[0].absorber(),     uf7);
-    EXPECT_EQ(expN03UGs[0].absorbeeAt(0),  uf6);
-
-    EXPECT_EQ(&expN04.IGBackwardLinkRef(), &ebcN08);
-    EXPECT_EQ(expN04.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN04UGs=expN04.sortedUnificationGroups();
-    EXPECT_EQ(expN04UGs.size(), 0);
-
-    EXPECT_EQ(&expN05.IGBackwardLinkRef(), &ebcN09);
-    EXPECT_EQ(expN05.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN05UGs=expN05.sortedUnificationGroups();
-    EXPECT_EQ(expN05UGs.size(), 0);
-
-    EXPECT_EQ(&expN06.IGBackwardLinkRef(), &ebcN10);
-    EXPECT_EQ(expN06.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN06UGs=expN06.sortedUnificationGroups();
-    EXPECT_EQ(expN06UGs.size(), 1);
-
-    EXPECT_EQ(expN06UGs[0].absorbeesSize(), 2);
-    EXPECT_EQ(expN06UGs[0].absorber(),     uf10);
-    EXPECT_EQ(expN06UGs[0].absorbeeAt(0),  uf8);
-    EXPECT_EQ(expN06UGs[0].absorbeeAt(1),  uf9);
-
-    EXPECT_EQ(&expN07.IGBackwardLinkRef(), &ebcN11);
-    EXPECT_EQ(expN07.numChildrenProcessed(), 0);
-    vector<SortedUnificationGroup>&expN07UGs=expN07.sortedUnificationGroups();
-    EXPECT_EQ(expN07UGs.size(), 2);
-
-    EXPECT_EQ(expN07UGs[0].absorbeesSize(), 1);
-    EXPECT_EQ(expN07UGs[0].absorber(),     uf2);
-    EXPECT_EQ(expN07UGs[0].absorbeeAt(0),  uf1);
-
-    EXPECT_EQ(expN07UGs[1].absorbeesSize(), 2);
-    EXPECT_EQ(expN07UGs[1].absorber(),     uf5);
-    EXPECT_EQ(expN07UGs[1].absorbeeAt(0),  uf3);
-    EXPECT_EQ(expN07UGs[1].absorbeeAt(1),  uf4);
-
-    auto expEit = expT.edges().first;
-    auto& expE01 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
-    EXPECT_EQ(expE01.incidentNodeSrc().backIt(), expN07.backIt());
-    EXPECT_EQ(expE01.incidentNodeDst().backIt(), expN01.backIt());
-    expEit++;
-    auto& expE02 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
-    EXPECT_EQ(expE02.incidentNodeSrc().backIt(), expN07.backIt());
-    EXPECT_EQ(expE02.incidentNodeDst().backIt(), expN03.backIt());
-    expEit++;
-    auto& expE03 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
-    EXPECT_EQ(expE03.incidentNodeSrc().backIt(), expN07.backIt());
-    EXPECT_EQ(expE03.incidentNodeDst().backIt(), expN06.backIt());
-    expEit++;
-    auto& expE04 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
-    EXPECT_EQ(expE04.incidentNodeSrc().backIt(), expN03.backIt());
-    EXPECT_EQ(expE04.incidentNodeDst().backIt(), expN02.backIt());
-    expEit++;
-    auto& expE05 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
-    EXPECT_EQ(expE05.incidentNodeSrc().backIt(), expN06.backIt());
-    EXPECT_EQ(expE05.incidentNodeDst().backIt(), expN04.backIt());
-    expEit++;
-    auto& expE06 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
-    EXPECT_EQ(expE06.incidentNodeSrc().backIt(), expN06.backIt());
-    EXPECT_EQ(expE06.incidentNodeDst().backIt(), expN05.backIt());
-    expEit++;
-
-    EXPECT_EQ(&ebcN02.outerFace(), &ebcN02dgF01);
-    EXPECT_EQ(&ebcN02.topNode(),   &ebcN02egN01);
-
-    EXPECT_EQ(&ebcN04.outerFace(), &ebcN04dgF01);
-    EXPECT_EQ(&ebcN04.topNode(),   &ebcN04egN01);
-
-    EXPECT_EQ(&ebcN06.outerFace(), &ebcN06dgF01);
-    EXPECT_EQ(&ebcN06.topNode(),   &ebcN06egN01);
-
-    EXPECT_EQ(&ebcN08.outerFace(), &ebcN08dgF01);
-    EXPECT_EQ(&ebcN08.topNode(),   &ebcN08egN01);
-
-    EXPECT_EQ(&ebcN09.outerFace(), &ebcN09dgF01);
-    EXPECT_EQ(&ebcN09.topNode(),   &ebcN09egN01);
-
-    EXPECT_EQ(&ebcN10.outerFace(), &ebcN10dgF01);
-    EXPECT_EQ(&ebcN10.topNode(),   &ebcN10egN01);
-
-    EXPECT_EQ(&ebcN11.outerFace(), &ebcN11dgF03);
-    EXPECT_EQ(&ebcN11.topNode(),   &ebcN11egN04);
-
-}
-
+// /**  @brief realistic example
+//  */
+// TEST_F(EmbeddedBCTreeTests, Realistic1) {
+// 
+//     auto  gp1 = generate_graph();
+//     auto& g1  = *gp1;
+// 
+//     auto  np01 = generate_node(1);
+//     auto& n01  = g1.addNode(std::move(np01));
+//     auto  np02 = generate_node(2);
+//     auto& n02  = g1.addNode(std::move(np02));
+//     auto  np03 = generate_node(3);
+//     auto& n03  = g1.addNode(std::move(np03));
+//     auto  np04 = generate_node(4);
+//     auto& n04  = g1.addNode(std::move(np04));
+//     auto  np05 = generate_node(5);
+//     auto& n05  = g1.addNode(std::move(np05));
+//     auto  np06 = generate_node(6);
+//     auto& n06  = g1.addNode(std::move(np06));
+//     auto  np07 = generate_node(7);
+//     auto& n07  = g1.addNode(std::move(np07));
+//     auto  np08 = generate_node(8);
+//     auto& n08  = g1.addNode(std::move(np08));
+//     auto  np09 = generate_node(9);
+//     auto& n09  = g1.addNode(std::move(np09));
+//     auto  np10 = generate_node(10);
+//     auto& n10  = g1.addNode(std::move(np10));
+//     auto  np11 = generate_node(11);
+//     auto& n11  = g1.addNode(std::move(np11));
+//     auto  np12 = generate_node(12);
+//     auto& n12  = g1.addNode(std::move(np12));
+//     auto  np13 = generate_node(13);
+//     auto& n13  = g1.addNode(std::move(np13));
+// 
+//     auto  ep01_02 = generate_edge();
+//     auto& e01_02  = g1.addEdge(std::move(ep01_02),n01,n02);
+//     auto  ep01_03 = generate_edge();
+//     auto& e01_03  = g1.addEdge(std::move(ep01_03),n01,n03);
+//     auto  ep01_04 = generate_edge();
+//     auto& e01_04  = g1.addEdge(std::move(ep01_04),n01,n04);
+//     auto  ep01_05 = generate_edge();
+//     auto& e01_05  = g1.addEdge(std::move(ep01_05),n01,n05);
+//     auto  ep03_04 = generate_edge();
+//     auto& e03_04  = g1.addEdge(std::move(ep03_04),n03,n04);
+//     auto  ep04_07 = generate_edge();
+//     auto& e04_07  = g1.addEdge(std::move(ep04_07),n04,n07);
+//     auto  ep04_08 = generate_edge();
+//     auto& e04_08  = g1.addEdge(std::move(ep04_08),n04,n08);
+//     auto  ep04_10 = generate_edge();
+//     auto& e04_10  = g1.addEdge(std::move(ep04_10),n04,n10);
+//     auto  ep05_06 = generate_edge();
+//     auto& e05_06  = g1.addEdge(std::move(ep05_06),n05,n06);
+//     auto  ep05_07 = generate_edge();
+//     auto& e05_07  = g1.addEdge(std::move(ep05_07),n05,n07);
+//     auto  ep06_07 = generate_edge();
+//     auto& e06_07  = g1.addEdge(std::move(ep06_07),n06,n07);
+//     auto  ep08_09 = generate_edge();
+//     auto& e08_09  = g1.addEdge(std::move(ep08_09),n08,n09);
+//     auto  ep10_11 = generate_edge();
+//     auto& e10_11  = g1.addEdge(std::move(ep10_11),n10,n11);
+//     auto  ep10_12 = generate_edge();
+//     auto& e10_12  = g1.addEdge(std::move(ep10_12),n10,n12);
+//     auto  ep10_13 = generate_edge();
+//     auto& e10_13  = g1.addEdge(std::move(ep10_13),n10,n13);
+//     auto  ep11_12 = generate_edge();
+//     auto& e11_12  = g1.addEdge(std::move(ep11_12),n11,n12);
+// 
+//     BiconnectedDecomposer decomp;
+//     BCTree bcT = decomp.decompose(g1);
+// 
+//     EmbeddedBCTree ebcT(bcT);
+// 
+//     ebcT.makeDefaultEmbedding();
+// 
+//     EXPECT_EQ(&(ebcT.bcTree()),&bcT);
+//     EXPECT_EQ(ebcT.numNodes(), 11);
+//     EXPECT_EQ(ebcT.numEdges(), 10);
+// 
+//     auto ebcNit = ebcT.nodes().first;
+//     auto& ebcN01 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN02 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN03 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN04 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN05 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN06 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN07 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN08 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN09 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN10 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+//     ebcNit++;
+//     auto& ebcN11 = dynamic_cast<EmbeddedBCTreeNode&>(*(*(ebcNit)));
+// 
+//     auto bcNit = bcT.nodes().first;
+//     auto& bcN01 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN02 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN03 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN04 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN05 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN06 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN07 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN08 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN09 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN10 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+//     bcNit++;
+//     auto& bcN11 = dynamic_cast<BCTreeNode&>(*(*(bcNit)));
+// 
+//     auto ebcEit = ebcT.edges().first;
+//     auto& ebcE01 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE02 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE03 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE04 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE05 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE06 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE07 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE08 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE09 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+//     ebcEit++;
+//     auto& ebcE10 = dynamic_cast<EmbeddedBCTreeEdge&>(*(*(ebcEit)));
+// 
+//     auto bcEit = bcT.edges().first;
+//     auto& bcE01 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE02 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE03 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE04 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE05 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE06 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE07 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE08 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE09 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+//     bcEit++;
+//     auto& bcE10 = dynamic_cast<BCTreeEdge&>(*(*(bcEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN01.type(),      BCTreeNode::CutVertexType);
+//     EXPECT_EQ(&ebcN01.IGBackwardLinkRef(), &bcN01);
+//     EXPECT_EQ(&bcN01.IGBackwardLinkRef(), &n01);
+//     EXPECT_THROW(ebcN01.embeddedGraph(), std::invalid_argument);
+//     EXPECT_THROW(ebcN01.dualGraph(), std::invalid_argument);
+//     EXPECT_EQ(ebcN01.numUnificationGroups(), 1);
+//     auto& ebcN01UG1 = ebcN01.unificationGroup(0);
+// 
+// 
+//     EXPECT_EQ(ebcN02.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN02.IGBackwardLinkRef(), &bcN02);
+//     auto& ebcN02eg = ebcN02.embeddedGraph();
+//     auto& ebcN02dg = ebcN02.dualGraph();
+//     EXPECT_EQ(ebcN02eg.numNodes(), 2);
+//     EXPECT_EQ(ebcN02eg.numEdges(), 1);
+//     EXPECT_EQ(ebcN02dg.numNodes(), 1);
+//     EXPECT_EQ(ebcN02dg.numEdges(), 1);
+// 
+//     auto  ebcN02egNit = ebcN02eg.nodes().first;
+//     auto& ebcN02egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN02egNit)));
+//     auto& ebcN02egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN02egN01.IGBackwardLink())));
+//     auto& ebcN02egN01GN = dynamic_cast<NumNode&>(ebcN02egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN02egN01GN.backIt(), n01.backIt());
+//     ebcN02egNit++;
+//     auto& ebcN02egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN02egNit)));
+//     auto& ebcN02egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN02egN02.IGBackwardLink())));
+//     auto& ebcN02egN02GN = dynamic_cast<NumNode&>(ebcN02egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN02egN02GN.backIt(), n02.backIt());
+// 
+//     auto  ebcN02egEit = ebcN02eg.edges().first;
+//     auto& ebcN02egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN02egEit)));
+//     auto& ebcN02egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN02egE01.IGBackwardLink())));
+//     auto& ebcN02egE01GE = dynamic_cast<Edge&>(ebcN02egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN02egE01GE.backIt(), e01_02.backIt());
+// 
+//     auto  ebcN02dgFit = ebcN02dg.nodes().first;
+//     auto& ebcN02dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN02dgFit)));
+// 
+//     //auto  ebcN02dgEit = ebcN02dg.edges().first;
+//     //auto& ebcN02dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN02dgEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN03.type(),      BCTreeNode::CutVertexType);
+//     EXPECT_EQ(&ebcN03.IGBackwardLinkRef(), &bcN03);
+//     EXPECT_EQ(&bcN03.IGBackwardLinkRef(), &n08);
+//     EXPECT_THROW(ebcN03.embeddedGraph(), std::invalid_argument);
+//     EXPECT_THROW(ebcN03.dualGraph(), std::invalid_argument);
+//     EXPECT_EQ(ebcN03.numUnificationGroups(), 1);
+//     auto& ebcN03UG1 = ebcN03.unificationGroup(0);
+// 
+// 
+//     EXPECT_EQ(ebcN04.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN04.IGBackwardLinkRef(), &bcN04);
+//     auto& ebcN04eg = ebcN04.embeddedGraph();
+//     auto& ebcN04dg = ebcN04.dualGraph();
+//     EXPECT_EQ(ebcN04eg.numNodes(), 2);
+//     EXPECT_EQ(ebcN04eg.numEdges(), 1);
+//     EXPECT_EQ(ebcN04dg.numNodes(), 1);
+//     EXPECT_EQ(ebcN04dg.numEdges(), 1);
+// 
+//     auto  ebcN04egNit = ebcN04eg.nodes().first;
+//     auto& ebcN04egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN04egNit)));
+//     auto& ebcN04egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN04egN01.IGBackwardLink())));
+//     auto& ebcN04egN01GN = dynamic_cast<NumNode&>(ebcN04egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN04egN01GN.backIt(), n08.backIt());
+//     ebcN04egNit++;
+//     auto& ebcN04egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN04egNit)));
+//     auto& ebcN04egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN04egN02.IGBackwardLink())));
+//     auto& ebcN04egN02GN = dynamic_cast<NumNode&>(ebcN04egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN04egN02GN.backIt(), n09.backIt());
+// 
+//     auto  ebcN04egEit = ebcN04eg.edges().first;
+//     auto& ebcN04egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN04egEit)));
+//     auto& ebcN04egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN04egE01.IGBackwardLink())));
+//     auto& ebcN04egE01GE = dynamic_cast<Edge&>(ebcN04egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN04egE01GE.backIt(), e08_09.backIt());
+// 
+//     auto  ebcN04dgFit = ebcN04dg.nodes().first;
+//     auto& ebcN04dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN04dgFit)));
+// 
+//     //auto  ebcN04dgEit = ebcN04dg.edges().first;
+//     //auto& ebcN04dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN04dgEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN05.type(),      BCTreeNode::CutVertexType);
+//     EXPECT_EQ(&ebcN05.IGBackwardLinkRef(), &bcN05);
+//     EXPECT_EQ(&bcN05.IGBackwardLinkRef(), &n04);
+//     EXPECT_THROW(ebcN05.embeddedGraph(), std::invalid_argument);
+//     EXPECT_THROW(ebcN05.dualGraph(), std::invalid_argument);
+//     EXPECT_EQ(ebcN05.numUnificationGroups(), 1);
+//     auto& ebcN05UG1 = ebcN05.unificationGroup(0);
+// 
+// 
+//     EXPECT_EQ(ebcN06.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN06.IGBackwardLinkRef(), &bcN06);
+//     auto& ebcN06eg = ebcN06.embeddedGraph();
+//     auto& ebcN06dg = ebcN06.dualGraph();
+//     EXPECT_EQ(ebcN06eg.numNodes(), 2);
+//     EXPECT_EQ(ebcN06eg.numEdges(), 1);
+//     EXPECT_EQ(ebcN06dg.numNodes(), 1);
+//     EXPECT_EQ(ebcN06dg.numEdges(), 1);
+// 
+//     auto  ebcN06egNit = ebcN06eg.nodes().first;
+//     auto& ebcN06egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN06egNit)));
+//     auto& ebcN06egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN06egN01.IGBackwardLink())));
+//     auto& ebcN06egN01GN = dynamic_cast<NumNode&>(ebcN06egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN06egN01GN.backIt(), n04.backIt());
+//     ebcN06egNit++;
+//     auto& ebcN06egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN06egNit)));
+//     auto& ebcN06egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN06egN02.IGBackwardLink())));
+//     auto& ebcN06egN02GN = dynamic_cast<NumNode&>(ebcN06egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN06egN02GN.backIt(), n08.backIt());
+// 
+//     auto  ebcN06egEit = ebcN06eg.edges().first;
+//     auto& ebcN06egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN06egEit)));
+//     auto& ebcN06egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN06egE01.IGBackwardLink())));
+//     auto& ebcN06egE01GE = dynamic_cast<Edge&>(ebcN06egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN06egE01GE.backIt(), e04_08.backIt());
+// 
+//     auto  ebcN06dgFit = ebcN06dg.nodes().first;
+//     auto& ebcN06dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN06dgFit)));
+// 
+//     //auto  ebcN06dgEit = ebcN06dg.edges().first;
+//     //auto& ebcN06dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN06dgEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN07.type(),      BCTreeNode::CutVertexType);
+//     EXPECT_EQ(&ebcN07.IGBackwardLinkRef(), &bcN07);
+//     EXPECT_EQ(&bcN07.IGBackwardLinkRef(), &n10);
+//     EXPECT_THROW(ebcN07.embeddedGraph(), std::invalid_argument);
+//     EXPECT_THROW(ebcN07.dualGraph(), std::invalid_argument);
+//     EXPECT_EQ(ebcN07.numUnificationGroups(), 1);
+//     auto& ebcN07UG1 = ebcN07.unificationGroup(0);
+// 
+// 
+//     EXPECT_EQ(ebcN08.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN08.IGBackwardLinkRef(), &bcN08);
+//     auto& ebcN08eg = ebcN08.embeddedGraph();
+//     auto& ebcN08dg = ebcN08.dualGraph();
+//     EXPECT_EQ(ebcN08eg.numNodes(), 3);
+//     EXPECT_EQ(ebcN08eg.numEdges(), 3);
+//     EXPECT_EQ(ebcN08dg.numNodes(), 2);
+//     EXPECT_EQ(ebcN08dg.numEdges(), 3);
+// 
+//     auto  ebcN08egNit = ebcN08eg.nodes().first;
+//     auto& ebcN08egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN08egNit)));
+//     auto& ebcN08egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN08egN01.IGBackwardLink())));
+//     auto& ebcN08egN01GN = dynamic_cast<NumNode&>(ebcN08egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN08egN01GN.backIt(), n10.backIt());
+//     ebcN08egNit++;
+//     auto& ebcN08egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN08egNit)));
+//     auto& ebcN08egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN08egN02.IGBackwardLink())));
+//     auto& ebcN08egN02GN = dynamic_cast<NumNode&>(ebcN08egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN08egN02GN.backIt(), n12.backIt());
+//     ebcN08egNit++;
+//     auto& ebcN08egN03 = dynamic_cast<EmbeddedNode&>(*(*(ebcN08egNit)));
+//     auto& ebcN08egN03BN =dynamic_cast<BlockNode&>(*(*(ebcN08egN03.IGBackwardLink())));
+//     auto& ebcN08egN03GN = dynamic_cast<NumNode&>(ebcN08egN03BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN08egN03GN.backIt(), n11.backIt());
+// 
+//     auto  ebcN08egEit = ebcN08eg.edges().first;
+//     auto& ebcN08egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN08egEit)));
+//     auto& ebcN08egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN08egE01.IGBackwardLink())));
+//     auto& ebcN08egE01GE = dynamic_cast<Edge&>(ebcN08egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN08egE01GE.backIt(), e10_12.backIt());
+//     ebcN08egEit++;
+//     auto& ebcN08egE02   = dynamic_cast<EmbeddedEdge&>(*(*(ebcN08egEit)));
+//     auto& ebcN08egE02BE =dynamic_cast<BlockEdge&>(*(*(ebcN08egE02.IGBackwardLink())));
+//     auto& ebcN08egE02GE = dynamic_cast<Edge&>(ebcN08egE02BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN08egE02GE.backIt(), e11_12.backIt());
+//     ebcN08egEit++;
+//     auto& ebcN08egE03   = dynamic_cast<EmbeddedEdge&>(*(*(ebcN08egEit)));
+//     auto& ebcN08egE03BE =dynamic_cast<BlockEdge&>(*(*(ebcN08egE03.IGBackwardLink())));
+//     auto& ebcN08egE03GE = dynamic_cast<Edge&>(ebcN08egE03BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN08egE03GE.backIt(), e10_11.backIt());
+// 
+//     auto  ebcN08dgFit = ebcN08dg.nodes().first;
+//     auto& ebcN08dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN08dgFit)));
+//     ebcN08dgFit++;
+//     /*auto& ebcN08dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN08dgFit)));*/
+// 
+//     auto eit = ebcN08dgF01.mCycleEdges.begin();
+//     EXPECT_EQ(ebcN08egE03.backIt(), 
+//               dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN08egE02.backIt(), 
+//               dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN08egE01.backIt(), 
+//               dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     // ebcN08dgF01 : 10 -> 11-> 12
+//     // ebcN08dgF02 : 10 -> 12-> 11
+// 
+//     //auto  ebcN08dgEit = ebcN08dg.edges().first;
+//     //auto& ebcN08dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
+//     //ebcN08dgEit++;
+//     //auto& ebcN08dgE02 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
+//     //ebcN08dgEit++;
+//     //auto& ebcN08dgE03 = dynamic_cast<DualEdge&>(*(*(ebcN08dgEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN09.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN09.IGBackwardLinkRef(), &bcN09);
+//     auto& ebcN09eg = ebcN09.embeddedGraph();
+//     auto& ebcN09dg = ebcN09.dualGraph();
+//     EXPECT_EQ(ebcN09eg.numNodes(), 2);
+//     EXPECT_EQ(ebcN09eg.numEdges(), 1);
+//     EXPECT_EQ(ebcN09dg.numNodes(), 1);
+//     EXPECT_EQ(ebcN09dg.numEdges(), 1);
+// 
+//     auto  ebcN09egNit = ebcN09eg.nodes().first;
+//     auto& ebcN09egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN09egNit)));
+//     auto& ebcN09egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN09egN01.IGBackwardLink())));
+//     auto& ebcN09egN01GN = dynamic_cast<NumNode&>(ebcN09egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN09egN01GN.backIt(), n10.backIt());
+//     ebcN09egNit++;
+//     auto& ebcN09egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN09egNit)));
+//     auto& ebcN09egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN09egN02.IGBackwardLink())));
+//     auto& ebcN09egN02GN = dynamic_cast<NumNode&>(ebcN09egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN09egN02GN.backIt(), n13.backIt());
+// 
+//     auto  ebcN09egEit = ebcN09eg.edges().first;
+//     auto& ebcN09egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN09egEit)));
+//     auto& ebcN09egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN09egE01.IGBackwardLink())));
+//     auto& ebcN09egE01GE = dynamic_cast<Edge&>(ebcN09egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN09egE01GE.backIt(), e10_13.backIt());
+// 
+//     auto  ebcN09dgFit = ebcN09dg.nodes().first;
+//     auto& ebcN09dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN09dgFit)));
+// 
+//     //auto  ebcN09dgEit = ebcN09dg.edges().first;
+//     //auto& ebcN09dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN09dgEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN10.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN10.IGBackwardLinkRef(), &bcN10);
+//     auto& ebcN10eg = ebcN10.embeddedGraph();
+//     auto& ebcN10dg = ebcN10.dualGraph();
+//     EXPECT_EQ(ebcN10eg.numNodes(), 2);
+//     EXPECT_EQ(ebcN10eg.numEdges(), 1);
+//     EXPECT_EQ(ebcN10dg.numNodes(), 1);
+//     EXPECT_EQ(ebcN10dg.numEdges(), 1);
+// 
+//     auto  ebcN10egNit = ebcN10eg.nodes().first;
+//     auto& ebcN10egN01 = dynamic_cast<EmbeddedNode&>(*(*(ebcN10egNit)));
+//     auto& ebcN10egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN10egN01.IGBackwardLink())));
+//     auto& ebcN10egN01GN = dynamic_cast<NumNode&>(ebcN10egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN10egN01GN.backIt(), n04.backIt());
+//     ebcN10egNit++;
+//     auto& ebcN10egN02 = dynamic_cast<EmbeddedNode&>(*(*(ebcN10egNit)));
+//     auto& ebcN10egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN10egN02.IGBackwardLink())));
+//     auto& ebcN10egN02GN = dynamic_cast<NumNode&>(ebcN10egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN10egN02GN.backIt(), n10.backIt());
+// 
+//     auto  ebcN10egEit = ebcN10eg.edges().first;
+//     auto& ebcN10egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN10egEit)));
+//     auto& ebcN10egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN10egE01.IGBackwardLink())));
+//     auto& ebcN10egE01GE = dynamic_cast<Edge&>(ebcN10egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN10egE01GE.backIt(), e04_10.backIt());
+// 
+//     auto  ebcN10dgFit = ebcN10dg.nodes().first;
+//     auto& ebcN10dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN10dgFit)));
+// 
+//     //auto  ebcN10dgEit = ebcN10dg.edges().first;
+//     //auto& ebcN10dgE01 = dynamic_cast<DualEdge&>(*(*(ebcN10dgEit)));
+// 
+// 
+//     EXPECT_EQ(ebcN11.type(),      BCTreeNode::BlockType);
+//     EXPECT_EQ(&ebcN11.IGBackwardLinkRef(), &bcN11);
+//     auto& ebcN11eg = ebcN11.embeddedGraph();
+//     auto& ebcN11dg = ebcN11.dualGraph();
+//     EXPECT_EQ(ebcN11eg.numNodes(), 6);
+//     EXPECT_EQ(ebcN11eg.numEdges(), 8);
+//     EXPECT_EQ(ebcN11dg.numNodes(), 4);
+//     EXPECT_EQ(ebcN11dg.numEdges(), 8);
+// 
+//     auto  ebcN11egNit = ebcN11eg.nodes().first;
+//     auto& ebcN11egN01   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
+//     auto& ebcN11egN01BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN01.IGBackwardLink())));
+//     auto& ebcN11egN01GN = dynamic_cast<NumNode&>(ebcN11egN01BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egN01GN.backIt(), n06.backIt());
+//     ebcN11egNit++;
+//     auto& ebcN11egN02   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
+//     auto& ebcN11egN02BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN02.IGBackwardLink())));
+//     auto& ebcN11egN02GN = dynamic_cast<NumNode&>(ebcN11egN02BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egN02GN.backIt(), n07.backIt());
+//     ebcN11egNit++;
+//     auto& ebcN11egN03   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
+//     auto& ebcN11egN03BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN03.IGBackwardLink())));
+//     auto& ebcN11egN03GN = dynamic_cast<NumNode&>(ebcN11egN03BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egN03GN.backIt(), n05.backIt());
+//     ebcN11egNit++;
+//     auto& ebcN11egN04   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
+//     auto& ebcN11egN04BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN04.IGBackwardLink())));
+//     auto& ebcN11egN04GN = dynamic_cast<NumNode&>(ebcN11egN04BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egN04GN.backIt(), n01.backIt());
+//     ebcN11egNit++;
+//     auto& ebcN11egN05   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
+//     auto& ebcN11egN05BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN05.IGBackwardLink())));
+//     auto& ebcN11egN05GN = dynamic_cast<NumNode&>(ebcN11egN05BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egN05GN.backIt(), n04.backIt());
+//     ebcN11egNit++;
+//     auto& ebcN11egN06   = dynamic_cast<EmbeddedNode&>(*(*(ebcN11egNit)));
+//     auto& ebcN11egN06BN =dynamic_cast<BlockNode&>(*(*(ebcN11egN06.IGBackwardLink())));
+//     auto& ebcN11egN06GN = dynamic_cast<NumNode&>(ebcN11egN06BN.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egN06GN.backIt(), n03.backIt());
+// 
+// 
+//     auto  ebcN11egEit = ebcN11eg.edges().first;
+//     auto& ebcN11egE01 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE01BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE01.IGBackwardLink())));
+//     auto& ebcN11egE01GE = dynamic_cast<Edge&>(ebcN11egE01BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE01GE.backIt(), e06_07.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE02 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE02BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE02.IGBackwardLink())));
+//     auto& ebcN11egE02GE = dynamic_cast<Edge&>(ebcN11egE02BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE02GE.backIt(), e05_06.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE03 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE03BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE03.IGBackwardLink())));
+//     auto& ebcN11egE03GE = dynamic_cast<Edge&>(ebcN11egE03BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE03GE.backIt(), e01_05.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE04 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE04BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE04.IGBackwardLink())));
+//     auto& ebcN11egE04GE = dynamic_cast<Edge&>(ebcN11egE04BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE04GE.backIt(), e05_07.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE05 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE05BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE05.IGBackwardLink())));
+//     auto& ebcN11egE05GE = dynamic_cast<Edge&>(ebcN11egE05BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE05GE.backIt(), e04_07.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE06 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE06BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE06.IGBackwardLink())));
+//     auto& ebcN11egE06GE = dynamic_cast<Edge&>(ebcN11egE06BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE06GE.backIt(), e01_04.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE07 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE07BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE07.IGBackwardLink())));
+//     auto& ebcN11egE07GE = dynamic_cast<Edge&>(ebcN11egE07BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE07GE.backIt(), e03_04.backIt());
+//     ebcN11egEit++;
+//     auto& ebcN11egE08 = dynamic_cast<EmbeddedEdge&>(*(*(ebcN11egEit)));
+//     auto& ebcN11egE08BE =dynamic_cast<BlockEdge&>(*(*(ebcN11egE08.IGBackwardLink())));
+//     auto& ebcN11egE08GE = dynamic_cast<Edge&>(ebcN11egE08BE.IGBackwardLinkRef());
+//     EXPECT_EQ(ebcN11egE08GE.backIt(), e01_03.backIt());
+// 
+//     auto  ebcN11dgFit = ebcN11dg.nodes().first;
+//     auto& ebcN11dgF01 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
+//     ebcN11dgFit++;
+//     auto& ebcN11dgF02 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
+//     ebcN11dgFit++;
+//     auto& ebcN11dgF03 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
+//     ebcN11dgFit++;
+//     auto& ebcN11dgF04 = dynamic_cast<EmbeddedFace&>(*(*(ebcN11dgFit)));
+// 
+//     eit = ebcN11dgF01.mCycleEdges.begin();
+//     EXPECT_EQ(ebcN11egE01.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE04.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE02.backIt(), // 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+// 
+//     eit = ebcN11dgF02.mCycleEdges.begin();
+//     EXPECT_EQ(ebcN11egE02.backIt(), // 05-06
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE03.backIt(), // 01-05
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE08.backIt(), // 01-03
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE07.backIt(), // 03-04
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE05.backIt(), // 04-07
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE01.backIt(), // 06-07
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+// 
+//     eit = ebcN11dgF03.mCycleEdges.begin();
+//     EXPECT_EQ(ebcN11egE05.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE06.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE03.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE04.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+// 
+//     eit = ebcN11dgF04.mCycleEdges.begin();
+//     EXPECT_EQ(ebcN11egE06.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE07.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+//     EXPECT_EQ(ebcN11egE08.backIt(), 
+//                         dynamic_cast<EmbeddedEdge&>(*(**(eit++))).backIt());
+// 
+//     EXPECT_EQ(&ebcE01.IGBackwardLinkRef(), &bcE01);
+//     EXPECT_EQ(&ebcE01.incidentNodeBlockType(), &ebcN02);
+// 
+//     EXPECT_EQ(&ebcE02.IGBackwardLinkRef(), &bcE02);
+//     EXPECT_EQ(&ebcE02.incidentNodeBlockType(), &ebcN04);
+// 
+//     EXPECT_EQ(&ebcE03.IGBackwardLinkRef(), &bcE03);
+//     EXPECT_EQ(&ebcE03.incidentNodeBlockType(), &ebcN06);
+// 
+//     EXPECT_EQ(&ebcE04.IGBackwardLinkRef(), &bcE04);
+//     EXPECT_EQ(&ebcE04.incidentNodeBlockType(), &ebcN06);
+// 
+//     EXPECT_EQ(&ebcE05.IGBackwardLinkRef(), &bcE05);
+//     EXPECT_EQ(&ebcE05.incidentNodeBlockType(), &ebcN08);
+// 
+//     EXPECT_EQ(&ebcE06.IGBackwardLinkRef(), &bcE06);
+//     EXPECT_EQ(&ebcE06.incidentNodeBlockType(), &ebcN09);
+// 
+//     EXPECT_EQ(&ebcE07.IGBackwardLinkRef(), &bcE07);
+//     EXPECT_EQ(&ebcE07.incidentNodeBlockType(), &ebcN10);
+// 
+//     EXPECT_EQ(&ebcE08.IGBackwardLinkRef(), &bcE08);
+//     EXPECT_EQ(&ebcE08.incidentNodeBlockType(), &ebcN10);
+// 
+//     EXPECT_EQ(&ebcE09.IGBackwardLinkRef(), &bcE09);
+//     EXPECT_EQ(&ebcE09.incidentNodeBlockType(), &ebcN11);
+// 
+//     EXPECT_EQ(&ebcE10.IGBackwardLinkRef(), &bcE10);
+//     EXPECT_EQ(&ebcE10.incidentNodeBlockType(), &ebcN11);
+// 
+//     EXPECT_EQ(ebcN01UG1.size(), 2);
+//     UnificationFace& uf1 = ebcN01UG1.at(0);
+//     UnificationFace& uf2 = ebcN01UG1.at(1);
+// 
+//     EXPECT_EQ(&uf1.treeNode(),       &ebcN02);
+//     EXPECT_EQ(&uf1.faceInDG(),       &ebcN02dgF01);
+//     EXPECT_EQ( uf1.faceInDGIt(),      ebcN02dgF01.backIt());
+//     EXPECT_EQ(&uf1.cutVertexInEG(),  &ebcN02egN01);
+//     EXPECT_EQ( uf1.cutVertexInEGIt(), ebcN02egN01.backIt());
+//     EXPECT_EQ(&uf1.edgeCCWInEG(),    &ebcN02egE01);
+//     EXPECT_EQ( uf1.edgeCCWInEGIt(),   ebcN02egE01.backIt());
+//     EXPECT_EQ(&uf1.edgeCWInEG()    , &ebcN02egE01);
+//     EXPECT_EQ( uf1.edgeCWInEGIt(),    ebcN02egE01.backIt());
+//     EXPECT_EQ( uf1.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(&uf2.treeNode(),       &ebcN11);
+//     EXPECT_EQ(&uf2.faceInDG(),       &ebcN11dgF02);
+//     EXPECT_EQ( uf2.faceInDGIt(),      ebcN11dgF02.backIt());
+//     EXPECT_EQ(&uf2.cutVertexInEG(),  &ebcN11egN04);
+//     EXPECT_EQ( uf2.cutVertexInEGIt(), ebcN11egN04.backIt());
+//     EXPECT_EQ(&uf2.edgeCCWInEG(),    &ebcN11egE03); // 1->3
+//     EXPECT_EQ( uf2.edgeCCWInEGIt(),   ebcN11egE03.backIt());
+//     EXPECT_EQ(&uf2.edgeCWInEG()    , &ebcN11egE08); // 1->5
+//     EXPECT_EQ( uf2.edgeCWInEGIt(),    ebcN11egE08.backIt());
+//     EXPECT_EQ( uf2.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(ebcN05UG1.size(), 3);
+//     UnificationFace& uf3 = ebcN05UG1.at(0);
+//     UnificationFace& uf4 = ebcN05UG1.at(1);
+//     UnificationFace& uf5 = ebcN05UG1.at(2);
+// 
+//     EXPECT_EQ(&uf3.treeNode(),       &ebcN06);
+//     EXPECT_EQ(&uf3.faceInDG(),       &ebcN06dgF01);
+//     EXPECT_EQ( uf3.faceInDGIt(),      ebcN06dgF01.backIt());
+//     EXPECT_EQ(&uf3.cutVertexInEG(),  &ebcN06egN01);
+//     EXPECT_EQ( uf3.cutVertexInEGIt(), ebcN06egN01.backIt());
+//     EXPECT_EQ(&uf3.edgeCCWInEG(),    &ebcN06egE01);
+//     EXPECT_EQ( uf3.edgeCCWInEGIt(),   ebcN06egE01.backIt());
+//     EXPECT_EQ(&uf3.edgeCWInEG()    , &ebcN06egE01);
+//     EXPECT_EQ( uf3.edgeCWInEGIt(),    ebcN06egE01.backIt());
+//     EXPECT_EQ( uf3.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(&uf4.treeNode(),       &ebcN10);
+//     EXPECT_EQ(&uf4.faceInDG(),       &ebcN10dgF01);
+//     EXPECT_EQ( uf4.faceInDGIt(),      ebcN10dgF01.backIt());
+//     EXPECT_EQ(&uf4.cutVertexInEG(),  &ebcN10egN01);
+//     EXPECT_EQ( uf4.cutVertexInEGIt(), ebcN10egN01.backIt());
+//     EXPECT_EQ(&uf4.edgeCCWInEG(),    &ebcN10egE01);
+//     EXPECT_EQ( uf4.edgeCCWInEGIt(),   ebcN10egE01.backIt());
+//     EXPECT_EQ(&uf4.edgeCWInEG()    , &ebcN10egE01);
+//     EXPECT_EQ( uf4.edgeCWInEGIt(),    ebcN10egE01.backIt());
+//     EXPECT_EQ( uf4.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(&uf5.treeNode(),       &ebcN11);
+//     EXPECT_EQ(&uf5.faceInDG(),       &ebcN11dgF02);
+//     EXPECT_EQ( uf5.faceInDGIt(),      ebcN11dgF02.backIt());
+//     EXPECT_EQ(&uf5.cutVertexInEG(),  &ebcN11egN05);
+//     EXPECT_EQ( uf5.cutVertexInEGIt(), ebcN11egN05.backIt());
+//     EXPECT_EQ(&uf5.edgeCCWInEG(),    &ebcN11egE07); // 4 -> 7
+//     EXPECT_EQ( uf5.edgeCCWInEGIt(),   ebcN11egE07.backIt());
+//     EXPECT_EQ(&uf5.edgeCWInEG()    , &ebcN11egE05); // 3 -> 4
+//     EXPECT_EQ( uf5.edgeCWInEGIt(),    ebcN11egE05.backIt());
+//     EXPECT_EQ( uf5.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(ebcN03UG1.size(), 2);
+//     UnificationFace& uf6 = ebcN03UG1.at(0);
+//     UnificationFace& uf7 = ebcN03UG1.at(1);
+// 
+//     EXPECT_EQ(&uf6.treeNode(),       &ebcN04);
+//     EXPECT_EQ(&uf6.faceInDG(),       &ebcN04dgF01);
+//     EXPECT_EQ( uf6.faceInDGIt(),      ebcN04dgF01.backIt());
+//     EXPECT_EQ(&uf6.cutVertexInEG(),  &ebcN04egN01);
+//     EXPECT_EQ( uf6.cutVertexInEGIt(), ebcN04egN01.backIt());
+//     EXPECT_EQ(&uf6.edgeCCWInEG(),    &ebcN04egE01);
+//     EXPECT_EQ( uf6.edgeCCWInEGIt(),   ebcN04egE01.backIt());
+//     EXPECT_EQ(&uf6.edgeCWInEG()    , &ebcN04egE01);
+//     EXPECT_EQ( uf6.edgeCWInEGIt(),    ebcN04egE01.backIt());
+//     EXPECT_EQ( uf6.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(&uf7.treeNode(),       &ebcN06);
+//     EXPECT_EQ(&uf7.faceInDG(),       &ebcN06dgF01);
+//     EXPECT_EQ( uf7.faceInDGIt(),      ebcN06dgF01.backIt());
+//     EXPECT_EQ(&uf7.cutVertexInEG(),  &ebcN06egN02);
+//     EXPECT_EQ( uf7.cutVertexInEGIt(), ebcN06egN02.backIt());
+//     EXPECT_EQ(&uf7.edgeCCWInEG(),    &ebcN06egE01);
+//     EXPECT_EQ( uf7.edgeCCWInEGIt(),   ebcN06egE01.backIt());
+//     EXPECT_EQ(&uf7.edgeCWInEG()    , &ebcN06egE01);
+//     EXPECT_EQ( uf7.edgeCWInEGIt(),    ebcN06egE01.backIt());
+//     EXPECT_EQ( uf7.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(ebcN07UG1.size(), 3);
+//     UnificationFace& uf8 = ebcN07UG1.at(0);
+//     UnificationFace& uf9 = ebcN07UG1.at(1);
+//     UnificationFace& uf10= ebcN07UG1.at(2);
+// 
+//     EXPECT_EQ(&uf8.treeNode(),       &ebcN08);
+//     EXPECT_EQ(&uf8.faceInDG(),       &ebcN08dgF01);
+//     EXPECT_EQ( uf8.faceInDGIt(),      ebcN08dgF01.backIt());
+//     EXPECT_EQ(&uf8.cutVertexInEG(),  &ebcN08egN01);
+//     EXPECT_EQ( uf8.cutVertexInEGIt(), ebcN08egN01.backIt());
+//     EXPECT_EQ(&uf8.edgeCCWInEG(),    &ebcN08egE01);
+//     EXPECT_EQ( uf8.edgeCCWInEGIt(),   ebcN08egE01.backIt());
+//     EXPECT_EQ(&uf8.edgeCWInEG()    , &ebcN08egE03);
+//     EXPECT_EQ( uf8.edgeCWInEGIt(),    ebcN08egE03.backIt());
+//     EXPECT_EQ( uf8.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(&uf9.treeNode(),       &ebcN09);
+//     EXPECT_EQ(&uf9.faceInDG(),       &ebcN09dgF01);
+//     EXPECT_EQ( uf9.faceInDGIt(),      ebcN09dgF01.backIt());
+//     EXPECT_EQ(&uf9.cutVertexInEG(),  &ebcN09egN01);
+//     EXPECT_EQ( uf9.cutVertexInEGIt(), ebcN09egN01.backIt());
+//     EXPECT_EQ(&uf9.edgeCCWInEG(),    &ebcN09egE01);
+//     EXPECT_EQ( uf9.edgeCCWInEGIt(),   ebcN09egE01.backIt());
+//     EXPECT_EQ(&uf9.edgeCWInEG()    , &ebcN09egE01);
+//     EXPECT_EQ( uf9.edgeCWInEGIt(),    ebcN09egE01.backIt());
+//     EXPECT_EQ( uf9.roleOfECWReversed(), false);
+// 
+//     EXPECT_EQ(&uf10.treeNode(),       &ebcN10);
+//     EXPECT_EQ(&uf10.faceInDG(),       &ebcN10dgF01);
+//     EXPECT_EQ( uf10.faceInDGIt(),      ebcN10dgF01.backIt());
+//     EXPECT_EQ(&uf10.cutVertexInEG(),  &ebcN10egN02);
+//     EXPECT_EQ( uf10.cutVertexInEGIt(), ebcN10egN02.backIt());
+//     EXPECT_EQ(&uf10.edgeCCWInEG(),    &ebcN10egE01);
+//     EXPECT_EQ( uf10.edgeCCWInEGIt(),   ebcN10egE01.backIt());
+//     EXPECT_EQ(&uf10.edgeCWInEG()    , &ebcN10egE01);
+//     EXPECT_EQ( uf10.edgeCWInEGIt(),    ebcN10egE01.backIt());
+//     EXPECT_EQ( uf10.roleOfECWReversed(), false);
+//     ebcT.findGeometricEmbedding(
+//                   ebcN11.backIt(),ebcN11dgF03.backIt(), ebcN11egN04.backIt());
+//     auto& ebcTR = ebcT.root();
+// 
+//     EXPECT_EQ(&ebcTR, &ebcN11);
+// 
+//     EmbeddedBCTree::ExplorationTree& expT =  ebcT.explorationTree();
+// 
+//     auto& expTR = expT.root();
+// 
+//     EXPECT_EQ(expT.numNodes(),7);
+//     EXPECT_EQ(expT.numEdges(),6);
+// 
+//     auto expNit = expT.nodes().first;
+//     auto& expN01 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+//     expNit++;
+//     auto& expN02 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+//     expNit++;
+//     auto& expN03 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+//     expNit++;
+//     auto& expN04 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+//     expNit++;
+//     auto& expN05 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+//     expNit++;
+//     auto& expN06 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+//     expNit++;
+//     auto& expN07 = dynamic_cast<EmbeddedBCTree::ExplorationNode&>(*(*expNit));
+// 
+//     EXPECT_EQ(&expTR, &expN07);
+// 
+//     EXPECT_EQ(&expN01.IGBackwardLinkRef(), &ebcN02);
+//     EXPECT_EQ(expN01.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN01UGs=expN01.sortedUnificationGroups();
+//     EXPECT_EQ(expN01UGs.size(), 0);
+// 
+//     EXPECT_EQ(&expN02.IGBackwardLinkRef(), &ebcN04);
+//     EXPECT_EQ(expN02.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN02UGs=expN02.sortedUnificationGroups();
+//     EXPECT_EQ(expN02UGs.size(), 0);
+// 
+//     EXPECT_EQ(&expN03.IGBackwardLinkRef(), &ebcN06);
+//     EXPECT_EQ(expN03.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN03UGs=expN03.sortedUnificationGroups();
+//     EXPECT_EQ(expN03UGs.size(), 1);
+// 
+//     EXPECT_EQ(expN03UGs[0].absorbeesSize(), 1);
+//     EXPECT_EQ(expN03UGs[0].absorber(),     uf7);
+//     EXPECT_EQ(expN03UGs[0].absorbeeAt(0),  uf6);
+// 
+//     EXPECT_EQ(&expN04.IGBackwardLinkRef(), &ebcN08);
+//     EXPECT_EQ(expN04.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN04UGs=expN04.sortedUnificationGroups();
+//     EXPECT_EQ(expN04UGs.size(), 0);
+// 
+//     EXPECT_EQ(&expN05.IGBackwardLinkRef(), &ebcN09);
+//     EXPECT_EQ(expN05.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN05UGs=expN05.sortedUnificationGroups();
+//     EXPECT_EQ(expN05UGs.size(), 0);
+// 
+//     EXPECT_EQ(&expN06.IGBackwardLinkRef(), &ebcN10);
+//     EXPECT_EQ(expN06.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN06UGs=expN06.sortedUnificationGroups();
+//     EXPECT_EQ(expN06UGs.size(), 1);
+// 
+//     EXPECT_EQ(expN06UGs[0].absorbeesSize(), 2);
+//     EXPECT_EQ(expN06UGs[0].absorber(),     uf10);
+//     EXPECT_EQ(expN06UGs[0].absorbeeAt(0),  uf8);
+//     EXPECT_EQ(expN06UGs[0].absorbeeAt(1),  uf9);
+// 
+//     EXPECT_EQ(&expN07.IGBackwardLinkRef(), &ebcN11);
+//     EXPECT_EQ(expN07.numChildrenProcessed(), 0);
+//     vector<SortedUnificationGroup>&expN07UGs=expN07.sortedUnificationGroups();
+//     EXPECT_EQ(expN07UGs.size(), 2);
+// 
+//     EXPECT_EQ(expN07UGs[0].absorbeesSize(), 1);
+//     EXPECT_EQ(expN07UGs[0].absorber(),     uf2);
+//     EXPECT_EQ(expN07UGs[0].absorbeeAt(0),  uf1);
+// 
+//     EXPECT_EQ(expN07UGs[1].absorbeesSize(), 2);
+//     EXPECT_EQ(expN07UGs[1].absorber(),     uf5);
+//     EXPECT_EQ(expN07UGs[1].absorbeeAt(0),  uf3);
+//     EXPECT_EQ(expN07UGs[1].absorbeeAt(1),  uf4);
+// 
+//     auto expEit = expT.edges().first;
+//     auto& expE01 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
+//     EXPECT_EQ(expE01.incidentNodeSrc().backIt(), expN07.backIt());
+//     EXPECT_EQ(expE01.incidentNodeDst().backIt(), expN01.backIt());
+//     expEit++;
+//     auto& expE02 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
+//     EXPECT_EQ(expE02.incidentNodeSrc().backIt(), expN07.backIt());
+//     EXPECT_EQ(expE02.incidentNodeDst().backIt(), expN03.backIt());
+//     expEit++;
+//     auto& expE03 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
+//     EXPECT_EQ(expE03.incidentNodeSrc().backIt(), expN07.backIt());
+//     EXPECT_EQ(expE03.incidentNodeDst().backIt(), expN06.backIt());
+//     expEit++;
+//     auto& expE04 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
+//     EXPECT_EQ(expE04.incidentNodeSrc().backIt(), expN03.backIt());
+//     EXPECT_EQ(expE04.incidentNodeDst().backIt(), expN02.backIt());
+//     expEit++;
+//     auto& expE05 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
+//     EXPECT_EQ(expE05.incidentNodeSrc().backIt(), expN06.backIt());
+//     EXPECT_EQ(expE05.incidentNodeDst().backIt(), expN04.backIt());
+//     expEit++;
+//     auto& expE06 = dynamic_cast<EmbeddedBCTree::ExplorationEdge&>(*(*expEit));
+//     EXPECT_EQ(expE06.incidentNodeSrc().backIt(), expN06.backIt());
+//     EXPECT_EQ(expE06.incidentNodeDst().backIt(), expN05.backIt());
+//     expEit++;
+// 
+//     EXPECT_EQ(&ebcN02.outerFace(), &ebcN02dgF01);
+//     EXPECT_EQ(&ebcN02.topNode(),   &ebcN02egN01);
+// 
+//     EXPECT_EQ(&ebcN04.outerFace(), &ebcN04dgF01);
+//     EXPECT_EQ(&ebcN04.topNode(),   &ebcN04egN01);
+// 
+//     EXPECT_EQ(&ebcN06.outerFace(), &ebcN06dgF01);
+//     EXPECT_EQ(&ebcN06.topNode(),   &ebcN06egN01);
+// 
+//     EXPECT_EQ(&ebcN08.outerFace(), &ebcN08dgF01);
+//     EXPECT_EQ(&ebcN08.topNode(),   &ebcN08egN01);
+// 
+//     EXPECT_EQ(&ebcN09.outerFace(), &ebcN09dgF01);
+//     EXPECT_EQ(&ebcN09.topNode(),   &ebcN09egN01);
+// 
+//     EXPECT_EQ(&ebcN10.outerFace(), &ebcN10dgF01);
+//     EXPECT_EQ(&ebcN10.topNode(),   &ebcN10egN01);
+// 
+//     EXPECT_EQ(&ebcN11.outerFace(), &ebcN11dgF03);
+//     EXPECT_EQ(&ebcN11.topNode(),   &ebcN11egN04);
+// 
+// }
+// 
 } // namespace Undirected
 
 } // namespace Wailea

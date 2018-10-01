@@ -1,5 +1,5 @@
 #include "undirected/planar_dual_graph_maker.hpp"
-
+#include <map>
 #ifdef UNIT_TESTS
 #include "gtest/gtest_prod.h"
 #endif
@@ -185,13 +185,26 @@ void PlanarDualGraphMaker::findFaces(
             }
 
             findNextHalfEdge(sit, eit, HEOn1, dit);
-
+#ifdef UNIT_TESTS
+            map<Node*,long> nodeMap;
+            nodeMap[&N] = 1;
+#endif
             // Explore the half edges and form a face cycle
             while (sit != N.backIt()) {
 
                 auto& S  = dynamic_cast<EmbeddedNode&>(*(*sit));
                 auto& E  = dynamic_cast<EmbeddedEdge&>(*(*eit));
-
+#ifdef UNIT_TESTS
+                if (nodeMap.find(&S)!=nodeMap.end()) {
+                    auto& N = dynamic_cast<NumNode&>(S.IGBackwardLinkRef());
+                    cerr << "!!! ERROR: Duplicate node [" << N.num()
+                         << "] found during dual graph generation. !!!\n";
+//                    mDupFound = true;
+                }
+                else {
+                    nodeMap[&S] = 1;
+                }
+#endif
                 cycleEdges.push_back(eit);
                 cycleHalfEdgesOn1.push_back(HEOn1);
 

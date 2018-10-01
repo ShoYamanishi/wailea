@@ -476,6 +476,8 @@ class BLTreeNode : public Node {
     list<node_list_it_t> mAssumedOrientOutNorm;
     list<node_list_it_t> mAssumedOrientOutReversed;
 
+    list<edge_list_it_t> mCollectedEdges;
+    list<edge_list_it_t> mCollectedEdgesSide2;
 
   friend class BLTree;
   friend class BLPlanarityTester;
@@ -485,7 +487,6 @@ class BLTreeNode : public Node {
   friend class BLPlanarizerTests;
   int mNodeNum;
 #endif
-
 
 };
 

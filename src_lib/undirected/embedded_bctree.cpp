@@ -66,15 +66,15 @@ void EmbeddedBCTree::makeDefaultEmbedding()
 
             if (B.numNodes() > 2) {
 
-                auto bnit = B.nodes().first;
-                auto& nodeS = dynamic_cast<BlockNode&>(*(*bnit));
-                bnit++;
-                auto& nodeT = dynamic_cast<BlockNode&>(*(*bnit));
-            
+                auto beit = B.edges().first;
+                auto& BE = *(*beit);
+                auto& N1 = BE.incidentNode1();
+                auto& N2 = BE.incidentNode2();
+
                 vector<node_list_it_t> stNumbering;
 
                 STNumbering stMaker;
-                stNumbering = stMaker.getBipolarOrientation(B, nodeS, nodeT);
+                stNumbering = stMaker.getBipolarOrientation(B, N1, N2);
 
                 BLPlanarityTester blMaker;
                 blMaker.findEmbedding(B, stNumbering);

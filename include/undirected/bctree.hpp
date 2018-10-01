@@ -563,8 +563,8 @@ class BiconnectedDecomposer {
      *             BlockEdge.
      *          
      *           NOTE: g.popIGBackwardLinkFromNodes(), g.popUtilityFromNodes(),
-     *           and g.popIGBackwardLinkFromEdges() can be called to remove them
-     *           from g.
+     *           and g.popIGBackwardLinkFromEdges() can be called to remove
+     *           them from g.
      *
      *           - BCTreeNodes of CutVertexType have a backward link to the
      *             original Nodes in g.

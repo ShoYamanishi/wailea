@@ -24,7 +24,6 @@ bool BLPlanarityTester::isPlanar(
     vector<node_list_it_t>& stOrder
 ) {
 
-//cerr << "isPlanar 1\n";
     // Up to K3. Already planar.
     if (g.numNodes() <= 3) {
         return true;
@@ -41,7 +40,6 @@ bool BLPlanarityTester::isPlanar(
     size_t index = 0;
 
     for (auto nit : stOrderCopy ) {
-//cerr << "isPlanar loop index: " << index << "\n";
         auto& N = dynamic_cast<BLGraphNode&>(*(*nit));
 
         if (index > 0) {
@@ -53,38 +51,35 @@ bool BLPlanarityTester::isPlanar(
 
             node_list_it_t pertinentRoot;
             node_list_it_t virtualRoot =pqTree.nil();
-//cerr << "before BubbleUp\n";
+
             bool result = bubbleUp(pqTree, pertinentLeaves, virtualRoot);
-//cerr << "after BubbleUp\n";
+
             if (!result) {
                 cleanUpInternalData();
                 return false; // BubbleUp failed. Non-planar.
             }
 
-//cerr << "before applyTemplates\n";
-//pqTree.printTree(cerr, pqTree.nil());
             result = applyTemplates(pqTree, pertinentLeaves, pertinentRoot);
-//cerr << "after applyTemplates\n";
-//pqTree.printTree(cerr, pqTree.nil());
+
             if (!result) {                                   
                 cleanUpInternalData();
                 return false; // None of the templates matches. Non-planar.
             }
-//cerr << "before removePertinentTree\n";
+
             attachmentNode = removePertinentTree(pqTree, pertinentRoot);
-//cerr << "after removePertinentTree\n";
+
             if (!pqTree.isNil(virtualRoot)) {
-//cerr << "before removeVirtualRoot\n";
+
                 pqTree.removeVirtualRoot(virtualRoot);
-//cerr << "after removeVirtualRoot\n";
+
             }
 
         }
 
         if (index < stOrderCopy.size() - 1) {
-//cerr << "before fanOut\n";
+
             pqTree.fanOutLeavesFromAttachment(attachmentNode,N.mOutgoingEdges);
-//cerr << "after fanOut\n";
+
         }
 
         index++;
@@ -92,10 +87,9 @@ bool BLPlanarityTester::isPlanar(
     }
 
     cleanUpInternalData();
+
     return true;
 }
-
-
 
 
 bool BLPlanarityTester::isPlanarOldAlg(
@@ -151,34 +145,26 @@ bool BLPlanarityTester::findEmbedding(
     Graph&                  g,
     vector<node_list_it_t>& stOrder
 ) {
+
     // Up to K3. Already planar.
     if (g.numNodes() <= 3) {
         return true;
     }
-
     BLGraph                graphCopy;
     vector<node_list_it_t> stOrderCopy;
-
     copyInputGraph(g, stOrder, graphCopy, stOrderCopy);
-
     bool result;
-
     result = findEmbeddingFirstPass(graphCopy, stOrderCopy);
-
     if (!result) {
         cleanUpInternalData();
         return false;
     }
-
     result = findEmbeddingSecondPass(graphCopy, stOrderCopy);
-
     if (!result) {
         cleanUpInternalData();
         return false;
     }
-
     rearrangeIncidentEdges(g, graphCopy);
-
     cleanUpInternalData();
     return true;
 
@@ -198,15 +184,12 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
     cerr <<       "==================================================\n";
 #endif
     BLTree                 pqTree;
-
+    pqTree.setCollectingEdges();
     node_list_it_t attachmentNode = pqTree.makePAttachment();
-
     size_t index = 0;
 
     for (auto nit : stOrderCopy ) {
-
         auto& N = dynamic_cast<BLGraphNode&>(*(*nit));
-
 #ifdef UNIT_TESTS2
         {     
             cerr << "\n\n\n==================================================\n";
@@ -218,7 +201,7 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
             for (auto eit : N.mIncomingEdges) {
                 auto& GE = dynamic_cast<BLGraphEdge&>(*(*eit));
                 auto& BA = dynamic_cast<BLGraphNode&>(GE.adjacentNode(N));
-                auto& GA = dynamic_cast<NumNode&>(BA.IGBackwardLinkref());
+                auto& GA = dynamic_cast<NumNode&>(BA.IGBackwardLinkRef());
             cerr << GA.num() << ",";
             }
             cerr << "] Out:[";
@@ -232,9 +215,7 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
         }
 #endif
         if (index > 0) {
-
             pqTree.initializeForOneIteration();
-
             vector<node_list_it_t> pertinentLeaves =
                                     fromGraphEdgesToPQLeaves(N.mIncomingEdges);
 
@@ -242,7 +223,6 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
             node_list_it_t virtualRoot = pqTree.nil();
 
             bool result = bubbleUp(pqTree, pertinentLeaves, virtualRoot);
-                   
             if (!result) {
                 return false;
             }
@@ -251,9 +231,7 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
-
             result = applyTemplates(pqTree, pertinentLeaves, pertinentRoot);
-
             if (!result) {                                   
                 return false;
             }
@@ -262,26 +240,18 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
-
             collectEdgeOrdering(pqTree, pertinentRoot, N, INCOMING);
-
             attachmentNode = removePertinentTree(pqTree, pertinentRoot);
-
             if (!pqTree.isNil(virtualRoot)) {
-
                 pqTree.removeVirtualRoot(virtualRoot);
-
             }
-
 #ifdef UNIT_TESTS2
             cerr << "\nAfter removePertinentRoot\n";
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
         }
-
         if (index < stOrderCopy.size() - 1) {
-
             pqTree.fanOutLeavesFromAttachment(attachmentNode,N.mOutgoingEdges);
 #ifdef UNIT_TESTS2
             cerr << "\nAfter Fanning out\n";
@@ -305,11 +275,8 @@ bool BLPlanarityTester::findEmbeddingFirstPass(
             cerr << "]\n";
         }
 #endif
-
         index++;
-
     }
-
     return true;
 }
 
@@ -327,20 +294,16 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
     cerr <<       "=========          SECOND PASS         ===========\n";
     cerr <<       "==================================================\n";
 #endif
-
     BLTree                 pqTree;
-
+    pqTree.setCollectingEdges();
     // In the second pass, it keeps track of the orientation of all the Q-nodes
+
     pqTree.trackQFlippings();
-
     node_list_it_t attachmentNode = pqTree.makePAttachment();
-
     size_t index = 0;
 
     for (auto nItIt=stOrderCopy.rbegin(); nItIt!=stOrderCopy.rend(); nItIt++) {
-
         auto& N = dynamic_cast<BLGraphNode&>(*(*(*(nItIt))));
-
 #ifdef UNIT_TESTS2
         {     
             cerr << "\n\n\n================================================\n";
@@ -368,19 +331,13 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
         }
 #endif
 
-
         if (index > 0) {
-
             pqTree.initializeForOneIteration();
-
             vector<node_list_it_t> pertinentLeaves =
                                     fromGraphEdgesToPQLeaves(N.mOutgoingEdges);
-
             node_list_it_t pertinentRoot;
             node_list_it_t virtualRoot = pqTree.nil();
-
             bool result = bubbleUp(pqTree, pertinentLeaves, virtualRoot);
-
             if (!result) {
                 return false;
             }
@@ -389,9 +346,7 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
-
             result = applyTemplates(pqTree, pertinentLeaves, pertinentRoot);
-                                
             if (!result) {                                   
                 return false;
             }
@@ -400,37 +355,27 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
-
             collectEdgeOrdering(pqTree, pertinentRoot, N, OUTGOING);
-
             attachmentNode = removePertinentTree(pqTree, pertinentRoot);
-
             if (!pqTree.isNil(virtualRoot)) {
-
                 pqTree.removeVirtualRoot(virtualRoot);
-
             }
 #ifdef UNIT_TESTS2
             cerr << "\nAfter removePertinentRoot\n";
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
-
         }
-
         if (index < stOrderCopy.size() - 1) {
 
             pqTree.fanOutLeavesFromQAttachment(
                             attachmentNode,N.mIncomingEdgesOrdered,N.backIt());
-
 #ifdef UNIT_TESTS2
             cerr << "\nAfter Fanning out\n";
             pqTree.printTree(cerr, pqTree.nil());
             cerr << "\n";
 #endif
-
         }
-
         index++;
 
 
@@ -449,28 +394,53 @@ bool BLPlanarityTester::findEmbeddingSecondPass(
             cerr << "]\n";
         }
 #endif
-
-
     }
-
     // At this point, pqTree consists of a single node of Q type.
-    auto& Q = pqTree.toNodeRef(pqTree.nodes().first);
+
 
 #ifdef UNIT_TESTS2
+
     cerr << "\nFinal Tree\n";
+    cerr << "num nodes: " << pqTree.numNodes() << "\n";
     pqTree.printTree(cerr, pqTree.nil());
     cerr << "\n";
 #endif
-
 
     /*
      * Transfer all the orientation information to the lists in 
      * BLPlanarityTestser object.
      */
-    mOrientInNorm.splice(mOrientInNorm.end(), Q.mOrientInNorm);
-    mOrientInReversed.splice(mOrientInReversed.end(), Q.mOrientInReversed);
-    mOrientOutNorm.splice(mOrientOutNorm.end(), Q.mOrientOutNorm);
-    mOrientOutReversed.splice(mOrientOutReversed.end(), Q.mOrientOutReversed);
+    auto& Q = pqTree.toNodeRef(pqTree.nodes().first);
+
+    if (!pqTree.isNil(Q.mParent)) {
+        cerr << "!!!ERROR Q's not root!!!\n";
+    }
+
+    auto& Q2 = pqTree.toNodeRef(pqTree.findRoot());
+
+    if (Q.backIt()!=Q2.backIt()) {
+        cerr << "!!!ERROR Q different from Q2!!!\n";
+    }
+
+    mOrientInNorm.clear();
+    mOrientInReversed.clear();
+    mOrientOutNorm.clear();
+    mOrientOutReversed.clear();
+
+    for (auto nit : Q.mOrientInNorm) {
+        mOrientInNorm.push_back(nit);
+    }
+    for (auto nit : Q.mOrientInReversed) {
+        mOrientInReversed.push_back(nit);
+    }
+    for (auto nit : Q.mOrientOutNorm) {
+        mOrientOutNorm.push_back(nit);
+    }
+    for (auto nit : Q.mOrientOutReversed) {
+        mOrientOutReversed.push_back(nit);
+    }
+
+
 
 #ifdef UNIT_TESTS2
     cerr << "mOrientInNorm: ";
@@ -511,75 +481,52 @@ void BLPlanarityTester::rearrangeIncidentEdges(
     Graph&    graph,
     BLGraph&  graphCopy
 ) {
-
     for (auto nit : mOrientInReversed) {
-
         auto& N = dynamic_cast<BLGraphNode&>(*(*nit));
         N.mIncomingEdgesInReverse = true;
-
     }
-
     for (auto nit : mOrientOutReversed) {
-
         auto& N = dynamic_cast<BLGraphNode&>(*(*nit));
         N.mOutgoingEdgesInReverse = true;
-
     }
-
     for (auto nit = graphCopy.nodes().first;
                                       nit != graphCopy.nodes().second; nit++) {
-
         auto& NCopy = dynamic_cast<BLGraphNode&>(*(*nit));
         auto& NOrg  = dynamic_cast<Node&>(NCopy.IGBackwardLinkRef());
         vector<edge_list_it_t> rearrangedEdges;
-
         // Concatenate mIncomingEdgesOrdered and mOutgoingEdgesOrdered
         // into rearrangedEdges. Note that one of them must be in reversed 
         // order to make it a circular ordering.
 
         if (NCopy.mIncomingEdgesInReverse) {
-
             for (auto eit = NCopy.mIncomingEdgesOrdered.rbegin();
                            eit != NCopy.mIncomingEdgesOrdered.rend(); eit++) {
-
                 auto& ECopy = dynamic_cast<BLGraphEdge&>(*(*(*(eit))));
                 rearrangedEdges.push_back(ECopy.IGBackwardLink());
-
             }
 
         }
         else {        
             for (auto eit = NCopy.mIncomingEdgesOrdered.begin();
                            eit != NCopy.mIncomingEdgesOrdered.end(); eit++) {
-
                 auto& ECopy = dynamic_cast<BLGraphEdge&>(*(*(*(eit))));
                 rearrangedEdges.push_back(ECopy.IGBackwardLink());
-
             }
-
         }
-
         if (!NCopy.mOutgoingEdgesInReverse) {
-
             for (auto eit = NCopy.mOutgoingEdgesOrdered.rbegin();
                            eit != NCopy.mOutgoingEdgesOrdered.rend(); eit++) {
-
                 auto& ECopy = dynamic_cast<BLGraphEdge&>(*(*(*(eit))));
                 rearrangedEdges.push_back(ECopy.IGBackwardLink());
-
             }
         }
         else {        
-
             for (auto eit = NCopy.mOutgoingEdgesOrdered.begin();
                            eit != NCopy.mOutgoingEdgesOrdered.end(); eit++) {
-
                 auto& ECopy = dynamic_cast<BLGraphEdge&>(*(*(*(eit))));
                 rearrangedEdges.push_back(ECopy.IGBackwardLink());
-
             }
         }
-
         NOrg.reorderIncidence(std::move(rearrangedEdges));
     }
 }
@@ -665,8 +612,8 @@ vector<node_list_it_t> BLPlanarityTester::fromGraphEdgesToPQLeaves(
         auto& e = dynamic_cast<BLGraphEdge&>(*(*eit));
         //auto& GN1 = dynamic_cast<BLGraphNode&>(e.incidentNode1());
         //auto& GN2 = dynamic_cast<BLGraphNode&>(e.incidentNode2());
-        //auto& N1 = dynamic_cast<NumNode&>(*(*(GN1.mOriginal)));
-        //auto& N2 = dynamic_cast<NumNode&>(*(*(GN2.mOriginal)));
+        //auto& N1 = dynamic_cast<NumNode&>(GN1.IGBackwardLinkRef());
+        //auto& N2 = dynamic_cast<NumNode&>(GN2.IGBackwardLinkRef());
         //cerr << "Edge: [" << N1.num() << "," << N2.num() << "]\n";
         leaves.push_back(e.mPQLeaf);
     }
@@ -1006,35 +953,26 @@ bool BLPlanarityTester::applyTemplates(
     vector<node_list_it_t>& pertinentLeaves,
     node_list_it_t&         pertinentRoot
 ) {
-//cerr << "applyTemplates\n";
     // FIFO queue of the pertinent nodes.
     list<node_list_it_t> Q;
     size_t               Qsize = 0;
     for (auto leafIt : pertinentLeaves) {
-//cerr << "applyTemplates 2\n";
         auto& L  = pqTree.toNodeRef(leafIt);
         L.mPertinentLeavesCount = 1;
         Q.push_back(leafIt);
         Qsize++;
     }
-//cerr << "applyTemplates 3\n";
     while (Qsize > 0) {
-//cerr << "applyTemplates loop: Size:" << Q.size() << "\n";
         auto& X  = pqTree.toNodeRef(*(Q.begin()));
         Q.pop_front();
         Qsize--;
-//cerr << "applyTemplates 4\n";
         if (X.mPertinentLeavesCount < pertinentLeaves.size()) {
             // X is not the pertinent root.
-//cerr << "applyTemplates 5\n";
             if (!pqTree.isNil(X.mParent)) {
-//cerr << "applyTemplates 6\n";
                 auto& P = pqTree.toNodeRef(X.mParent);
                 P.mPertinentLeavesCount += X.mPertinentLeavesCount;
             }
-//cerr << "applyTemplates 7\n";
             queueParentIfNecessaryApplyTemplates(Q, Qsize, pqTree, X);
-//cerr << "applyTemplates 8\n";
             /** @remarks on use of earlyOut
              *           earlyOut is used to detect non-planarity condition
              *           at an early stage. If a template finds more than two
@@ -1061,18 +999,14 @@ bool BLPlanarityTester::applyTemplates(
             if (!pqTree.templateQ5(X, BLTree::NOT_FINAL_REDUCTION, earlyOut)) {
                 return false;
             }
-//cerr << "applyTemplates 9\n";
             if (earlyOut) {
                 return false;
             }
-//cerr << "applyTemplates 10\n";
         }
         else {
-//cerr << "applyTemplates 11\n";
             // X is the pertinent root.
             // P4 or P6 may change the pertinent root below.
             pertinentRoot = X.backIt();
-//cerr << "applyTemplates 12\n";
             bool dummyEarlyOut = false;
 
             if (!pqTree.templateL1(X, BLTree::FINAL_REDUCTION))
@@ -1089,11 +1023,8 @@ bool BLPlanarityTester::applyTemplates(
             {
                 return false;
             }
-//cerr << "applyTemplates 13\n";
         }
-//cerr << "applyTemplates 14\n";
     }
-//cerr << "applyTemplates 15\n";
     return true;
 }
 
@@ -1212,6 +1143,7 @@ void BLPlanarityTester::queueParentIfNecessaryApplyTemplates(
     }
 }
 
+
 /** @brief remove the pertinent subtree from PQ-tree and returns the
  *         attachment node from which new leaves are fanned out.
  *
@@ -1225,7 +1157,7 @@ node_list_it_t BLPlanarityTester::removePertinentTree(
     BLTree&               pqTree,
     node_list_it_t        pertinentRoot
 ) {
-//cerr << "removePertinentTree 1\n";
+
     /* This is a dispatching function to forward the call 
      * depending on  the node type.
      */
@@ -1233,12 +1165,14 @@ node_list_it_t BLPlanarityTester::removePertinentTree(
     auto& R  = pqTree.toNodeRef(pertinentRoot);
 
     if (!pqTree.isNil(pqTree.CDPartialRoot())) {
+
         return removePertinentTreeCDPartial(pqTree, R);
 
     }
     else if (R.nodeType()==BLTreeNode::LType) {
 
         R.resetToPAttachment();
+
         return R.backIt();
 
     }
@@ -1307,6 +1241,26 @@ node_list_it_t BLPlanarityTester::removePertinentTreeCDPartial(
 
     }
     auto& newTreeRoot = pqTree.toNodeRef(pqTree.CDPartialRoot());
+
+    if (pqTree.isTrackingQFlippings()) {
+
+        newTreeRoot.mOrientInNorm.splice(
+            newTreeRoot.mOrientInNorm.end(), 
+            treeRoot.mOrientInNorm               );
+
+        newTreeRoot.mOrientInReversed.splice(
+            newTreeRoot.mOrientInReversed.end(),
+            treeRoot.mOrientInReversed           );
+
+        newTreeRoot.mOrientOutNorm.splice(
+            newTreeRoot.mOrientOutNorm.end(), 
+            treeRoot.mOrientOutNorm              );
+
+        newTreeRoot.mOrientOutReversed.splice(
+            newTreeRoot.mOrientOutReversed.end(),
+            treeRoot.mOrientOutReversed          );
+
+    }
 
     // Remove the full children from End1.
     auto prevIt  = pqTree.nil();
@@ -1627,17 +1581,6 @@ void BLPlanarityTester::removePertinentNodesAndDescendants(
                 pqTree.advanceSib(prevIt, curIt);
             }
 
-            // Transfer the orientation info from the Q-node.
-            if (pqTree.isTrackingQFlippings()) {
-
-                mOrientInNorm.splice(mOrientInNorm.end(), C.mOrientInNorm);
-                mOrientInReversed.splice(
-                                 mOrientInReversed.end(), C.mOrientInReversed);
-                mOrientOutNorm.splice(mOrientOutNorm.end(), C.mOrientOutNorm);
-                mOrientOutReversed.splice(
-                               mOrientOutReversed.end(), C.mOrientOutReversed);
-
-            }
         }
 
         pqTree.removeNode(C);
@@ -1657,530 +1600,41 @@ void BLPlanarityTester::collectEdgeOrdering(
         BLGraphNode&          graphNode,
         edgeCollectionType    collectionType
 ) {
-//cerr << "collectEdgeOrdering\n";
+
     /* This is a dispatching function to forward the call 
      * depending on  the node type.
      */
     auto& R  = pqTree.toNodeRef(pertinentRoot);    
-
-
-    if (!pqTree.isNil(pqTree.CDPartialRoot())) {
-//cerr << "collectEdgeOrdering 01\n";
-        collectEdgeOrderingCDPartialRoot(
-                             pqTree, pertinentRoot, graphNode, collectionType);
-
-    }
-    else if (R.nodeType()==BLTreeNode::LType) {
-//cerr << "collectEdgeOrdering 02\n";
-        if (collectionType == INCOMING) {
-//cerr << "collectEdgeOrdering 03\n";
-            graphNode.mIncomingEdgesOrdered.push_back(R.mGraphEdge);
-        }
-        else {
-//cerr << "collectEdgeOrdering 04\n";
-            graphNode.mOutgoingEdgesOrdered.push_back(R.mGraphEdge);
-        }
-
-    }
-    else if (R.nodeType()==BLTreeNode::VirtualRootType) { 
-//cerr << "collectEdgeOrdering 05\n";
-        collectEdgeOrderingQTypeMiddle(
-                             pqTree, pertinentRoot, graphNode, collectionType);
-
-    }
-    else if (R.nodeType()==BLTreeNode::QType) {
-//cerr << "collectEdgeOrdering 06\n";
-        collectEdgeOrderingQType(
-                             pqTree, pertinentRoot, graphNode, collectionType);
-
-    }
-    else if (R.nodeType()==BLTreeNode::PType) {
-//cerr << "collectEdgeOrdering 07\n";
-        collectEdgeOrderingPType(
-                             pqTree, pertinentRoot, graphNode, collectionType);
-    }
-}
-
-
-void BLPlanarityTester::collectEdgeOrderingCDPartialRoot(
-        BLTree&               pqTree,
-        node_list_it_t        treeRoot,
-        BLGraphNode&          graphNode,
-        edgeCollectionType    collectionType
-) {
-
-    // This must be the tree root, not just the pertinent root.
-    auto& R  = pqTree.toNodeRef(treeRoot);
-
     list<edge_list_it_t>& edgeList = (collectionType==INCOMING)?
                                          graphNode.mIncomingEdgesOrdered:
                                          graphNode.mOutgoingEdgesOrdered;
-
-    list<node_list_it_t> topPertinentNodes;
-    topPertinentNodes.push_back(R.backIt());
-
-    collectEdgeOrderingFromTopLevelNodes(
-                        pqTree, topPertinentNodes, edgeList, NORMAL_DIRECTION);
-
-
-
-    collectEdgeOrderingFromTopLevelNodes(
-                      pqTree, topPertinentNodes, edgeList, REVERSED_DIRECTION);
-
-//    cerr << "Collected Edges:";
-//    for (auto e : edgeList) {
-//        auto& BE = dynamic_cast<BLGraphEdge&>(*(*e));
-//        auto& BN1 = dynamic_cast<BLGraphNode&>(BE.incidentNode1());
-//        auto& BN2 = dynamic_cast<BLGraphNode&>(BE.incidentNode2());
-//        auto& GN1 = dynamic_cast<NumNode&>(*(*(BN1.mOriginal)));
-//        auto& GN2 = dynamic_cast<NumNode&>(*(*(BN2.mOriginal)));
-//        cerr << "{" << GN1.num() << "," << GN2.num() << "} ";
-//    }
-//    cerr << "\n";
-
-    // Place graph node to the lowest complementarily doubly partial Q node.
-    if (pqTree.mTrackQFlippings) {
-
-        auto& Q = pqTree.toNodeRef(pqTree.CDPartialRoot());
-
-        if (collectionType==INCOMING) {
-            Q.mOrientInNorm.push_back(graphNode.backIt());
-        }
-        else {
-            Q.mOrientOutNorm.push_back(graphNode.backIt());
-        }
-
+    edgeList.clear();
+    for (auto eit : R.mCollectedEdgesSide2) {
+        edgeList.push_back(eit);
     }
-}
-
-
-void BLPlanarityTester::collectEdgeOrderingQTypeMiddle(
-        BLTree&               pqTree,
-        node_list_it_t        pertinentRoot,
-        BLGraphNode&          graphNode,
-        edgeCollectionType    collectionType
-) {
-//cerr << "collectEdgeOrderingVirtualRoot\n";
-    /*
-     * The direction from End1 to End2 unknown.
-     * Pick an arbitrary direction of the sibling chain and assume it to be
-     * in end1->end2.
-     */
-    auto& R       = pqTree.toNodeRef(pertinentRoot);
-
-    list<edge_list_it_t>& edgeList = (collectionType==INCOMING)?
-                                         graphNode.mIncomingEdgesOrdered:
-                                         graphNode.mOutgoingEdgesOrdered;
-    /*
-     * Pick a full child and finds the boundary full child in the direciton of
-     * Sib1
-     */
-    auto  curIt   = *(R.mFullChildren.rbegin());
-    auto& FullC   = pqTree.toNodeRef(curIt); 
-    auto  prevIt  = FullC.mSibling2;
-
-    while (!pqTree.isNil(curIt)) {
-
-        auto& C = pqTree.toNodeRef(curIt);
-
-        if (C.isEmpty()) {
-            break;
-        }
-
-        pqTree.advanceSib(prevIt, curIt);
+    R.mCollectedEdgesSide2.clear();
+    for (auto eit : R.mCollectedEdges) {
+        edgeList.push_back(eit);
     }
-
-    std::swap(curIt, prevIt);
-    /* curIt  : the boundary full child F1
-     * prevIt : the boundary empty child E1
-     *
-     *                                       Q(Unknown)
-     *    ___________________________________|______________________
-     *   |                                                          |
-     *   |                              VirtualRoot                 |
-     *   |                                   |                      |
-     *  EndX ... E1 - F1 - ... Sib1<-FullC->Sib2 ... - F2 - E2 ... EndY
-     *(Unknown)       |===============================>|   /     (Unknown)
-     *                  Assumed End1->End2 direction  \___/
-     *                                            Place the assumed direction
-     *                                            to E2.
-     */
-
-
-    // From F1 to F2, place the nodes to topPertinentNodes in this order
-    list<node_list_it_t> topPertinentNodes;
-    while (!pqTree.isNil(curIt)) {
-
-        auto& C = pqTree.toNodeRef(curIt);
-
-        if (C.isEmpty()) {
-            break;
-        }
-
-        topPertinentNodes.push_back(curIt);
-
-        pqTree.advanceSib(prevIt, curIt);
-    }
-
-    // Now curIt points to the boundary empty child E2.
-    // Place the assumed orientation of the collected edges to it.
-//cerr << "collectEdgeOrderingVirtualRoot 01\n";
-    auto& E2 = pqTree.toNodeRef(curIt);    
-    if (pqTree.mTrackQFlippings) {
-//cerr << "collectEdgeOrderingVirtualRoot 02\n";
-        if (E2.mSibling1 == prevIt) {
-            // Scanning direction is in the natural direction of C.
-            if (collectionType==INCOMING) {
-                E2.mAssumedOrientInNorm.push_back(graphNode.backIt());
+    R.mCollectedEdges.clear();
+    if (pqTree.isTrackingQFlippings()) {
+        if ( R.nodeType() == BLTreeNode::VirtualRootType ) { 
+            auto& NextSib = pqTree.toNodeRef(pqTree.mVirtualNextSib);
+            if (pqTree.mVirtualNextSibAssumeReversed) {
+                NextSib.mAssumedOrientOutReversed.push_back(graphNode.backIt());
             }
-            else { //(collectionType==OUTGOING) {
-                E2.mAssumedOrientOutNorm.push_back(graphNode.backIt());
+            else {
+                NextSib.mAssumedOrientOutNorm.push_back(graphNode.backIt());
             }
         }
         else {
-            if (collectionType==INCOMING) {
-                E2.mAssumedOrientInReversed.push_back(graphNode.backIt());
-            }
-            else { //(collectionType==OUTGOING) {
-                E2.mAssumedOrientOutReversed.push_back(graphNode.backIt());
-            }
-        }
-    }
-//cerr << "collectEdgeOrderingVirtualRoot 03\n";
-    collectEdgeOrderingFromTopLevelNodes(
-                        pqTree, topPertinentNodes, edgeList, NORMAL_DIRECTION);
-//cerr << "collectEdgeOrderingVirtualRoot 04\n";
-//    cerr << "Collected Edges:";
-//    for (auto e : edgeList) {
-//        auto& BE = dynamic_cast<BLGraphEdge&>(*(*e));
-//        auto& BN1 = dynamic_cast<BLGraphNode&>(BE.incidentNode1());
-//        auto& BN2 = dynamic_cast<BLGraphNode&>(BE.incidentNode2());
-//        auto& GN1 = dynamic_cast<NumNode&>(*(*(BN1.mOriginal)));
-//        auto& GN2 = dynamic_cast<NumNode&>(*(*(BN2.mOriginal)));
-//        cerr << "{" << GN1.num() << "," << GN2.num() << "} ";
-//    }
-//    cerr << "\n";
-
-
-}
-
-
-void BLPlanarityTester::collectEdgeOrderingQType(
-        BLTree&               pqTree,
-        node_list_it_t        pertinentRoot,
-        BLGraphNode&          graphNode,
-        edgeCollectionType    collectionType
-) {
-
-    auto& R     = pqTree.toNodeRef(pertinentRoot);
-
-    list<edge_list_it_t>& edgeList = (collectionType==INCOMING)?
-                                         graphNode.mIncomingEdgesOrdered:
-                                         graphNode.mOutgoingEdgesOrdered;
-
-
-    auto& REnd1 = pqTree.toNodeRef(R.mEndChild1);
-    auto& REnd2 = pqTree.toNodeRef(R.mEndChild2);
-
-    // Scan the sibling for full children.
-    auto prevIt  = pqTree.nil();
-    node_list_it_t curIt;
-    bool direction1to2;
-    if (REnd1.isFull()) {
-        // Start from End1.
-        curIt = R.mEndChild1;
-        direction1to2 = true;
-    }
-    else if (REnd2.isFull()) {
-        // Start from End2.
-        curIt = R.mEndChild2;
-        direction1to2 = false;
-    }
-    else {
-        // Pertinent nodes are in the middle of the sibling chain.
-        collectEdgeOrderingQTypeMiddle(
-                            pqTree, pertinentRoot, graphNode, collectionType);
-        return;
-    }
-    list<node_list_it_t> topPertinentNodes;
-    while (!pqTree.isNil(curIt)) {
-
-        auto& C = pqTree.toNodeRef(curIt);
-
-        if (C.isEmpty()) {
-             break;
-        }
-        if (direction1to2) {
-            topPertinentNodes.push_back(curIt);
-        }
-        else {
-            topPertinentNodes.push_front(curIt);
-        }
-
-        pqTree.advanceSib(prevIt, curIt);
-
-    }
-
-    /* At this point topPertinentNodes has the full children in 
-     * End1->End2 direction.
-     */
-
-    if (pqTree.mTrackQFlippings) {
-        if (collectionType==INCOMING) {
-            R.mOrientInNorm.push_back(graphNode.backIt());
-        }
-        else {
+            // The orientation of the edges collected will be tracked
+            // in this root Q-node.
             R.mOrientOutNorm.push_back(graphNode.backIt());
         }
     }
-
-    collectEdgeOrderingFromTopLevelNodes(
-                        pqTree, topPertinentNodes, edgeList, NORMAL_DIRECTION);
-
-//    cerr << "Collected Edges:";
-//    for (auto e : edgeList) {
-//        auto& BE = dynamic_cast<BLGraphEdge&>(*(*e));
-//        auto& BN1 = dynamic_cast<BLGraphNode&>(BE.incidentNode1());
-//        auto& BN2 = dynamic_cast<BLGraphNode&>(BE.incidentNode2());
-//        auto& GN1 = dynamic_cast<NumNode&>(*(*(BN1.mOriginal)));
-//        auto& GN2 = dynamic_cast<NumNode&>(*(*(BN2.mOriginal)));
-//        cerr << "{" << GN1.num() << "," << GN2.num() << "} ";
-//    }
-//    cerr << "\n";
-
 }
 
-
-void BLPlanarityTester::collectEdgeOrderingPType(
-        BLTree&               pqTree,
-        node_list_it_t        pertinentRoot,
-        BLGraphNode&          graphNode,
-        edgeCollectionType    collectionType
-) {
-
-    auto& R     = pqTree.toNodeRef(pertinentRoot);
-
-    list<edge_list_it_t>& edgeList = (collectionType==INCOMING)?
-                                         graphNode.mIncomingEdgesOrdered:
-                                         graphNode.mOutgoingEdgesOrdered;
-
-    list<node_list_it_t> topPertinentNodes;
-
-    topPertinentNodes.insert(
-              topPertinentNodes.end(), R.mChildren.begin(), R.mChildren.end());
-
-    collectEdgeOrderingFromTopLevelNodes(
-                        pqTree, topPertinentNodes, edgeList, NORMAL_DIRECTION);
-
-//    cerr << "Collected Edges:";
-//    for (auto e : edgeList) {
-//        auto& BE = dynamic_cast<BLGraphEdge&>(*(*e));
-//        auto& BN1 = dynamic_cast<BLGraphNode&>(BE.incidentNode1());
-//        auto& BN2 = dynamic_cast<BLGraphNode&>(BE.incidentNode2());
-//        auto& GN1 = dynamic_cast<NumNode&>(*(*(BN1.mOriginal)));
-//        auto& GN2 = dynamic_cast<NumNode&>(*(*(BN2.mOriginal)));
-//        cerr << "{" << GN1.num() << "," << GN2.num() << "} ";
-//    }
-//    cerr << "\n";
-
-}
-
-
-/** @class PStackElem
- *
- *  @brief helper class to implement a simple  pre-travarsal DFS mechanism
- *         without recursive calls. One element of this class works like 
- *         a block of the function calling stack. It specifies the currently
- *         visiting node, and which child is being visited.
- */
-
-class PStackElem {
-  public:
-
-    PStackElem(
-         BLTree& tree, BLTreeNode& N, BLTree::scanDirectionType scanDirection):
-        mTree(tree),
-        mN(N),
-        mScanDirection(scanDirection),
-        mWaitingForChild(false),
-        mPChild(N.mChildren.begin()),
-        mPChildR(N.mChildren.rbegin()),
-        mQPrev(tree.nil())
-        {
-            if (scanDirection == BLTree::NORMAL_DIRECTION) {
-                mQCur = N.mEndChild1;
-            }
-            else { //(directionType==REVERSED_DIRECTION)
-                mQCur = N.mEndChild2;        
-            }
-        }
-
-    virtual ~PStackElem() {;};
-
-    // Helper routines to access BLTreeNode's members.
-    enum BLTreeNode::nodeType type(){return mN.nodeType();};
-    bool isEmpty(){return mN.isEmpty();};
-    edge_list_it_t edge(){return mN.mGraphEdge;};
-
-    /* Returns the child to be visited, and updates
-     * the internal data for the next call
-     */
-    node_list_it_t child(){   
-
-        if (mN.nodeType() == BLTreeNode::PType) {
-
-            if (mScanDirection == BLTree::REVERSED_DIRECTION) {
-
-                if (mPChildR == mN.mChildren.rend()) {
-
-                    return  mTree.nil();
-                }
-                else {
-
-                    return  *(mPChildR++);
-                }
-            }
-            else {
-
-                if (mPChild == mN.mChildren.end()) {
-
-                    return  mTree.nil();
-                }
-                else {
-
-                    return  *(mPChild++);
-                }
-            }
-        }
-        else if (mN.nodeType() == BLTreeNode::QType) {
-
-            if (mTree.isNil(mQCur)) {
-
-                return  mTree.nil();
-            }
-            else {
-
-                mTree.advanceSib(mQPrev, mQCur);
-                return mQPrev;
-            }
-        }
-        else {
-
-            return mTree.nil();
-        }
-    };
-
-  private:
-
-    // PQ-tree
-    BLTree&                        mTree;
-
-    // Currently visiting node.
-    BLTreeNode&                    mN;    
-
-    /*
-     *  NORMAL_DIRECTION:   mChildren.begein()-> end() if this is a P node.
-     *                      mEndChild1 -> mEndChild2   if this is a Q node.
-     *
-     *  REVERSED_DIRECTION: mChildren.rbegin()->rend() if this is a P node.
-     *                      mEndChild2 -> mEndChild1   if this is a Q node.
-     */
-    BLTree::scanDirectionType      mScanDirection;
-
-    /* 
-     *  true  : if this node is waiting for the exploration to come back 
-     *          from a child.
-     *  false : if the exploration is about to visit a child.
-     */
-    bool                           mWaitingForChild;
-
-    /*
-     * Currently visiting or about to visit a child it 
-     * if the direction is normal.
-     */
-    list<node_list_it_t>::iterator mPChild;
-
-    /*
-     * Currently visiting or about to visit a child it 
-     * if the direction is reversed.
-     */
-    list<node_list_it_t>::reverse_iterator mPChildR;
-                                   
-    // Previous child visited if this is a Q node.
-    node_list_it_t                 mQPrev;
-
-    // Current child being or to be visited if this is a Q node.
-    node_list_it_t                 mQCur;
-
-
-#ifdef UNIT_TESTS
-  public:
-    int num(){ return mN.mNodeNum; }
-#endif
-
-};
-
-
-/** @brief Explore the nodes from the top level nodes collected into 
- *         topLevelNodes and collect the graph edges in this direction.
- */
-void BLPlanarityTester::collectEdgeOrderingFromTopLevelNodes(
-    BLTree&                   pqTree,
-    list<node_list_it_t>&     topPertinentNodes,
-    list<edge_list_it_t>&     edgeList,
-    scanDirectionType         scanDirection
-) {
-
-    for (auto topNode : topPertinentNodes) {
-
-        vector<PStackElem> DFSStack;
-        DFSStack.emplace_back(
-            pqTree,
-            pqTree.toNodeRef(topNode), 
-            (scanDirection==NORMAL_DIRECTION)?
-                BLTree::NORMAL_DIRECTION:BLTree::REVERSED_DIRECTION
-        );
-
-        while (DFSStack.size()>0) {
-
-            PStackElem& E = *(DFSStack.rbegin());
-
-            if (E.isEmpty()) {
-                return;
-            }
-
-            if (E.type()==BLTreeNode::LType) {
-
-                if (scanDirection==NORMAL_DIRECTION) {
-
-                    edgeList.push_back(E.edge());
-                }
-                else {
-
-                    edgeList.push_front(E.edge());
-                }
-                DFSStack.pop_back();
-            }
-            else {
-
-                node_list_it_t cIt = E.child();
-                if (pqTree.isNil(cIt)) {
-
-                    DFSStack.pop_back();
-                }
-                else {
-
-                    DFSStack.emplace_back(
-                        pqTree,
-                        pqTree.toNodeRef(cIt), 
-                        (scanDirection==NORMAL_DIRECTION)?
-                            BLTree::NORMAL_DIRECTION:BLTree::REVERSED_DIRECTION
-                    );
-                }
-            }
-        }
-    }        
-}
 
 }// namespace Undirected
 

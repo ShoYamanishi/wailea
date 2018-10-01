@@ -27,12 +27,12 @@ void PlanarInsertionPathFinder::findDualGraph()
 
     // Step 1. Find an st ordering
     STNumbering st;
-    auto nit1 = mG.nodes().first;
-    auto nit2 = mG.nodes().first;
-    nit2++;
+    auto eit = mG.edges().first;
+    auto& E = *(*eit);
+    auto& N1 = E.incidentNode1();
+    auto& N2 = E.incidentNode2();
 
-    vector<node_list_it_t> stOrdering = 
-                              st.getBipolarOrientation(mG, *(*nit1), *(*nit2));
+    vector<node_list_it_t> stOrdering = st.getBipolarOrientation(mG, N1, N2);
 
     // Step 2. Find an embedding
     BLPlanarityTester tester;

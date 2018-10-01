@@ -708,7 +708,10 @@ inline void BLTreeNode::solveAssumedGraphNodeOrientationsFrom(
 }
 
 
-inline BLTree::BLTree():mGeneration(0),mTrackQFlippings(false){;}
+inline BLTree::BLTree():
+    mGeneration(0),
+    mTrackQFlippings(false),
+    mCollectingEdges(false){;}
 
 
 inline BLTree::~BLTree(){;}
@@ -759,8 +762,9 @@ inline node_list_it_t BLTree::makePAttachment()
 inline void BLTree::initializeForOneIteration() {
 
     mGeneration++;
-    mCDPartialRoot        = nil();
-
+    mCDPartialRoot                = nil();
+    mVirtualNextSib               = nil();
+    mVirtualNextSibAssumeReversed = false;
 }
 
 
@@ -840,6 +844,18 @@ inline void BLTree::unlinkFromPTypeParent(list<node_list_it_t>& children)
 inline node_list_it_t BLTree::CDPartialRoot()
 {
     return mCDPartialRoot;
+}
+
+
+inline void BLTree::setCollectingEdges()
+{
+    mCollectingEdges = true;
+}
+
+
+inline bool BLTree::isCollectingEdges()
+{
+    return mCollectingEdges;
 }
 
 

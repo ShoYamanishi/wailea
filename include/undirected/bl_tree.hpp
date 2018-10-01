@@ -65,7 +65,6 @@ class BLTree : public Graph {
      */
     node_list_it_t makePNode(list<node_list_it_t>& children);
 
-
     node_list_it_t makeQNode();
 
     node_list_it_t bringUpOnlyChildOfPNodeAndRemove(BLTreeNode& X);
@@ -87,6 +86,9 @@ class BLTree : public Graph {
 
     void flattenSinglyPartialChildToQNode(
                         BLTreeNode& P, node_list_it_t cIt, reductionType type);
+
+    void flattenSinglyPartialChildToQNodePreservingOrientation(
+                        BLTreeNode& P, node_list_it_t spIt);
 
     bool templateL1(BLTreeNode& X, reductionType reduction);
     bool templateP1(BLTreeNode& X, reductionType reduction);
@@ -113,15 +115,29 @@ class BLTree : public Graph {
     bool checkSequenceQ3(BLTreeNode& X);
     bool checkSequenceQ4(BLTreeNode& X);
 
-    void transferGraphNodeOrientationsQ1(BLTreeNode& X);
-    void transferGraphNodeOrientationsQ2(BLTreeNode& X, node_list_it_t nIt);
-    void transferGraphNodeOrientationsQ3(BLTreeNode& X);
-    void transferGraphNodeOrientationsQ4(BLTreeNode& X);
-    void transferGraphNodeOrientationsQ5(BLTreeNode& X);
-                      
+    void collectGraphEdgesP4(BLTreeNode&X, list<node_list_it_t>&fullChildren);
+    void collectGraphEdgesP5(BLTreeNode&X, list<node_list_it_t>&fullChildren);
+    void collectGraphEdgesP6Step1(
+                             BLTreeNode&X, list<node_list_it_t>&fullChildren);
+    void collectGraphEdgesP7Step1(
+                             BLTreeNode&X, list<node_list_it_t>&fullChildren);
+
+    void collectGraphEdgesQ2( BLTreeNode& X, node_list_it_t partialIt );
+    void collectGraphEdgesQ3( BLTreeNode& X );
+    void collectGraphEdgesQ3OnRealRoot   ( BLTreeNode& X );
+    void collectGraphEdgesQ3OnVirtualRoot( BLTreeNode& X );
+    void collectGraphEdgesQ4( BLTreeNode& X );
+    void collectGraphEdgesQ5( BLTreeNode& X );
+
     node_list_it_t CDPartialRoot();
 
+    void setCollectingEdges();
+    bool isCollectingEdges();
+
+    node_list_it_t findRoot();
+
 #ifdef UNIT_TESTS
+    void printEdgeList(list<edge_list_it_t>& edgeList);
     void printTree(ostream& os, node_list_it_t pr);
 #endif
 
@@ -151,6 +167,24 @@ class BLTree : public Graph {
      */
     node_list_it_t       mCDPartialRoot;
 
+
+    /** @brief flag to indicate if it is collecting the edges ordering.
+     *         Used for finding an embedding.
+     */
+    bool                 mCollectingEdges;
+
+    /** @brief indicates the immediately following sibling of the top 
+     *         pertinent node chain if the pertinent root is virtual.
+     *         Used to store the orientation of the collected edges.
+     */
+    node_list_it_t       mVirtualNextSib;
+
+    /** @brief indicates the assumed orientation of the immediately 
+     *         following sibling of the top 
+     *         pertinent node chain if the pertinent root is virtual.
+     *         Used to store the orientation of the collected edges.
+     */
+    bool                 mVirtualNextSibAssumeReversed;
 
 friend class BLPlanarityTester;
 friend class BLTreeNode;

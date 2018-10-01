@@ -299,8 +299,9 @@ void BLTree::fanOutLeavesFromQAttachment(
 
         // The orientation of the edges fanned-out will be tracked
         // in this Q-node.
-        A.mOrientInNorm.push_back(nIt);
-
+        if (mTrackQFlippings) {
+            A.mOrientInNorm.push_back(nIt);
+        }
     }
 }
 
@@ -366,11 +367,13 @@ bool BLTree::templateP1(BLTreeNode& X, reductionType reduction)
         X.mCollectedEdgesSide2.clear();
 
         for (auto cit : X.mFullChildren) {
+
             auto& C = dynamic_cast<BLTreeNode&>(*(*cit));
 
             X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
                                       C.mCollectedEdges        );
             C.mCollectedEdges.clear();
+
         }
     }
 
@@ -1400,24 +1403,6 @@ void BLTree::concatenateOneSinglyPartialToTheOther(
 
     }
 
-    if (mTrackQFlippings) {
-
-        scanDirectionType direction;
-
-        if( ( MainEnd1.isFull() &&  AbsorbedEnd1.isFull() )||
-            (!MainEnd1.isFull() && !AbsorbedEnd1.isFull() )  ) {
-
-            direction = REVERSED_DIRECTION; 
-        }
-        else {
-
-            direction = NORMAL_DIRECTION; 
-        }
-
-        Main.transferGraphNodeOrientationsFrom(Absorbed, direction);
-
-    }
-
     Absorbed.discardOldFullLink();
 
     Absorbed.clearFullChildren();
@@ -2059,7 +2044,7 @@ bool BLTree::checkSequenceQ2(BLTreeNode& X)
             }
             else {
 
-                return false;
+               return false;
             }
         }
         else {
@@ -2459,6 +2444,155 @@ void BLTree::flattenSinglyPartialChildToQNode(
 }
 
 
+void BLTree::flattenSinglyPartialChildToQNodePreservingOrientation(
+    BLTreeNode&    P,
+    node_list_it_t spIt
+) {
+
+    auto& SP = toNodeRef(spIt);
+
+    // Partially Unlink C from P.
+    if(P.mSinglyPartialChild1 == spIt) {
+
+        P.mSinglyPartialChild1 = nil();
+
+    }
+    else if(P.mSinglyPartialChild2 == spIt) {
+
+        P.mSinglyPartialChild2 = nil();
+
+    }
+
+    P.mPertinentChildrenCount--;
+    P.mPertinentLeavesCount -= SP.mPertinentLeavesCount;
+
+    node_list_it_t prevIt = nil();
+    node_list_it_t curIt  = (SP.isEndChild1Full()) ? 
+                             SP.mEndChild1 : 
+                             SP.mEndChild2 ;
+
+    while (!isNil(curIt)) {
+
+        auto& GC = toNodeRef(curIt);
+        if (GC.isEmpty()) {
+            break;
+        }
+
+        GC.mParent  = P.backIt();
+        P.mPertinentChildrenCount++;
+        P.mPertinentLeavesCount += GC.mPertinentLeavesCount;
+        GC.discardOldFullLink();
+        GC.createFullLink(P);
+
+        advanceSib(prevIt, curIt);
+    }
+
+
+    auto& SPEnd1 = toNodeRef(SP.mEndChild1);
+    auto& SPEnd2 = toNodeRef(SP.mEndChild2);
+
+    if (spIt == P.mEndChild1) {
+        auto& SibNext = toNodeRef( isNil(SP.mSibling1) ? 
+                                   SP.mSibling2 :
+                                   SP.mSibling1         );
+
+        P.mEndChild1   = SPEnd1.backIt();
+        SPEnd1.mParent = P.backIt();
+        SPEnd2.mParent = nil();
+
+        if (isNil(SPEnd2.mSibling1)) {
+            SPEnd2.mSibling1 = SibNext.backIt();
+        }
+        else {
+            SPEnd2.mSibling2 = SibNext.backIt();
+        }
+        if (isNil(SibNext.mSibling1)) {
+             SibNext.mSibling1 = SPEnd2.backIt();
+        }
+        else {
+             SibNext.mSibling2 = SPEnd2.backIt();
+        }
+    }
+    else if (spIt == P.mEndChild2) {
+        auto& SibPrev = toNodeRef( isNil(SP.mSibling1) ? 
+                                   SP.mSibling2 :
+                                   SP.mSibling1         );
+        P.mEndChild2   = SPEnd2.backIt();
+        SPEnd2.mParent = P.backIt();
+        SPEnd1.mParent = nil();
+
+        if (isNil(SPEnd1.mSibling1)) {
+            SPEnd1.mSibling1 = SibPrev.backIt();
+        }
+        else {
+            SPEnd1.mSibling2 = SibPrev.backIt();
+        }
+        if (isNil(SibPrev.mSibling1)) {
+             SibPrev.mSibling1 = SPEnd1.backIt();
+        }
+        else {
+             SibPrev.mSibling2 = SPEnd1.backIt();
+        }
+    }
+    else {
+        // relink parent of full children of C to P.
+        prevIt = nil();
+        curIt  = P.mEndChild1;
+
+        while (!isNil(curIt)) {
+
+            if (curIt == spIt) {
+                break;
+            }
+
+            advanceSib(prevIt, curIt);
+        }
+        auto& SibPrev = toNodeRef( prevIt );
+        auto& SibNext = toNodeRef( (SP.mSibling1==prevIt) ?
+                                    SP.mSibling2 :
+                                    SP.mSibling1           );
+
+        unlinkSiblings( SibPrev, SP      );
+        unlinkSiblings( SP,      SibNext );
+
+        SPEnd1.mParent = nil();
+        SPEnd2.mParent = nil();
+
+        if (isNil(SPEnd1.mSibling1)) {
+            SPEnd1.mSibling1 = SibPrev.backIt();
+        }
+        else {
+            SPEnd1.mSibling2 = SibPrev.backIt();
+        }
+        if (isNil(SibPrev.mSibling1)) {
+             SibPrev.mSibling1 = SPEnd1.backIt();
+        }
+        else {
+             SibPrev.mSibling2 = SPEnd1.backIt();
+        }
+
+        if (isNil(SPEnd2.mSibling1)) {
+            SPEnd2.mSibling1 = SibNext.backIt();
+        }
+        else {
+            SPEnd2.mSibling2 = SibNext.backIt();
+        }
+        if (isNil(SibNext.mSibling1)) {
+             SibNext.mSibling1 = SPEnd2.backIt();
+        }
+        else {
+             SibNext.mSibling2 = SPEnd2.backIt();
+        }
+    }
+
+    SP.discardOldFullLink();
+    SP.clearFullChildren();
+    removeNode(SP);
+
+}
+
+
+
 /**
  *   Assumption: Number of children is greater than 1
  *   Condition:
@@ -2672,7 +2806,7 @@ void BLTree::collectGraphEdgesQ3OnRealRoot(BLTreeNode& X)
                     if (mTrackQFlippings) {
                         X.transferGraphNodeOrientationsFrom(
                                                        C, NORMAL_DIRECTION );
-                    }
+                   }
                 }
             }
             else {
@@ -2905,7 +3039,6 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
 
     }
 
-
 //cerr << "templateQ4:[" << X.mNodeNum << "]\n";
 
     if (mCollectingEdges) {
@@ -2914,16 +3047,32 @@ bool BLTree::templateQ4(BLTreeNode& X, reductionType reduction, bool& earlyOut)
 
     }
 
-    if (!isNil(X.mSinglyPartialChild1)) {
+    if (  !isNil(X.mSinglyPartialChild1)
+        && isNil(X.mSinglyPartialChild2)
+        && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
 
-        flattenSinglyPartialChildToQNode(
-                           X, X.mSinglyPartialChild1, COMPLEMENTARY_REDUCTION);
+        flattenSinglyPartialChildToQNodePreservingOrientation(
+                                                   X, X.mSinglyPartialChild1);
     }
+    else if (  !isNil(X.mSinglyPartialChild2)
+             && isNil(X.mSinglyPartialChild1)
+             && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
 
-    if (!isNil(X.mSinglyPartialChild2)) {
+        flattenSinglyPartialChildToQNodePreservingOrientation(
+                                                   X, X.mSinglyPartialChild2);
+    }
+    else {
+        if (!isNil(X.mSinglyPartialChild1)) {
 
-        flattenSinglyPartialChildToQNode(
+            flattenSinglyPartialChildToQNode(
+                           X, X.mSinglyPartialChild1, COMPLEMENTARY_REDUCTION);
+        }
+
+        if (!isNil(X.mSinglyPartialChild2)) {
+
+            flattenSinglyPartialChildToQNode(
                            X, X.mSinglyPartialChild2, COMPLEMENTARY_REDUCTION);
+        }
     }
 
     X.mPertinentType = BLTreeNode::CDPartial;
@@ -3019,7 +3168,7 @@ void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
     auto curIt  = X.mEndChild1;
     auto partIt = nil();
 
-    long SPcount = 0;
+
     while (!isNil(curIt)) {
 
         auto& C = toNodeRef(curIt);
@@ -3029,14 +3178,35 @@ void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
         }
 
         if (C.isSinglyPartial()) {
-            if (SPcount==1) {
-                break;
-            }
 
             partIt = curIt;
 
             auto& CEnd1 = toNodeRef(C.mEndChild1);
-            if (CEnd1.isFull()) {
+            if (  !isNil(X.mSinglyPartialChild1)
+                && isNil(X.mSinglyPartialChild2)
+                && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
+
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                }
+
+            }
+            else if (  !isNil(X.mSinglyPartialChild2)
+                     && isNil(X.mSinglyPartialChild1)
+                     && (X.mPertinentChildrenCount == X.mChildrenCount) ) {
+
+                X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
+                                          C.mCollectedEdges        );
+                if (mTrackQFlippings) {
+                    X.transferGraphNodeOrientationsFrom(
+                                                       C, NORMAL_DIRECTION );
+                }
+
+            }
+            else if (CEnd1.isFull()) {
                 X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
                                           C.mCollectedEdges        );
                 if (mTrackQFlippings) {
@@ -3054,7 +3224,7 @@ void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
                 }
             }
             break;
-            SPcount++;
+
         }
         else {
             X.mCollectedEdges.splice( X.mCollectedEdges.end(), 
@@ -3095,9 +3265,13 @@ void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
             if (curIt == partIt) {
                 break;
             }
+            else {
+                advanceSib(prevIt, curIt);
+                break;
+            }
         }
 
-        advanceSib(prevIt, curIt);                
+        advanceSib(prevIt, curIt);
     }
 
     std::swap(prevIt, curIt);
@@ -3129,7 +3303,6 @@ void BLTree::collectGraphEdgesQ4(BLTreeNode& X)
                                                        C, NORMAL_DIRECTION );
                 }
             }
-            break;
         }
         else {
             X.mCollectedEdgesSide2.splice( X.mCollectedEdgesSide2.end(), 
@@ -3273,6 +3446,40 @@ void BLTree::collectGraphEdgesQ5(BLTreeNode& X)
 }
 
 
+node_list_it_t BLTree::findRoot()
+{
+    auto pIt = nodes().first;
+    while (!isNil(pIt)) {
+        auto& P = toNodeRef(pIt);
+        if (!isNil(P.mSibling1)&&!isNil(P.mSibling2)) {
+            auto it1 = P.mSibling1;
+            auto it2 = pIt;
+            while (!isNil(it2)) {
+                advanceSib(it1, it2);
+            }
+
+            auto& P2 = toNodeRef(it1);
+            if (isNil(P2.mParent)) {
+                break;
+            }
+            else {
+                pIt = P2.mParent;
+            }
+        }
+        else {
+            if (isNil(P.mParent)) {
+                break;
+            }
+            else {
+                pIt = P.mParent;
+            }
+        }
+    }
+    return pIt;
+}
+
+
+
 #ifdef UNIT_TESTS
 
 void BLTree::printEdgeList(list<edge_list_it_t>& edgeList)
@@ -3286,6 +3493,8 @@ void BLTree::printEdgeList(list<edge_list_it_t>& edgeList)
         cerr << "Edge: [" << N1.num() << "," << N2.num() << "]\n";
     }
 }
+
+
 
 void BLTree::printTree(ostream& os, node_list_it_t pr) {
 

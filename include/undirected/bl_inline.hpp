@@ -762,8 +762,9 @@ inline node_list_it_t BLTree::makePAttachment()
 inline void BLTree::initializeForOneIteration() {
 
     mGeneration++;
-    mCDPartialRoot        = nil();
-
+    mCDPartialRoot                = nil();
+    mVirtualNextSib               = nil();
+    mVirtualNextSibAssumeReversed = false;
 }
 
 

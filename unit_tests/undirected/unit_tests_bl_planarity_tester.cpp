@@ -783,13 +783,13 @@ static bool areImmediateSiblings(BLTreeNode& n1, BLTreeNode& n2)
 
 #include "unit_tests/undirected/unit_tests_bl_planarity_tester_templateQ.inc"
 
-#include "unit_tests/undirected/unit_tests_bl_planarity_tester_collectEdgeOrdering.inc"
+//#include "unit_tests/undirected/unit_tests_bl_planarity_tester_collectEdgeOrdering.inc"
 
 #include "unit_tests/undirected/unit_tests_bl_planarity_tester_removePertinentTree.inc"
 
 #include "unit_tests/undirected/unit_tests_bl_planarity_tester_isPlanar.inc"
 
-#include "unit_tests/undirected/unit_tests_bl_planarity_tester_findEmbedding.inc"
+//#include "unit_tests/undirected/unit_tests_bl_planarity_tester_findEmbedding.inc"
 
 } // namespace Undirected
 

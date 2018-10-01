@@ -87,6 +87,9 @@ class BLTree : public Graph {
     void flattenSinglyPartialChildToQNode(
                         BLTreeNode& P, node_list_it_t cIt, reductionType type);
 
+    void flattenSinglyPartialChildToQNodePreservingOrientation(
+                        BLTreeNode& P, node_list_it_t spIt);
+
     bool templateL1(BLTreeNode& X, reductionType reduction);
     bool templateP1(BLTreeNode& X, reductionType reduction);
     bool templateP2(BLTreeNode& X, node_list_it_t& pertinentRoot);
@@ -130,6 +133,8 @@ class BLTree : public Graph {
 
     void setCollectingEdges();
     bool isCollectingEdges();
+
+    node_list_it_t findRoot();
 
 #ifdef UNIT_TESTS
     void printEdgeList(list<edge_list_it_t>& edgeList);

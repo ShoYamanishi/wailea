@@ -313,11 +313,13 @@ void CommandLineBiconnectedEmbeddingFinder::generateEmbedding()
 
     if (mG.numNodes() > 3) {    
         STNumbering st;
-        auto nit = mG.nodes().first;
-        auto& S = *(*nit);
-        nit++;
-        auto& T = *(*nit);
-        vector<node_list_it_t> stNum = st.getBipolarOrientation(mG, S, T);
+
+        auto eit = mG.edges().first;
+        auto& E = *(*eit);
+        auto& N1 = E.incidentNode1();
+        auto& N2 = E.incidentNode2();
+
+        vector<node_list_it_t> stNum = st.getBipolarOrientation(mG, N1, N2);
         BLPlanarityTester tester;
         bool planar = tester.findEmbedding(mG, stNum);
         if (!planar) {
